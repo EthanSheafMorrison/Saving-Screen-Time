@@ -1,0 +1,164 @@
+:root {
+    --cobalt: #0038ff;
+    --off-white: #f0f0f0;
+    --crimson: #ff3e3e;
+    --ink: #1a1a1a;
+    --grid-gap: 1rem;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--cobalt);
+    color: var(--off-white);
+    font-family: 'EB Garamond', serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    width: 100vw;
+}
+
+/* Brutalist nav bar */
+.nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: var(--ink);
+    border-bottom: 3px solid var(--off-white);
+    z-index: 100;
+    box-sizing: border-box;
+}
+
+.nav-logo {
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--off-white);
+    text-decoration: none;
+}
+
+.nav-logo:hover {
+    color: var(--crimson);
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--off-white);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-links a:hover {
+    color: var(--crimson);
+    border-bottom-color: var(--crimson);
+}
+
+/* The Grain: Adds analog texture to the digital flat colour */
+.noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0.07;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.googleapis.com/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    height: 100vh;
+    width: 100%;
+    padding: 2rem;
+    padding-top: 5rem; /* Space for fixed nav */
+    box-sizing: border-box;
+}
+
+.hero-title {
+    grid-column: 1 / 10;
+    grid-row: 1 / 10;
+    font-size: clamp(4rem, 14vw, 18rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 0.85;
+    z-index: 2;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+    mix-blend-mode: hard-light;
+}
+
+/* Halftone effect: dots vary in size based on image luminance
+   Based on https://css-irl.info/css-halftone-patterns/ */
+.visual-anchor {
+    --visual-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop'); /* Placeholder */
+    --dot-size: 0.06rem;
+    --dot-stop: 0.65rem;
+    --grid-size: 1.3rem;
+
+    grid-column: 6 / 13;
+    grid-row: 4 / 13;
+    position: relative;
+    background: white;
+    filter: contrast(50);
+    mix-blend-mode: multiply;
+    z-index: 1;
+    border: 1px solid var(--off-white);
+    overflow: hidden;
+}
+
+.visual-anchor::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(
+            circle at center,
+            black var(--dot-size),
+            transparent var(--dot-stop)
+        ),
+        radial-gradient(
+            circle at center,
+            black var(--dot-size),
+            transparent var(--dot-stop)
+        );
+    background-size: var(--grid-size) var(--grid-size);
+    background-position: 0 0, calc(var(--grid-size) / 2) calc(var(--grid-size) / 2);
+    mask-image: var(--visual-image);
+    mask-size: cover;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-mode: luminance;
+    -webkit-mask-image: var(--visual-image);
+    -webkit-mask-size: cover;
+    -webkit-mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+}
+
+.meta-data {
+    grid-column: 10 / 13;
+    grid-row: 12 / 13;
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    z-index: 3;
+    justify-content: flex-end;
+}
