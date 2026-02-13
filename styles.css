@@ -3,79 +3,159 @@
     --off-white: #f0f0f0;
     --crimson: #ff3e3e;
     --ink: #1a1a1a;
+    --mustard: #f5d547;
+    --green: #2d6a4f;
     --grid-gap: 1rem;
+    --bright-green: #00E676;
+    --teal: #00CED1;
+    --bright-yellow: #FFEB3B;
+    --light-mint: #d4edda;
+    --dark-green: #1b5e20;
 }
 
 body {
     margin: 0;
     padding: 0;
-    background-color: var(--cobalt);
-    color: var(--off-white);
+    color: var(--ink);
     font-family: 'EB Garamond', serif;
     overflow-x: hidden;
     min-height: 100vh;
     width: 100vw;
 }
 
-/* Brutalist nav bar */
-.nav-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: var(--ink);
-    border-bottom: 3px solid var(--off-white);
-    z-index: 100;
+/* Section base – full screen */
+.section {
+    width: 100%;
+    min-height: 100vh;
     box-sizing: border-box;
 }
 
-.nav-logo {
-    font-weight: 700;
-    font-size: 1rem;
+/* Section 1: Blue banner */
+.section-banner {
+    background-color: var(--cobalt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.banner-title {
+    margin: 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.15em;
     color: var(--off-white);
-    text-decoration: none;
 }
 
-.nav-logo:hover {
-    color: var(--crimson);
-}
-
-.nav-links {
+/* Section 2: Yellow intro – previous intro block design */
+.section-intro {
+    background-color: var(--cobalt);
     display: flex;
-    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
 }
 
-.nav-links a {
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+.intro-block {
+    width: 100%;
+    max-width: 90%;
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 3rem 4rem;
+    box-sizing: border-box;
+}
+
+.intro-block .nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0 2rem;
+    background: none;
+    border: none;
+}
+
+.intro-block .nav-logo {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    text-transform: none;
+    letter-spacing: 0.02em;
     color: var(--off-white);
     text-decoration: none;
-    border-bottom: 2px solid transparent;
 }
 
-.nav-links a:hover {
+.intro-block .nav-logo:hover {
     color: var(--crimson);
-    border-bottom-color: var(--crimson);
 }
 
-/* The Grain: Adds analog texture to the digital flat colour */
-.noise-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 10;
-    opacity: 0.07;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.googleapis.com/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+.intro-block .nav-links {
+    display: flex;
+    gap: 2.5rem;
+}
+
+.intro-block .nav-links a {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    text-transform: none;
+    letter-spacing: 0.02em;
+    color: var(--off-white);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+.intro-block .nav-links a:hover {
+    color: var(--crimson);
+}
+
+.contact-link {
+    color: var(--off-white);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+.contact-link:hover {
+    color: var(--crimson);
+}
+
+.intro-text {
+    max-width: 42rem;
+    margin: 0 auto 3rem;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    text-align: center;
+    color: var(--off-white);
+}
+
+.intro-brand {
+    margin-top: auto;
+    padding-top: 2rem;
+    text-align: center;
+}
+
+.intro-brand-label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 0.25rem;
+    color: var(--off-white);
+}
+
+.intro-brand-name {
+    font-size: clamp(3rem, 12vw, 10rem);
+    font-weight: 700;
+    line-height: 0.9;
+    margin: 0;
+    font-style: italic;
+    color: var(--off-white);
+}
+
+/* Section 3: Grid layout – previous hero + visual anchor design */
+.section-grid {
+    background-color: var(--cobalt);
+    padding: 0;
 }
 
 .grid-container {
@@ -85,8 +165,8 @@ body {
     height: 100vh;
     width: 100%;
     padding: 2rem;
-    padding-top: 5rem; /* Space for fixed nav */
     box-sizing: border-box;
+    color: var(--off-white);
 }
 
 .hero-title {
@@ -104,10 +184,8 @@ body {
     mix-blend-mode: hard-light;
 }
 
-/* Halftone effect: dots vary in size based on image luminance
-   Based on https://css-irl.info/css-halftone-patterns/ */
 .visual-anchor {
-    --visual-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop'); /* Placeholder */
+    --visual-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop');
     --dot-size: 0.06rem;
     --dot-stop: 0.65rem;
     --grid-size: 1.3rem;
@@ -161,4 +239,191 @@ body {
     letter-spacing: 0.05em;
     z-index: 3;
     justify-content: flex-end;
+}
+
+/* Section 4: Color-block – vibrant solid backgrounds */
+.section-color-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    min-height: 80vh;
+    color: var(--ink);
+}
+
+.section-color-block--green {
+    background-color: var(--bright-green);
+}
+
+.section-color-block--teal {
+    background-color: var(--teal);
+}
+
+.section-color-block--yellow {
+    background-color: var(--bright-yellow);
+}
+
+.color-block-inner {
+    width: 100%;
+    max-width: 90rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+.color-block-inner.color-block-inner--single {
+    grid-template-columns: 1fr;
+}
+
+.color-block-heading h2,
+.color-block-heading h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.5rem;
+}
+
+.color-block-heading .color-block-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 600;
+    margin: 0;
+}
+
+.color-block-body p {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* Section 5: Two-column (Team / Practice style) */
+.section-two-col {
+    background-color: var(--light-mint);
+    color: var(--dark-green);
+    padding: 4rem 2rem;
+    min-height: 60vh;
+}
+
+.two-col-divider {
+    width: 100%;
+    max-width: 90rem;
+    margin: 0 auto 3rem;
+    height: 1px;
+    background-color: var(--dark-green);
+    opacity: 0.3;
+}
+
+.two-col-inner {
+    width: 100%;
+    max-width: 90rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+}
+
+.two-col-item h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+}
+
+.two-col-item p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Section 6: Pull quote / magazine */
+.section-pull-quote {
+    background-color: var(--bright-yellow);
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    min-height: 80vh;
+    text-align: center;
+}
+
+.pull-quote-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.4;
+    max-width: 42rem;
+    margin: 0 0 2rem;
+    padding: 0;
+    border: none;
+}
+
+.pull-quote-credits {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0;
+}
+
+/* Section 7: Image row */
+.section-image-row {
+    background-color: var(--light-mint);
+    padding: 4rem 2rem;
+    min-height: 40vh;
+}
+
+.image-row {
+    display: flex;
+    gap: 1rem;
+    max-width: 90rem;
+    margin: 0 auto;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+
+.image-row img {
+    flex: 0 0 auto;
+    width: 12rem;
+    height: 16rem;
+    object-fit: cover;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .section {
+        padding: 1.5rem;
+    }
+
+    .color-block-inner {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .two-col-inner {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .image-row img {
+        width: 10rem;
+        height: 13rem;
+    }
+}
+
+/* The Grain: Adds analog texture to the digital flat colour */
+.noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.googleapis.com/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
