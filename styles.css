@@ -1,16 +1,20 @@
 :root {
-    --cobalt: #0038ff;
-    --off-white: #f0f0f0;
+    --cobalt: #161D49;
+    --off-white: #CFCCD3;
     --crimson: #ff3e3e;
     --ink: #1a1a1a;
-    --mustard: #f5d547;
+    --mustard: #F7E200;
     --green: #2d6a4f;
     --grid-gap: 1rem;
-    --bright-green: #00E676;
+    --bright-green: #50D926;
     --teal: #00CED1;
     --bright-yellow: #FFEB3B;
     --light-mint: #d4edda;
     --dark-green: #1b5e20;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -75,6 +79,7 @@ body {
     padding: 0 0 2rem;
     background: none;
     border: none;
+    position: sticky;
 }
 
 .intro-block .nav-logo {
@@ -122,21 +127,25 @@ body {
 
 .intro-text {
     max-width: 42rem;
-    margin: 0 auto 3rem;
+    margin: 0 auto 4rem;
+    margin-top: 2em;
     font-size: 1.125rem;
     line-height: 1.6;
     text-align: center;
     color: var(--off-white);
+    padding: 1rem;
 }
 
 .intro-brand {
-    margin-top: auto;
-    padding-top: 2rem;
+    margin-top: 10em;
+    margin-bottom: auto;
+    /* padding: 2em; */
     text-align: center;
 }
 
 .intro-brand-label {
     display: block;
+    margin: 2em;
     font-size: 1rem;
     font-weight: 400;
     margin-bottom: 0.25rem;
@@ -145,6 +154,7 @@ body {
 
 .intro-brand-name {
     font-size: clamp(3rem, 12vw, 10rem);
+    margin: 2em;
     font-weight: 700;
     line-height: 0.9;
     margin: 0;
