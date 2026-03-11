@@ -12,13 +12,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2rem;
+    padding: 3rem;
     background: none;
     border: none;
-    position: sticky;
+    position: absolute;
+    width: 100%;
     color:var(--white);
+    mix-blend-mode: difference; /* Ensures nav links interact with background colors */
     top: 0;
     z-index: 100;
+    box-sizing: border-box;
 }
 .nav-bar a {
     text-decoration: none;
@@ -30,6 +33,11 @@
 }
 .nav-bar a:hover {
     border-bottom: 2px solid var(--white);
+}
+
+.nav-links {
+    display: flex;
+    gap: 1rem;
 }
 
 body {
@@ -115,6 +123,12 @@ body {
     border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; /* Organic blob shape */
     mix-blend-mode: color-burn; /* Gives a harsh ink interaction */
     z-index: 1;
+}
+
+.sec-page {
+    padding: 8rem 2rem 2rem 2rem;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 /* --- SECTION 2: THE STARK YELLOW (Inspired by image 4) --- */

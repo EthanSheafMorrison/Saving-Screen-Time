@@ -7,16 +7,7 @@ export default function Home() {
         <div className="hero-plus hp-tr">+</div>
         <div className="hero-plus hp-bl">+</div>
 
-        <nav className="nav-bar">
-          <a href="/" className="nav-logo">
-            Saving Screen Time
-          </a>
-          <div className="nav-links">
-            <a href="#about">About</a>
-            <a href="#">Archive</a>
-            <a href="#contact">Contact</a>
-          </div>
-        </nav>
+        
 
         <div style={{ marginTop: "10vh", position: "relative", zIndex: 10 }}>
           <Image
