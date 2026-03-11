@@ -1,0 +1,283 @@
+/* [project]/src/app/globals.css [app-client] (css) */
+:root {
+  --red: #ff0073;
+  --blue: #19267b;
+  --yellow: #ffe609;
+  --green: #00b939;
+  --neon: #ffe609;
+  --black: #050505;
+  --white: #cfccd3;
+}
+
+.nav-bar {
+  color: var(--white);
+  z-index: 100;
+  background: none;
+  border: none;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  display: flex;
+  position: sticky;
+  top: 0;
+}
+
+.nav-bar a {
+  color: var(--white);
+  border-bottom: 2px solid #0000;
+  font-family: IBM Plex Mono, monospace;
+  font-weight: 200;
+  text-decoration: none;
+  transition: border-color .3s;
+}
+
+.nav-bar a:hover {
+  border-bottom: 2px solid var(--white);
+}
+
+body {
+  background-color: var(--white);
+  color: var(--black);
+  margin: 0;
+  padding: 0;
+  font-family: DM Sans, sans-serif;
+  overflow-x: hidden;
+}
+
+.global-crosshair {
+  z-index: 9999;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.sec-hero {
+  background-color: var(--blue);
+  color: var(--white);
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-plus {
+  z-index: 9999;
+  font-family: IBM Plex Mono, monospace;
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: .5;
+  position: fixed;
+}
+
+.hp-tr {
+  top: 1rem;
+  right: 1rem;
+}
+
+.hp-bl {
+  bottom: 1rem;
+  left: 1rem;
+}
+
+.hero-title {
+  z-index: 10;
+  margin: 10vh 0 0;
+  font-family: EB Garamond, serif;
+  font-size: clamp(5rem, 15vw, 12rem);
+  line-height: .85;
+  position: relative;
+}
+
+.hero-title span {
+  display: block;
+}
+
+.hero-title-underline {
+  text-underline-offset: 8px;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.hero-label {
+  background-color: var(--white);
+  color: var(--blue);
+  z-index: 10;
+  margin-top: 2rem;
+  padding: .2rem .5rem;
+  font-family: IBM Plex Mono, monospace;
+  font-size: 1.2rem;
+  display: inline-block;
+  position: relative;
+}
+
+.hero-graphic {
+  background: var(--blue);
+  mix-blend-mode: color-burn;
+  z-index: 1;
+  border-radius: 40% 60% 70% 30% / 40% 50% 60%;
+  width: 60vw;
+  max-width: 800px;
+  height: 60vw;
+  max-height: 800px;
+  position: absolute;
+  bottom: -10%;
+  right: 5%;
+}
+
+.sec-yellow {
+  background-color: var(--yellow);
+  color: var(--black);
+  padding: 10rem 2rem;
+  position: relative;
+}
+
+.giant-bg-text {
+  letter-spacing: -.05em;
+  z-index: 1;
+  margin: 0;
+  font-size: 35vw;
+  font-weight: 900;
+  line-height: .75;
+  position: absolute;
+  top: 0;
+  left: -2vw;
+}
+
+.yellow-content {
+  z-index: 10;
+  background: var(--black);
+  color: var(--white);
+  width: 90%;
+  max-width: 600px;
+  margin-top: 15vw;
+  margin-left: auto;
+  padding: 3rem;
+  position: relative;
+}
+
+.yellow-content p {
+  margin: 0;
+  font-family: EB Garamond, serif;
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+.sec-black {
+  background-color: var(--black);
+  color: var(--white);
+  padding: 5rem 2rem;
+  position: relative;
+}
+
+.floating-neon-box {
+  background-color: var(--neon);
+  color: var(--black);
+  z-index: 10;
+  width: 300px;
+  padding: 1.5rem;
+  font-family: IBM Plex Mono, monospace;
+  font-size: .9rem;
+  position: absolute;
+  top: 10%;
+  left: 5%;
+}
+
+.floating-neon-box h3 {
+  justify-content: space-between;
+  margin: 0 0 1rem;
+  font-size: 1.2rem;
+  display: flex;
+}
+
+.black-content {
+  max-width: 800px;
+  margin-top: 15vh;
+  margin-left: max(350px, 30%);
+}
+
+.black-content h2 {
+  margin-bottom: 2rem;
+  font-size: 3rem;
+}
+
+.sec-stripes {
+  flex-direction: column;
+  min-height: 100vh;
+  display: flex;
+  position: relative;
+}
+
+.stripe {
+  flex: 1;
+  align-items: center;
+  padding: 0 2rem;
+  display: flex;
+  position: relative;
+}
+
+.stripe-blue {
+  background-color: var(--blue);
+  color: var(--red);
+}
+
+.stripe-yellow {
+  background-color: var(--yellow);
+  color: var(--black);
+}
+
+.stripe-green {
+  background-color: var(--green);
+  color: var(--white);
+}
+
+.stripe-giant-text {
+  white-space: nowrap;
+  letter-spacing: -.02em;
+  pointer-events: none;
+  mix-blend-mode: color-dodge;
+  font-size: 15vw;
+  font-weight: 700;
+  position: absolute;
+  top: 20%;
+}
+
+.stripe-content {
+  z-index: 10;
+  max-width: 800px;
+  padding: 2rem;
+  font-family: IBM Plex Mono, monospace;
+  font-size: 1.2rem;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.stripe-link {
+  color: inherit;
+  border-bottom: 2px solid;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.stripe-link:hover {
+  background-color: var(--black);
+  color: var(--white);
+}
+
+.brutal-image-small {
+  mix-blend-mode: difference;
+  z-index: 5000;
+  width: 100%;
+  max-width: 40%;
+  height: auto;
+  margin: 1rem 0;
+  animation: 6s ease-in-out infinite brutalFloat;
+  display: block;
+}
+
+/*# sourceMappingURL=src_app_globals_91e4631d.css.map*/
