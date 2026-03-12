@@ -1,35 +1,36 @@
 export default function Publications() {
   return (
-    <main className="sec-page">
-      <h1>Publications</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.
-        Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies
-        sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius
-        a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy
-        molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.
-        Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium
-        a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra
-        tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede.
-        Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit
-        sodales. Vestibulum ante ipsum primis in faucibus orci luctus et
-        ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede
-        pellentesque fermentum. Maecenas adipiscing ante non diam.           
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.
-        Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies
-        sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius
-        a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy
-        molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.
-        Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium
-        a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra
-        tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede.
-        Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit
-        sodales. Vestibulum ante ipsum primis in faucibus orci luctus et
-        ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede
-        pellentesque fermentum. Maecenas adipiscing ante non diam.           
-      </p>
-    </main>
+    <main className="section-publications">
+    <h1 className="section-header">Publications & Projects</h1>
+    
+    <div className="index-container">
+        <div className="index-row">
+            <div className="index-meta">2026</div>
+            <div className="index-content">
+                <a href="#" className="index-title">The Dream Atlas</a>
+                <span className="index-author">Sheaf-Morrison, E.</span>
+                <span className="index-venue">MIT Dream Engineering Symposium</span>
+            </div>
+        </div>
+
+        <div className="index-row">
+            <div className="index-meta">2026</div>
+            <div className="index-content">
+                <a href="#" className="index-title">Embodied Cartographies</a>
+                <span className="index-author">Sheaf-Morrison, E.</span>
+                <span className="index-venue">Digital Experience / Website</span>
+            </div>
+        </div>
+
+        <div className="index-row">
+            <div className="index-meta">2025</div>
+            <div className="index-content">
+                <a href="#" className="index-title">Saving Screen Time</a>
+                <span className="index-author">Beattie, A., Sheaf-Morrison, E.</span>
+                <span className="index-venue">Research Project</span>
+            </div>
+        </div>
+    </div>
+</main>
   );
 }

@@ -290,3 +290,96 @@ body {
     /* Apply the animation: 6 seconds, smooth ease, loops forever */
     animation: brutalFloat 6s ease-in-out infinite;
 }
+
+/* --- PUBLICATIONS INDEX --- */
+.section-publications {
+    background-color: var(--off-white);
+    color: var(--blue);
+    padding: 10rem 5% 6rem;
+    min-height: 100vh;
+}
+
+.section-header {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4rem;
+    border-bottom: 4px solid var(--blue);
+    padding-bottom: 1rem;
+}
+
+.index-container {
+    width: 100%;
+    border-top: 2px solid var(--blue);
+}
+
+.index-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 2rem;
+    padding: 2.5rem 0;
+    border-bottom: 2px solid var(--blue);
+    align-items: baseline;
+    transition: background-color 0.2s ease;
+}
+
+/* Adds a faint blue background when hovering over the row */
+.index-row:hover {
+    background-color: rgba(0, 56, 255, 0.05); 
+}
+
+.index-meta {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.index-title {
+    display: block;
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    text-decoration: none;
+    color: var(--blue);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    transition: color 0.2s ease;
+}
+
+.index-row:hover .index-title {
+    color: var(--crimson);
+}
+
+.index-author, 
+.index-venue {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+    margin-top: 0.25rem;
+}
+
+.index-venue {
+    opacity: 0.7;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .section-publications {
+        padding-top: 8rem;
+    }
+    
+    .index-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        padding: 1.5rem 0;
+    }
+    
+    .index-meta {
+        margin-bottom: 0.5rem;
+        color: var(--crimson);
+    }
+}
