@@ -3,37 +3,23 @@ import Image from "next/image";
 export default function Home() {
   return (
     <>
-      <section className="sec-hero" style={{ position: "relative", overflow: "hidden" }}>
+      <section className="sec-hero">
         <div className="hero-plus hp-tr">+</div>
         <div className="hero-plus hp-bl">+</div>
 
-        
-
-        <div style={{ marginTop: "10vh", position: "relative", zIndex: 10 }}>
+        <div className="hero-content-wrapper">
           <Image
             src="/Images/Logo.svg"
             alt="Logo graphic"
             width={800}
             height={480}
-            style={{ width: "60%", maxWidth: "800px", height: "auto", display: "block" }}
             className="hero-logo"
           />
 
-          <div
-            className="hero-label"
-            style={{
-              marginLeft: "1%",
-              marginTop: "1.5rem",
-              backgroundColor: "var(--white)",
-              color: "var(--blue)",
-            }}
-          >
+          <div className="hero-label">
             a research project by Alex Beattie
           </div>
-          <div
-            className="stripe-content"
-            style={{ margin: "3em", transform: "translateX(-80%)" }}
-          >
+          <div className="stripe-content hero-intro-text">
             The project examines the benefits and challenges of connecting and
             disconnecting from the internet for people with ADHD, who may have
             different needs and preferences than neurotypical users.It draws
@@ -47,20 +33,11 @@ export default function Home() {
         alt="Slice graphic"
         width={500}
         height={500}
-        className="brutal-image-small"
-        style={{
-          position: "absolute",
-          bottom: 0,
-          right: 0,
-          width: "50%",
-          height: "auto",
-          transform: "translateY(10%)",
-          zIndex: 0,
-        }}
+        className="brutal-image-small brutal-image-slice"
       />
 
-      <section className="sec-yellow" style={{ position: "relative", overflow: "hidden" }}>
-        <h2 className="giant-bg-text" style={{ marginTop: "-.02em" }}>
+      <section className="sec-yellow">
+        <h2 className="giant-bg-text">
           ADHD
           <br />
           CRIP
@@ -90,10 +67,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div
-          className="black-content"
-          style={{ padding: "1rem 1rem", transform: "translateY(-20%)" }}
-        >
+        <div className="black-content">
           <h2>
             Often at the root of calls to disconnect is a fear of cognitive
             difference, becoming unproductive or anything other than what
@@ -105,16 +79,7 @@ export default function Home() {
           alt="Horse graphic"
           width={700}
           height={700}
-          className="brutal-image-small"
-          style={{
-            position: "absolute",
-            bottom: "-25%",
-            left: "3%",
-            width: "70%",
-            height: "auto",
-            zIndex: 9999,
-            mixBlendMode: "difference",
-          }}
+          className="brutal-image-small brutal-image-horse"
         />
       </section>
 

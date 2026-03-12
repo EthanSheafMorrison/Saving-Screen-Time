@@ -104,7 +104,8 @@ body {
     font-family: 'IBM Plex Mono', monospace;
     display: inline-block;
     padding: 0.2rem 0.5rem;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
+    margin-left: 1%;
     font-size: 1.2rem;
     position: relative;
     z-index: 10;
@@ -137,6 +138,7 @@ body {
     color: var(--black);
     padding: 10rem 2rem;
     position: relative;
+    overflow: hidden;
 }
 
 .giant-bg-text {
@@ -148,6 +150,7 @@ body {
     top: 0;
     left: -2vw;
     margin: 0;
+    margin-top: -0.02em;
     z-index: 1;
 }
 
@@ -203,6 +206,8 @@ body {
     margin-left: max(350px, 30%);
     margin-top: 15vh;
     max-width: 800px;
+    padding: 1rem;
+    transform: translateY(-20%);
 }
 
 .black-content h2 {
@@ -482,4 +487,114 @@ body {
     .team-hover-img {
         width: 80vw;
     }
+}
+@media (max-width: 768px) {
+    .nav-bar {
+        padding: 1.5rem;
+    }
+    .hero-intro-text {
+        transform: translateX(0);
+        margin: 3em 1em;
+    }
+    .black-content h2 {
+    font-size: 2rem;
+    }
+}
+
+/* --- DESKTOP HERO TEXT --- */
+.hero-intro-text {
+    margin: 3em;
+    transform: translateX(-30%); /* Reduced from -80% for better desktop balance */
+}
+
+/* --- MOBILE RESPONSIVE FIXES --- */
+@media (max-width: 768px) {
+    /* 1. Simplify the Navigation */
+    .nav-bar {
+        padding: 1.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+        position: relative; /* Un-fixes it so it scrolls naturally on mobile */
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: column; /* Stacks the links cleanly */
+        gap: 0.8rem;
+        width: 100%;
+    }
+
+    /* 2. Adjust the Hero Container */
+    .sec-hero {
+        padding: 1.5rem;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* 3. Fix the Main Logo */
+    .hero-logo {
+        width: 100% !important; /* Overrides the inline width */
+        margin-top: 1rem;
+    }
+
+    .hero-label {
+        font-size: 1rem;
+        margin-left: 0 !important; /* Aligns it flush left */
+    }
+
+    /* 4. Fix the Cut-Off Intro Text */
+    .hero-intro-text,
+    .stripe-content {
+        margin: 2rem 0 !important; 
+        transform: none !important; /* This stops the text from pushing off-screen */
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+        font-size: 1.1rem;
+    }
+
+    /* 5. Tame the Bottom Right Graphic */
+    .brutal-image-small {
+        width: 60% !important; /* Scales it down slightly */
+        bottom: 0 !important;
+        right: -5% !important;
+        opacity: 0.5; /* Fades it so overlapping text is still readable */
+    }
+}
+
+/* --- STYLES MOVED FROM INLINE --- */
+
+.hero-content-wrapper {
+  margin-top: 10vh;
+  position: relative;
+  z-index: 10;
+}
+
+.hero-logo {
+  width: 60%;
+  max-width: 800px;
+  height: auto;
+  display: block;
+}
+
+.brutal-image-slice {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  height: auto;
+  transform: translateY(10%);
+  z-index: 0;
+}
+
+.brutal-image-horse {
+  position: absolute;
+  bottom: -25%;
+  left: 3%;
+  width: 70%;
+  height: auto;
+  z-index: 9999;
+  mix-blend-mode: difference;
 }
