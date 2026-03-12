@@ -27,14 +27,14 @@ export default function Home() {
             assumptions behind the concept of disconnecting.
           </div>
         </div>
+        <Image
+          src="/Images/slice1.png"
+          alt="Slice graphic"
+          width={500}
+          height={500}
+          className="brutal-image-small brutal-image-slice"
+        />
       </section>
-      <Image
-        src="/Images/slice1.png"
-        alt="Slice graphic"
-        width={500}
-        height={500}
-        className="brutal-image-small brutal-image-slice"
-      />
 
       <section className="sec-yellow">
         <h2 className="giant-bg-text">
