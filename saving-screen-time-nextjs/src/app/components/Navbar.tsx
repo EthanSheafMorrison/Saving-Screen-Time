@@ -7,9 +7,9 @@ export default function Navbar() {
         Saving Screen Time
       </Link>
       <div className="nav-links">
-        <Link href="/about">About</Link>
-        <Link href="/archive">Archive</Link>
-        <Link href="/contact">Contact</Link>
+        <Link href="/publications">Publications</Link>
+        <Link href="/team">Team</Link>
+        <Link href="/current-study">Current Study</Link>
       </div>
     </nav>
   );
