@@ -55,11 +55,11 @@ export default function Home() {
           width: "50%",
           height: "auto",
           transform: "translateY(10%)",
-          zIndex: 99,
+          zIndex: 0,
         }}
       />
 
-      <section className="sec-yellow">
+      <section className="sec-yellow" style={{ position: "relative", overflow: "hidden" }}>
         <h2 className="giant-bg-text" style={{ marginTop: "-.02em" }}>
           ADHD
           <br />
@@ -113,6 +113,7 @@ export default function Home() {
             width: "70%",
             height: "auto",
             zIndex: 9999,
+            mixBlendMode: "difference",
           }}
         />
       </section>
@@ -132,7 +133,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="stripe stripe-green">
+        <div className="stripe stripe-red">
           <div className="stripe-content">
             <a
               href="mailto:alex.beattie@vuw.ac.nz"

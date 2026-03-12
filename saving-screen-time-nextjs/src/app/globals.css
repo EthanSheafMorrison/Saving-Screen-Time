@@ -1,10 +1,10 @@
 /* CSS RESET & VARIABLES */
 :root {
-    --red: #ff0073;
-    --blue: #19267b;
-    --yellow: #FFE609;
-    --green: #00B939;
-    --neon: #FFE609;
+    --red: #ff0000;
+    --blue: #0F29EC;
+    --yellow: #E7FF00;
+    --green: #E7FF00;
+    --neon: #E7FF00;
     --black: #050505;
     --white: #CFCCD3;
 }
@@ -229,6 +229,7 @@ body {
 .stripe-blue { background-color: var(--blue); color: var(--red); }
 .stripe-yellow { background-color: var(--yellow); color: var(--black); }
 .stripe-green { background-color: var(--green); color: var(--white); }
+.stripe-red { background-color: var(--red); color: var(--white); }
 
 .stripe-giant-text {
     position: absolute;
@@ -284,7 +285,7 @@ body {
     height: auto;          
     display: block;        
     margin: 1rem 0;        
-    mix-blend-mode: difference; /* Adds a harsh ink-like interaction with the background */
+    
     z-index: 5000;
     
     /* Apply the animation: 6 seconds, smooth ease, loops forever */
