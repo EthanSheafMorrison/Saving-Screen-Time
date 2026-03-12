@@ -383,3 +383,102 @@ body {
         color: var(--crimson);
     }
 }
+
+/* --- TEAM INTERACTIVE MENU --- */
+.section-team {
+    background-color: var(--cobalt);
+    color: var(--off-white);
+    padding: 10rem 5% 8rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.team-header {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4rem;
+    border-bottom: 4px solid var(--off-white);
+    padding-bottom: 1rem;
+}
+
+.team-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.team-member {
+    position: relative;
+    border-bottom: 1px solid rgba(240, 240, 240, 0.3);
+    padding: 3rem 0;
+    cursor: crosshair;
+}
+
+.team-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(4rem, 9vw, 12rem);
+    font-weight: 700;
+    margin: 0;
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+    transition: color 0.2s ease, transform 0.3s ease;
+}
+
+.team-role {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.25rem;
+    margin-top: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+}
+
+/* Base state for the hover image */
+.team-hover-img {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    width: 35vw;
+    min-width: 300px;
+    max-width: 500px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    
+    /* CSS filters to create a high-contrast brutalist effect */
+    filter: grayscale(100%) contrast(150%);
+    mix-blend-mode: screen; 
+}
+
+/* Hover states applied when hovering over the parent container */
+.team-member:hover .team-name {
+    color: var(--mustard);
+    transform: translateX(2%);
+}
+
+.team-member:hover .team-hover-img {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .section-team {
+        padding-top: 8rem;
+    }
+    
+    .team-member:hover .team-name {
+        transform: translateX(0); /* Removes the text shift on mobile */
+    }
+    
+    .team-hover-img {
+        width: 80vw;
+    }
+}
