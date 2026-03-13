@@ -529,16 +529,19 @@ body {
         position: relative;
         z-index: 9000;
         background-color: #000;
+        
     }
 
     .nav-menu {
         display: block;
         color: #000;
         position: relative;
+        mix-blend-mode: normal;
     }
 
     .nav-links {
         display: none;
+        
     }
     
     .nav-menu > .nav-links {
@@ -554,7 +557,7 @@ body {
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
-        background-color: var(--black);
+        background-color: var(--white);
         position: absolute;
         top: calc(100% + 1rem);
         right: 0;
@@ -562,6 +565,7 @@ body {
         border: 2px solid var(--white);
         width: max-content;
         z-index: 100;
+        mix-blend-mode: normal;
     }
 
     .hamburger-button {
