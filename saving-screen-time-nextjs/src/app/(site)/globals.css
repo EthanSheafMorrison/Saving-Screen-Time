@@ -505,7 +505,7 @@ body {
     }
     .hero-intro-text {
         transform: translateX(0);
-        margin: 3em 1em;
+        margin: 3em 3em;
     }
     .black-content h2 {
     font-size: 2rem;
@@ -515,7 +515,7 @@ body {
 /* --- DESKTOP HERO TEXT --- */
 .hero-intro-text {
     margin: 3em;
-    transform: translateX(-30%); /* Reduced from -80% for better desktop balance */
+    transform: translateX(-50%); /* Reduced from -80% for better desktop balance */
 }
 
 /* --- MOBILE RESPONSIVE FIXES --- */
@@ -568,6 +568,16 @@ body {
         mix-blend-mode: normal;
     }
 
+    /* Forces the links to be visible against the white dropdown background */
+    .nav-menu .nav-links.open a {
+        color: var(--black); /* Or var(--blue) if you prefer */
+        display: block;      /* Ensures the whole line is clickable */
+    }
+
+    .nav-menu .nav-links.open a:hover {
+        border-bottom-color: var(--black);
+    }
+
     .hamburger-button {
         flex-direction: column;
         justify-content: space-around;
@@ -589,17 +599,6 @@ body {
         transform-origin: 1px;
     }
     
-    .hamburger-button.open span:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px);
-    }
-
-    .hamburger-button.open span:nth-child(2) {
-        opacity: 0;
-    }
-
-    .hamburger-button.open span:nth-child(3) {
-        transform: rotate(-45deg) translate(7px, -7px);
-    }
 
     /* 2. Adjust the Hero Container */
     .sec-hero {
