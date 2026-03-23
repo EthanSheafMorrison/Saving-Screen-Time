@@ -56,6 +56,7 @@ export default function StudyPage() {
           <a href="#help">Participate</a>
           <a href="#rights">Rights</a>
           <a href="#team">Team</a>
+          <Link href="/Studies">See all studies</Link>
         </div>
           <div className="hero-cta">
             <a href="mailto:alex.beattie@vuw.ac.nz" className="study-btn">
@@ -437,6 +438,8 @@ export default function StudyPage() {
           </div>
         </div>
       </section>
+
+      
 
       {/* FOOTER */}
       <footer className="study-footer">

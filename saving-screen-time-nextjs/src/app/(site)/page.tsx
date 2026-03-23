@@ -119,6 +119,14 @@ export default async function Home() {
           </div>
         </div>
 
+        <div className="stripe stripe-blue">
+          <div className="stripe-content">
+            <a href={homepageData?.studyLink || "Study"} className="stripe-link">
+              { "Join the Study"}
+            </a>
+          </div>
+        </div>
+
         <div className="stripe stripe-red">
           <div className="stripe-content">
             <a href={`mailto:${homepageData?.contactEmail || "alex.beattie@vuw.ac.nz"}`} className="stripe-link">
@@ -126,6 +134,9 @@ export default async function Home() {
             </a>
           </div>
         </div>
+        
+
+
       </section>
     </>
   );

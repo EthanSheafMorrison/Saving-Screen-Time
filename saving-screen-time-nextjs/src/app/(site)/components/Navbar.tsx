@@ -27,7 +27,7 @@ export default function Navbar() {
         <div className={`nav-links ${isOpen ? "open" : ""}`}>
           <Link href="/publications" onClick={closeMenu}>Publications</Link>
           <Link href="/team" onClick={closeMenu}>Team</Link>
-          <Link href="/current-study" onClick={closeMenu}>Current Study</Link>
+          <Link href="/Study" onClick={closeMenu}>Current Study</Link>
         </div>
       </div>
     </nav>
