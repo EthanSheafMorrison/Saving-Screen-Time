@@ -25,6 +25,13 @@ export default function SiteLayout({
       <body>
         <Navbar />
         {children}
+        <footer style={{ backgroundColor: 'var(--blue)', padding: '2rem', textAlign: 'center' }}>
+          <p style={{ fontSize: '0.8rem', color: 'var(--white)', margin: 0 }}>
+            Design by <a href="https://ethansheaf.com" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--white)', textDecoration: 'underline' }}>
+              Ethan Sheaf
+            </a>
+          </p>
+        </footer>
         <Script src="/grained.min.js" strategy="beforeInteractive" />
       </body>
     </html>
