@@ -29,5 +29,11 @@ export const teamMemberType = defineType({
         hotspot: true, // Allows Alex to crop the image inside Sanity
       }
     }),
+    defineField({
+      name: 'link',
+      title: 'Professional Link (Optional)',
+      type: 'url',
+      description: 'A link to a personal website, LinkedIn, or other professional profile.'
+    }),
   ],
 })
