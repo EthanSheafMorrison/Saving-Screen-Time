@@ -202,7 +202,7 @@ body {
     position: absolute;
     top: 10%;
     left: 5%;
-    z-index: 10;
+    z-index: 6; /* Maybe remove */
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.9rem;
 }
@@ -220,6 +220,9 @@ body {
     max-width: 800px;
     padding: 1rem;
     transform: translateY(-20%);
+    /* Add these two lines to pull the text above the horse */
+    position: relative;
+    z-index: 10000;
 }
 
 .black-content 
@@ -305,7 +308,7 @@ body {
     display: block;        
     margin: 1rem 0;        
     
-    z-index: 5000;
+    z-index: 1;
     
     /* Apply the animation: 6 seconds, smooth ease, loops forever */
     animation: brutalFloat 6s ease-in-out infinite;
@@ -512,13 +515,30 @@ body {
     }
     .black-content h2 {
     font-size: 2rem;
+    position: relative;
+    z-index: 10000;
     }
 }
+
+
 
 /* --- DESKTOP HERO TEXT --- */
 .hero-intro-text {
     margin: 3em;
     transform: translateX(-50%); /* Reduced from -80% for better desktop balance */
+}
+
+/* The actual highlight lives here, on the inline span */
+.hero-intro-text 
+
+.text-highlight {
+    display: inline;
+    background-color: var(--blue);
+    box-shadow: 6px 0 0 var(--blue), -6px 0 0 var(--blue);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    line-height: 2;
+    z-index: 9999;
 }
 
 /* --- MOBILE RESPONSIVE FIXES --- */
@@ -651,30 +671,69 @@ body {
         padding: 4rem 1.5rem; 
     }
 
-    .floating-neon-box {
-        position: relative; /* Stops it from floating over the text */
-        width: 100%;
-        top: 0;
-        left: 0;
-        margin-bottom: 2rem; /* Adds space between the box and the text */
-        box-sizing: border-box;
-    }
+/* 1. Container — transparent, NO z-index (don't create a stacking context) */
+.floating-neon-box {
+    background-color: transparent; /* ← remove the neon bg from the container itself */
+    color: var(--black);
+    width: 300px;
+    padding: 1.5rem;
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.9rem;
+    /* NO z-index here — this keeps ::before and h3/p in the same stacking context */
+}
+.floating-neon-box .text-highlight {
+    display: inline;
+    background-color: var(--neon);
+    box-shadow: 6px 0 0 var(--neon), -6px 0 0 var(--neon);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    line-height: 1.8;
+    position: relative;
+    z-index: 6; /* keeps text above the horse */
+}
 
-    .black-content {
-        margin-left: 0; /* Removes the massive 350px desktop margin */
-        margin-top: 0;
-        transform: none !important; /* Overrides the inline translateY(-20%) */
-        width: 100%;
-    }
+/* 2. Yellow box — sits BEHIND the horse */
+.floating-neon-box::before {
+    content: "";
+    position: absolute;
+    inset: 0; /* shorthand for top/right/bottom/left: 0 */
+    background-color: var(--neon);
+    z-index: 6; /* below the horse */
+}
 
-    /* 7. Adjust Hero Plus Icons */
-    .hero-plus {
-        position:   fixed;
-        z-index: 2000;
-    }
-    .hp-tr {
-        top: 2rem;
-    }
+/* 3. Text — floats ABOVE the horse */
+.floating-neon-box h3,
+.floating-neon-box p {
+    position: relative;
+    z-index: 6; /* above the horse */
+}
+
+/* 4. Heading highlight */
+.floating-neon-box h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.2rem;
+    display: block;
+    background-color: var(--neon);
+}
+
+.floating-neon-box h3 span {
+    float: right;
+}
+
+/* 5. Per-line paragraph highlight — above the horse, neon bg included */
+.floating-neon-box p {
+    display: inline;
+    background-color: var(--neon);
+    box-shadow: 4px 0 0 var(--neon), -4px 0 0 var(--neon);
+    line-height: 1.8;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    position: relative;
+    z-index: 6;
+}
 }
 
 /* --- STYLES MOVED FROM INLINE --- */
@@ -708,7 +767,7 @@ body {
   left: 3%;
   width: 70%;
   height: auto;
-  z-index: 9999;
+  z-index: 1;
   mix-blend-mode: difference;
 }
 

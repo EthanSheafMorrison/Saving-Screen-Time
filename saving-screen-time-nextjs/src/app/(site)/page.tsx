@@ -39,7 +39,9 @@ export default async function Home() {
           </div>
           
           <div className="stripe-content hero-intro-text">
-            {homepageData?.heroIntro || "Loading introduction..."}
+            <span className="text-highlight">
+              {homepageData?.heroIntro || "Loading introduction..."}
+            </span>
           </div>
         </div>
 
@@ -76,9 +78,16 @@ export default async function Home() {
       <section className="sec-black">
         <div className="floating-neon-box">
           <h3>
-            {homepageData?.neonBoxHeading || "Crip Time"} <span>✕</span>
+            <span className="text-highlight" style={{ zIndex: "6" }}>
+              {homepageData?.neonBoxHeading || "Crip Time"}
+            </span>
+            <span>✕</span>
           </h3>
-          <p>{homepageData?.neonBoxBody}</p>
+          <p>
+            <span className="text-highlight" style={{ zIndex: "6" }}>
+              {homepageData?.neonBoxBody}
+            </span>
+          </p>
         </div>
 
         <div
@@ -100,7 +109,7 @@ export default async function Home() {
             left: "3%",
             width: "70%",
             height: "auto",
-            zIndex: 9999,
+            zIndex: 5,
             mixBlendMode: "difference",
           }}
         />
