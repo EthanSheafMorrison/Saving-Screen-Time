@@ -27,6 +27,7 @@ export default async function TeamPage() {
   return (
     <main className="section-publications">
       <h1 className="section-header">Our Team</h1>
+      <h2 className="section-subheader">Meet the researchers and team members behind Saving Screentime.</h2>
 
       <div className="index-container">
         {teamMembers.map((member) => (
