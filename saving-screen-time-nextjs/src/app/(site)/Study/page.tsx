@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import Link from "next/link";
+import Script from "next/script";
 
 export default function StudyPage() {
   useEffect(() => {
@@ -59,8 +60,13 @@ export default function StudyPage() {
           <Link href="/Studies">See all studies</Link>
         </div>
           <div className="hero-cta">
-            <a href="mailto:alex.beattie@vuw.ac.nz" className="study-btn">
-              Join the Study ↗
+            <a
+              href="https://luma.com/event/evt-2wOktzcujLoeMsV"
+              className="study-btn"
+              data-luma-action="checkout"
+              data-luma-event-id="evt-2wOktzcujLoeMsV"
+            >
+              Register for Study ↗
             </a>
             <a href="#aim" className="study-btn">
               Learn More ↓
@@ -440,6 +446,27 @@ export default function StudyPage() {
       </section>
 
       
+
+      {/* EVENT REGISTER */}
+      <section className="event-register">
+        <div className="section-inner">
+          <div className="reveal">
+            <div className="section-label">Upcoming session</div>
+            <div className="section-title">Register for a <em>Story Party</em></div>
+            <div style={{ marginTop: "32px" }}>
+              <a
+                href="https://luma.com/event/evt-2wOktzcujLoeMsV"
+                className="study-btn"
+                data-luma-action="checkout"
+                data-luma-event-id="evt-2wOktzcujLoeMsV"
+              >
+                Register for Event
+              </a>
+            </div>
+          </div>
+        </div>
+        <Script id="luma-checkout" src="https://embed.lu.ma/checkout-button.js" strategy="afterInteractive" />
+      </section>
 
       {/* FOOTER */}
       <footer className="study-footer">
