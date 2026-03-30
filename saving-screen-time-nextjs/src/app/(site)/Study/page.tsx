@@ -5,6 +5,24 @@ import Link from "next/link";
 import Script from "next/script";
 
 export default function StudyPage() {
+  const scrollTo = (id: string) => {
+    const target = document.getElementById(id);
+    if (!target) return;
+    const start = window.scrollY;
+    const end = target.getBoundingClientRect().top + start;
+    const duration = 1200;
+    let startTime: number | null = null;
+    const easeInOut = (t: number) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+    const step = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      window.scrollTo(0, start + (end - start) * easeInOut(progress));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+
   useEffect(() => {
     // Scroll reveal
     const reveals = document.querySelectorAll(".reveal");
@@ -53,10 +71,10 @@ export default function StudyPage() {
             their stories.
           </p>
         <div className="nav-links">
-          <a href="#aim">Aim</a>
-          <a href="#help">Participate</a>
-          <a href="#rights">Rights</a>
-          <a href="#team">Team</a>
+          <a href="#aim" onClick={(e) => { e.preventDefault(); scrollTo("aim"); }}>Aim</a>
+          <a href="#help" onClick={(e) => { e.preventDefault(); scrollTo("help"); }}>Participate</a>
+          <a href="#rights" onClick={(e) => { e.preventDefault(); scrollTo("rights"); }}>Rights</a>
+          <a href="#team" onClick={(e) => { e.preventDefault(); scrollTo("team"); }}>Team</a>
           <Link href="/Studies">See all studies</Link>
         </div>
           <div className="hero-cta">
@@ -68,7 +86,7 @@ export default function StudyPage() {
             >
               Register for Study ↗
             </a>
-            <a href="#aim" className="study-btn">
+            <a href="#aim" className="study-btn" onClick={(e) => { e.preventDefault(); scrollTo("aim"); }}>
               Learn More ↓
             </a>
           </div>
@@ -383,6 +401,9 @@ export default function StudyPage() {
                 Victoria University of Wellington — Te Herenga Waka
               </div>
             </div>
+          </div>
+          <div style={{ marginTop: "40px", textAlign: "center" }}>
+            <Link href="/team" className="study-btn">Meet the Full Team</Link>
           </div>
         </div>
       </section>
