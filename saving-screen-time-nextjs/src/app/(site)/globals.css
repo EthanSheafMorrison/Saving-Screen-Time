@@ -518,6 +518,12 @@ body {
     position: relative;
     z-index: 10000;
     }
+    .black-content {
+        margin-left: 0;
+        transform: none;
+        margin-top: 2rem;
+        padding: 1rem 0;
+    }
 }
 
 
@@ -626,7 +632,8 @@ body {
     /* 2. Adjust the Hero Container */
     .sec-hero {
         padding: 1.5rem;
-        min-height: 100vh;
+        min-height: auto;
+        padding-bottom: 4rem;
         display: flex;
         flex-direction: column;
     }
@@ -675,13 +682,16 @@ body {
 .floating-neon-box {
     background-color: transparent; /* ← remove the neon bg from the container itself */
     color: var(--black);
-    width: 300px;
+    width: 100%;
+    max-width: 100%;
     padding: 1.5rem;
-    position: absolute;
-    top: 10%;
-    left: 5%;
+    position: relative;
+    top: auto;
+    left: auto;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.9rem;
+    margin-bottom: 2rem;
+    box-sizing: border-box;
     /* NO z-index here — this keeps ::before and h3/p in the same stacking context */
 }
 .floating-neon-box .text-highlight {
@@ -734,6 +744,24 @@ body {
     position: relative;
     z-index: 6;
 }
+
+    /* 7. Fix DISCONNECT text overflow */
+    .stripe-giant-text {
+        font-size: clamp(2rem, 10vw, 5rem);
+        overflow: hidden;
+        width: 100%;
+        white-space: nowrap;
+    }
+
+    .sec-stripes {
+        overflow: hidden;
+    }
+
+    /* 8. Reduce empty stripe heights */
+    .stripe {
+        min-height: 15vh;
+        padding: 2rem;
+    }
 }
 
 /* --- STYLES MOVED FROM INLINE --- */
