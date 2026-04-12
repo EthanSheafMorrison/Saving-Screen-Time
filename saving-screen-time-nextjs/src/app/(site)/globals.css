@@ -549,6 +549,8 @@ body {
 
 /* --- MOBILE RESPONSIVE FIXES --- */
 @media (max-width: 768px) {
+    .hero-plus { display: none; }
+
     /* 1. Simplify the Navigation */
     .nav-bar {
         padding: 1.5rem;
@@ -558,13 +560,12 @@ body {
         position: relative;
         z-index: 9000;
         background-color: #000;
-        
+        mix-blend-mode: normal;
     }
 
     .nav-menu {
         display: block;
         color: #000;
-        position: relative;
         mix-blend-mode: normal;
     }
 
@@ -586,25 +587,25 @@ body {
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
-        background-color: var(--white);
+        background-color: #000;
         position: absolute;
-        top: calc(100% + 1rem);
-        right: 0;
+        top: 100%;
+        left: 0;
         padding: 2rem;
-        border: 2px solid var(--white);
-        width: max-content;
+        width: 100%;
+        box-sizing: border-box;
         z-index: 100;
         mix-blend-mode: normal;
     }
 
-    /* Forces the links to be visible against the white dropdown background */
     .nav-menu .nav-links.open a {
-        color: var(--black); /* Or var(--blue) if you prefer */
-        display: block;      /* Ensures the whole line is clickable */
+        color: var(--white);
+        display: block;
+        font-size: 1.25rem;
     }
 
     .nav-menu .nav-links.open a:hover {
-        border-bottom-color: var(--black);
+        border-bottom-color: var(--white);
     }
 
     .hamburger-button {
