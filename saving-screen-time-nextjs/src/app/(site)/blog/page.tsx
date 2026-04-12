@@ -1,5 +1,5 @@
 import { client } from "../../../sanity/lib/client";
-import { PortableText } from "@portabletext/react";
+import Link from "next/link";
 
 export const revalidate = 60;
 
@@ -9,13 +9,13 @@ interface BlogPost {
   author?: string;
   date?: string;
   excerpt?: string;
-  body?: unknown[];
+  slug?: { current: string };
   link?: string;
 }
 
 export default async function BlogPage() {
   const posts: BlogPost[] = await client.fetch(
-    `*[_type == "blogPost"] | order(date desc)`
+    `*[_type == "blogPost"] | order(date desc){ _id, title, author, date, excerpt, slug, link }`
   );
 
   return (
@@ -32,24 +32,18 @@ export default async function BlogPage() {
                 <a href={post.link} target="_blank" rel="noopener noreferrer" className="index-title">
                   {post.title}
                 </a>
+              ) : post.slug?.current ? (
+                <Link href={`/blog/${post.slug.current}`} className="index-title">
+                  {post.title}
+                </Link>
               ) : (
                 <span className="index-title">{post.title}</span>
               )}
               {post.author && (
                 <span className="index-author">{post.author}</span>
               )}
-              {post.excerpt && !post.body && (
+              {post.excerpt && (
                 <p style={{ marginTop: "0.5rem", lineHeight: "1.5", textTransform: "none" }}>{post.excerpt}</p>
-              )}
-              {post.body && (post.body as unknown[]).length > 0 && (
-                <details style={{ marginTop: "0.75rem", textTransform: "none" }}>
-                  <summary style={{ cursor: "pointer", fontWeight: "bold", textDecoration: "underline" }}>
-                    Read More
-                  </summary>
-                  <div style={{ marginTop: "0.5rem", lineHeight: "1.6" }}>
-                    <PortableText value={post.body as Parameters<typeof PortableText>[0]["value"]} />
-                  </div>
-                </details>
               )}
             </div>
           </div>
