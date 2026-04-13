@@ -496,9 +496,17 @@ body {
     .section-team {
         padding-top: 8rem;
     }
-    
+
     .team-member:hover .team-name {
         transform: translateX(0); /* Removes the text shift on mobile */
+    }
+
+    .team-member-image {
+        display: none;
+    }
+
+    .team-member-bio {
+        max-width: 100% !important;
     }
     
     .team-hover-img {
@@ -731,7 +739,8 @@ body {
 }
 
 .floating-neon-box h3 span {
-    float: right;
+    float: none;
+    display: block;
 }
 
 /* 5. Per-line paragraph highlight — above the horse, neon bg included */
