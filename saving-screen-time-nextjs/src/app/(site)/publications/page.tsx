@@ -19,7 +19,7 @@ export default async function Publications() {
   return (
     <main className="section-publications">
       <h1 className="section-header">Publications & Projects</h1>
-      <h2 className="section-subheader">Peer-reviewed publications and research projects from the team.</h2>
+      <h2 className="section-subheader">Publications and research projects from the team.</h2>
 
       <div className="index-container">
         {publications.map((pub) => (

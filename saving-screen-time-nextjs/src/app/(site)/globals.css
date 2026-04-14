@@ -46,6 +46,17 @@
     display: none;
 }
 
+.home-link {
+  display: flex;
+  align-items: center; /* Centres the icon and text vertically */
+  gap: 0.5rem; /* Adds space between the icon and the text */
+  text-decoration: none;
+}
+.home-link svg {
+  margin-right: 0.5rem; /* adjust as needed */
+}
+
+
 html, body {
     max-width: 100vw;
     overflow-x: hidden;
@@ -251,17 +262,11 @@ body {
 .stripe-red { background-color: var(--red); color: var(--white); }
 
 .stripe-giant-text {
-    /* position: absolute; */
-    /* padding: 6rem 2rem; */
     font-size: clamp(3.5rem, 18vw, 18rem);
     font-weight: 900;
     text-align: center;
-    /* white-space: nowrap; */
     letter-spacing: -0.02em;
     pointer-events: none;
-   mix-blend-mode: color-dodge;
-    /* opacity: 0.25; */
-    /* top: 20%; */
 }
 
 .stripe-content {
@@ -281,6 +286,8 @@ body {
     border-bottom: 2px solid currentColor;
     font-weight: 600;
 }
+.stripe-blue .stripe-link { color: var(--yellow); }
+.stripe-red .stripe-link { color: var(--black); }
 .stripe-link:hover {
     background-color: var(--black);
     color: var(--white);
@@ -963,7 +970,7 @@ body {
 .section-label {
   font-size: 0.68rem; font-weight: 800;
   letter-spacing: 0.25em; text-transform: uppercase;
-  margin-bottom: 12px; opacity: 0.65;
+  margin-bottom: 12px;
 }
 .section-title {
   font-size: clamp(2.2rem, 4vw, 3.8rem);
@@ -1162,22 +1169,24 @@ body {
   border-bottom: 2px solid currentColor;
 }
 .blog-back-link {
+  position: relative;
+  z-index: 3;
   display: inline-block;
   margin-bottom: 24px;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  text-decoration: none;
-  opacity: 0.7;
+  text-decoration: underline;
+  opacity: 1;
+  cursor: pointer;
   transition: opacity 0.15s;
 }
-.blog-back-link:hover { opacity: 1; }
+.blog-back-link:hover { opacity: 0.75; }
 .blog-post-excerpt {
   font-size: 1.15rem;
   line-height: 1.55;
   max-width: 700px;
-  opacity: 0.85;
 }
 
 .blog-post-section {
@@ -1199,4 +1208,146 @@ body {
 
 /* ── SCROLL ANIMATIONS ── */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.55s ease, transform 0.55s ease; }
+
+/* ── NAV HIT-TEST FIX ──
+   Nav-bar has 48px padding and sits over the page. Without this, the empty
+   padding area intercepts clicks on content below (e.g. the Back to Blog
+   button). Only the actual interactive elements should catch pointer events. */
+.nav-bar {
+  pointer-events: none;
+}
+.nav-bar a,
+.nav-bar button,
+.nav-bar input,
+.nav-bar form,
+.nav-bar .nav-dropdown-panel {
+  pointer-events: auto;
+}
+
+/* ── NAV LOGO (SVG image) ── */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+.nav-logo img {
+  display: block;
+  height: 28px;
+  width: auto;
+  max-width: 40vw;
+}
+
+/* ── NAV MEDIA DROPDOWN ── */
+.nav-dropdown {
+  position: relative;
+  display: inline-block;
+}
+.nav-dropdown-toggle {
+  background: transparent;
+  border: none;
+  color: var(--white);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1rem;
+  font-weight: 400;
+  cursor: pointer;
+  padding: 0;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s;
+  line-height: 1.5;
+}
+.nav-dropdown-toggle:hover,
+.nav-dropdown-toggle:focus-visible {
+  border-bottom: 2px solid var(--white);
+  outline: none;
+}
+.nav-dropdown-panel {
+  display: none;
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  background: var(--blue, #0F29EC);
+  border: 2px solid var(--white);
+  padding: 0.75rem 1rem;
+  min-width: 180px;
+  z-index: 9999;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.nav-dropdown-panel.open {
+  display: flex;
+}
+.nav-dropdown-panel a {
+  color: var(--white);
+  text-decoration: none;
+  padding: 0.25rem 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.95rem;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s;
+}
+.nav-dropdown-panel a:hover,
+.nav-dropdown-panel a:focus-visible {
+  border-bottom-color: var(--white);
+  outline: none;
+}
+
+/* ── NAV SEARCH ── */
+.nav-search {
+  display: flex;
+  align-items: center;
+  margin-left: 0.5rem;
+}
+.nav-search-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--white);
+  color: var(--white);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  padding: 0.25rem 0.25rem;
+  width: 140px;
+  outline: none;
+}
+.nav-search-input::placeholder {
+  color: var(--white);
+  opacity: 0.6;
+}
+.nav-search-input:focus {
+  border-bottom-color: var(--yellow, #E7FF00);
+}
+
+/* ── MOBILE OVERRIDES for nav dropdown + search ── */
+@media (max-width: 768px) {
+  .nav-menu .nav-links.open .nav-dropdown {
+    display: block;
+    width: 100%;
+  }
+  .nav-menu .nav-links.open .nav-dropdown-toggle {
+    display: none;
+  }
+  .nav-menu .nav-links.open .nav-dropdown-panel {
+    display: flex;
+    position: static;
+    border: none;
+    padding: 0;
+    background: transparent;
+    gap: 1.5rem;
+    min-width: 0;
+  }
+  .nav-menu .nav-links.open .nav-dropdown-panel a {
+    font-size: 1.25rem;
+    padding: 0;
+  }
+  .nav-menu .nav-links.open .nav-search {
+    margin: 0.5rem 0 0;
+    width: 100%;
+  }
+  .nav-menu .nav-links.open .nav-search-input {
+    width: 100%;
+    font-size: 1rem;
+  }
+  .nav-logo img {
+    height: 24px;
+  }
+}
 .reveal.visible { opacity: 1; transform: none; }

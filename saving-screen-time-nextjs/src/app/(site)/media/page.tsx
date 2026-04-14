@@ -19,7 +19,7 @@ export default async function MediaPage() {
 
   return (
     <main className="section-publications">
-      <h1 className="section-header">Media</h1>
+      <h1 className="section-header">Press</h1>
       <h2 className="section-subheader">Press coverage, podcasts, and other media featuring the team of Saving Screentime.</h2>
 
       <div className="index-container">

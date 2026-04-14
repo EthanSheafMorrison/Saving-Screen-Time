@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Script from "next/script";
 import Navbar from "./components/Navbar"; /* Make sure this path is correct */
 import "./globals.css"; /* Make sure this path is correct */
@@ -26,6 +27,11 @@ export default function SiteLayout({
         <Navbar />
         {children}
         <footer style={{ backgroundColor: 'var(--blue)', padding: '2rem', textAlign: 'center' }}>
+          <p style={{ fontSize: '0.9rem', color: 'var(--white)', margin: '0 0 0.75rem' }}>
+            <Link href="/" style={{ color: 'var(--white)', textDecoration: 'underline', fontWeight: 700 }}>
+              Return to Home
+            </Link>
+          </p>
           <p style={{ fontSize: '0.8rem', color: 'var(--white)', margin: 0 }}>
             Design by <a href="https://ethansheaf.com" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--white)', textDecoration: 'underline' }}>
               Ethan Sheaf
