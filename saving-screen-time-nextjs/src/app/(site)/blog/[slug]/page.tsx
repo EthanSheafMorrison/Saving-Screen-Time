@@ -1,7 +1,10 @@
 import { client } from "../../../../sanity/lib/client";
 import { PortableText } from "@portabletext/react";
+import type { PortableTextComponents } from "@portabletext/react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ScrollProgress from "./ScrollProgress";
+import SectionReveal from "./SectionReveal";
 
 export const revalidate = 60;
 
@@ -21,20 +24,36 @@ interface Block {
   children?: { text: string }[];
 }
 
-const sectionThemes = [
-  { bg: "var(--blue, #0F29EC)", fg: "var(--white, #CFCCD3)" },
-  { bg: "var(--yellow, #E7FF00)", fg: "var(--blue, #0F29EC)" },
-  { bg: "var(--white, #CFCCD3)", fg: "var(--blue, #0F29EC)" },
-  { bg: "var(--black, #050505)", fg: "var(--white, #CFCCD3)" },
-  { bg: "var(--red, #ff0000)", fg: "var(--white, #CFCCD3)" },
-];
+const portableComponents: PortableTextComponents = {
+  block: {
+    blockquote: ({ children }) => (
+      <figure className="blog-pullquote">
+        <blockquote>{children}</blockquote>
+      </figure>
+    ),
+  },
+};
 
-function groupByHeadings(blocks: Block[]): { heading: string | null; blocks: Block[] }[] {
+function slugify(s: string) {
+  return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+}
+
+function groupByHeadings(
+  blocks: Block[],
+  postTitle?: string
+): { heading: string | null; blocks: Block[] }[] {
   const groups: { heading: string | null; blocks: Block[] }[] = [];
+  const normalizedTitle = (postTitle ?? "").trim().toLowerCase();
 
   for (const block of blocks) {
-    if (block._type === "block" && (block.style === "h1" || block.style === "h2" || block.style === "h3")) {
+    if (
+      block._type === "block" &&
+      (block.style === "h1" || block.style === "h2" || block.style === "h3")
+    ) {
       const text = block.children?.map((c) => c.text).join("") || "";
+      if (groups.length === 0 && text.trim().toLowerCase() === normalizedTitle) {
+        continue; // skip: duplicate of the hero h1
+      }
       groups.push({ heading: text, blocks: [] });
     } else {
       if (groups.length === 0) {
@@ -63,10 +82,12 @@ export default async function BlogPostPage({
     notFound();
   }
 
-  const sections = post.body ? groupByHeadings(post.body as Block[]) : [];
+  const sections = post.body ? groupByHeadings(post.body as Block[], post.title) : [];
 
   return (
     <main className="blog-post">
+      <ScrollProgress />
+      <SectionReveal />
       {/* Hero section */}
       <section className="blog-post-hero">
         <div className="section-inner">
@@ -85,24 +106,19 @@ export default async function BlogPostPage({
 
       {/* Body sections grouped by headings */}
       {sections.map((section, i) => {
-        const theme = sectionThemes[i % sectionThemes.length];
         return (
-          <section
-            key={i}
-            className="blog-post-section"
-            style={{
-              background: theme.bg,
-              color: theme.fg,
-            }}
-          >
+          <section key={i} className="blog-post-section">
             <div className="section-inner">
               {section.heading && (
-                <h2 className="section-title">{section.heading}</h2>
+                <h2 id={slugify(section.heading)} className="section-title">
+                  {section.heading}
+                </h2>
               )}
               {section.blocks.length > 0 && (
                 <div className="blog-post-body">
                   <PortableText
                     value={section.blocks as Parameters<typeof PortableText>[0]["value"]}
+                    components={portableComponents}
                   />
                 </div>
               )}
