@@ -1278,12 +1278,15 @@ html { scroll-behavior: smooth; scroll-padding-top: 120px; }
 
 /* ── BLOG POST PULL QUOTE CALLOUT ── */
 .blog-pullquote {
-  margin: 56px -24px;
-  padding: 40px 32px;
+  /* break out of the 68ch body column to full viewport width */
+  position: relative;
+  /* left: 50%;
+  transform: translateX(-50%); */
+  /* width: 100vw; */
+  margin: 56px 0;
+  padding: 40px clamp(1.5rem, 4vw, 6rem);
   background: var(--yellow);
   color: var(--blue);
-  position: relative;
-  max-width: none;
 }
 .blog-pullquote blockquote {
   font-family: 'EB Garamond', Georgia, serif;
@@ -1292,8 +1295,8 @@ html { scroll-behavior: smooth; scroll-padding-top: 120px; }
   font-size: clamp(1.6rem, 1rem + 1.6vw, 2.4rem);
   line-height: 1.2;
   letter-spacing: -0.01em;
-  margin: 0;
-  max-width: 24ch;
+  margin: 0 auto;
+  max-width: min(68ch, 100%);
 }
 .blog-pullquote::before {
   content: "\201C";
@@ -1302,11 +1305,11 @@ html { scroll-behavior: smooth; scroll-padding-top: 120px; }
   line-height: 0.6;
   position: absolute;
   top: 32px;
-  left: -8px;
+  left: clamp(1rem, 3.5vw, 5.5rem);
   opacity: 0.25;
 }
 @media (min-width: 1024px) {
-  .blog-pullquote { margin: 72px -48px; padding: 56px 56px; }
+  .blog-pullquote { margin: 72px 0; padding: 56px clamp(1.5rem, 4vw, 6rem); }
 }
 
 /* ── BLOG POST BODY TYPOGRAPHY ── */
