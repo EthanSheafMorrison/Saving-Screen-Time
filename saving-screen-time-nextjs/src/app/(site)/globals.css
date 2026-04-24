@@ -1210,7 +1210,6 @@ body {
   font-family: 'EB Garamond', Georgia, serif;
   font-size: clamp(1.1rem, 0.95rem + 0.4vw, 1.35rem);
   line-height: 1.55;
-  max-width: 54ch;
 }
 
 .blog-post-section {
@@ -1231,7 +1230,6 @@ body {
   line-height: 1.02;
   letter-spacing: -0.015em;
   margin-bottom: 32px;
-  max-width: 18ch;
 }
 .blog-post-section .section-title {
   font-family: 'DM Sans', sans-serif;
@@ -1240,7 +1238,6 @@ body {
   line-height: 1.15;
   letter-spacing: -0.01em;
   margin-bottom: 28px;
-  max-width: 24ch;
   scroll-margin-top: 2rem;
 }
 .blog-post-section .section-title::before {
@@ -1319,12 +1316,8 @@ html { scroll-behavior: smooth; scroll-padding-top: 120px; }
   font-size: clamp(1.05rem, 0.9rem + 0.4vw, 1.2rem);
   line-height: 1.7;
   font-weight: 400;
-  max-width: 68ch;
   overflow-wrap: break-word;
   hyphens: auto;
-}
-@media (min-width: 1440px) {
-  .blog-post-body { max-width: 72ch; }
 }
 .blog-post-body p { margin-top: 0; margin-bottom: 0; }
 .blog-post-body > p:first-of-type {
