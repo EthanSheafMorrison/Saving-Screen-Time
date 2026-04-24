@@ -1207,6 +1207,7 @@ body {
 }
 .blog-back-link:hover { opacity: 0.75; }
 .blog-post-excerpt {
+  font-family: 'EB Garamond', Georgia, serif;
   font-size: clamp(1.1rem, 0.95rem + 0.4vw, 1.35rem);
   line-height: 1.55;
   max-width: 54ch;
@@ -1314,6 +1315,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 120px; }
 
 /* ── BLOG POST BODY TYPOGRAPHY ── */
 .blog-post-body {
+  font-family: 'EB Garamond', Georgia, serif;
   font-size: clamp(1.05rem, 0.9rem + 0.4vw, 1.2rem);
   line-height: 1.7;
   font-weight: 400;
