@@ -2,9 +2,11 @@ import { client } from "../../../../sanity/lib/client";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextComponents } from "@portabletext/react";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import ScrollProgress from "./ScrollProgress";
 import SectionReveal from "./SectionReveal";
+import { urlFor } from "../../../../sanity/lib/image";
 
 export const revalidate = 60;
 
@@ -31,6 +33,26 @@ const portableComponents: PortableTextComponents = {
         <blockquote>{children}</blockquote>
       </figure>
     ),
+  },
+  types: {
+    image: ({ value }) => {
+      if (!value?.asset) return null;
+      const url = urlFor(value).width(1200).url();
+      return (
+        <figure className="blog-post-image">
+          <Image
+            src={url}
+            alt={value.alt ?? ""}
+            width={1200}
+            height={675}
+            style={{ width: "100%", height: "auto" }}
+          />
+          {value.caption && (
+            <figcaption className="blog-post-image-caption">{value.caption}</figcaption>
+          )}
+        </figure>
+      );
+    },
   },
 };
 
