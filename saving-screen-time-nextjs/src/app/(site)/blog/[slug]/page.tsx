@@ -6,6 +6,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import ScrollProgress from "./ScrollProgress";
 import SectionReveal from "./SectionReveal";
+import ShareButton from "./ShareButton";
 import { urlFor } from "../../../../sanity/lib/image";
 
 export const revalidate = 60;
@@ -123,6 +124,7 @@ export default async function BlogPostPage({
           {post.excerpt && (
             <p className="blog-post-excerpt">{post.excerpt}</p>
           )}
+          <ShareButton title={post.title} />
         </div>
       </section>
 

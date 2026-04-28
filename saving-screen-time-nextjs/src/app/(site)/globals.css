@@ -1313,19 +1313,13 @@ html { scroll-behavior: smooth; scroll-padding-top: 120px; }
 /* ── BLOG POST BODY TYPOGRAPHY ── */
 .blog-post-body {
   font-family: 'EB Garamond', Georgia, serif;
-  font-size: clamp(1.05rem, 0.9rem + 0.4vw, 1.2rem);
+  font-size: clamp(1.2rem, 1.05rem + 0.4vw, 1.45rem);
   line-height: 1.7;
-  font-weight: 400;
+  font-weight: 500;
   overflow-wrap: break-word;
   hyphens: auto;
 }
 .blog-post-body p { margin-top: 0; margin-bottom: 0; }
-.blog-post-body > p:first-of-type {
-  font-family: 'EB Garamond', Georgia, serif;
-  font-size: clamp(1.2rem, 1.05rem + 0.4vw, 1.45rem);
-  line-height: 1.5;
-  font-weight: 500;
-}
 .blog-post-body p + p { margin-top: 14px; }
 .blog-post-body strong {
   font-weight: 700;
@@ -1544,3 +1538,122 @@ body.blog-reveal-ready .blog-post-section.is-visible {
   }
 }
 .reveal.visible { opacity: 1; transform: none; }
+
+/* ── SHARE BUTTON & MODAL ── */
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  padding: 0.55rem 1.25rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--neon);
+  background: transparent;
+  border: 1px solid var(--neon);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.share-btn:hover {
+  background: var(--neon);
+  color: var(--black);
+}
+
+@keyframes share-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes share-slide-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.share-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: share-fade-in 0.18s ease;
+}
+
+.share-modal {
+  width: min(420px, 100% - 2rem);
+  background: var(--blue);
+  border: 1px solid rgba(207, 204, 211, 0.2);
+  border-radius: 10px;
+  padding: 1.5rem;
+  animation: share-slide-up 0.22s ease;
+}
+
+.share-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.share-modal-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--white);
+}
+
+.share-modal-close {
+  background: transparent;
+  border: none;
+  color: var(--white);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.1rem 0.3rem;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+.share-modal-close:hover { opacity: 1; }
+
+.share-divider {
+  height: 1px;
+  background: rgba(207, 204, 211, 0.15);
+  margin: 0.75rem 0;
+}
+
+.share-platform-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+  padding: 0.7rem 0.75rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.13s, color 0.13s;
+}
+.share-platform-btn:hover {
+  background: var(--neon);
+  color: var(--black);
+}
+
+.share-platform-icon { display: flex; align-items: center; flex-shrink: 0; }
+.share-platform-label { flex: 1; }
+.share-platform-arrow {
+  opacity: 0.5;
+  font-size: 0.9rem;
+  transition: opacity 0.13s;
+}
+.share-platform-btn:hover .share-platform-arrow { opacity: 1; }
