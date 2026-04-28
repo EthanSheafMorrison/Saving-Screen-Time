@@ -340,6 +340,61 @@ body {
     padding-bottom: 1rem;
 }
 
+.sort-controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 1rem;
+}
+
+.blog-search {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--blue);
+    background: transparent;
+    border: 2px solid var(--blue);
+    padding: 0.4rem 1rem;
+    outline: none;
+    width: 220px;
+    transition: border-color 0.2s ease;
+}
+
+.blog-search::placeholder {
+    color: var(--blue);
+    opacity: 0.5;
+}
+
+.blog-search:focus {
+    border-color: var(--blue);
+    background-color: rgba(0, 56, 255, 0.04);
+}
+
+/* Remove browser default search-input chrome */
+.blog-search::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+}
+
+.sort-toggle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--blue);
+    background: transparent;
+    border: 2px solid var(--blue);
+    padding: 0.4rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sort-toggle:hover {
+    background-color: var(--blue);
+    color: var(--off-white);
+}
+
 .index-container {
     width: 100%;
     border-top: 2px solid var(--blue);
