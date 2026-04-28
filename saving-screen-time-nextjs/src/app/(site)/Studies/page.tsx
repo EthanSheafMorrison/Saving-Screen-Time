@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { client } from "../../../sanity/lib/client";
 
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: "Studies",
+  description:
+    "Current and upcoming research studies exploring ADHD and digital technology use.",
+};
 
 interface Study {
   _id: string;

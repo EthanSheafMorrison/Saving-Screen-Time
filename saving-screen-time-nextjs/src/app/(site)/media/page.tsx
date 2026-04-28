@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import { client } from "../../../sanity/lib/client";
 
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: "Press",
+  description:
+    "Press coverage, podcasts, and media appearances related to the Saving Screen Time research.",
+};
 
 interface MediaItem {
   _id: string;

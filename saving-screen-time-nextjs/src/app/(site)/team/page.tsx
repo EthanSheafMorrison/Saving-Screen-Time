@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import { client } from "../../../sanity/lib/client";
 import TeamMemberRow from "./TeamMemberRow";
 
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: "Team",
+  description:
+    "Meet the researchers behind the Saving Screen Time project at Victoria University of Wellington.",
+};
 
 export interface TeamMember {
   _id: string;

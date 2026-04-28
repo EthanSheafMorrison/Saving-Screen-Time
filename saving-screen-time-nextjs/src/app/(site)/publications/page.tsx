@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import { client } from "../../../sanity/lib/client";
 
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: "Publications",
+  description:
+    "Academic papers, reports, and research outputs from the Saving Screen Time project.",
+};
 
 interface Publication {
   _id: string;

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { client } from "../../../../sanity/lib/client";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextComponents } from "@portabletext/react";
@@ -10,6 +11,46 @@ import ShareButton from "./ShareButton";
 import { urlFor } from "../../../../sanity/lib/image";
 
 export const revalidate = 60;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await client.fetch<{
+    title: string;
+    excerpt?: string;
+    date?: string;
+    imageUrl?: string;
+  } | null>(
+    `*[_type == "blogPost" && slug.current == $slug][0]{
+      title, excerpt, date,
+      "imageUrl": body[_type == "image"][0].asset->url
+    }`,
+    { slug }
+  );
+
+  if (!post) return {};
+
+  return {
+    title: post.title,
+    description: post.excerpt ?? undefined,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt ?? undefined,
+      type: "article",
+      publishedTime: post.date ?? undefined,
+      images: post.imageUrl ? [{ url: post.imageUrl }] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt ?? undefined,
+      images: post.imageUrl ? [post.imageUrl] : [],
+    },
+  };
+}
 
 interface BlogPost {
   _id: string;
@@ -109,6 +150,19 @@ export default async function BlogPostPage({
 
   return (
     <main className="blog-post">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: post.title,
+            datePublished: post.date,
+            author: post.author ? { "@type": "Person", name: post.author } : undefined,
+            description: post.excerpt,
+          }),
+        }}
+      />
       <ScrollProgress />
       <SectionReveal />
       {/* Hero section */}

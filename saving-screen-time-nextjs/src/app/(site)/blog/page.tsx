@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import { client } from "../../../sanity/lib/client";
 import BlogList, { BlogPost } from "./BlogList";
 
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: "Blog",
+  description:
+    "Research updates, reflections, and participant stories from the Saving Screen Time project.",
+};
 
 export default async function BlogPage() {
   const posts: BlogPost[] = await client.fetch(

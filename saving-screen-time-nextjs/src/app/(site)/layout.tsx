@@ -4,9 +4,26 @@ import Script from "next/script";
 import Navbar from "./components/Navbar"; /* Make sure this path is correct */
 import "./globals.css"; /* Make sure this path is correct */
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+
 export const metadata: Metadata = {
-  title: "Saving Screen Time",
-  description: "A research project by Alex Beattie",
+  title: {
+    default: "Saving Screen Time",
+    template: "%s | Saving Screen Time",
+  },
+  description:
+    "A research project exploring how people with ADHD navigate their relationship with digital technology and screen time.",
+  metadataBase: new URL(siteUrl),
+  openGraph: {
+    siteName: "Saving Screen Time",
+    type: "website",
+    locale: "en_NZ",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function SiteLayout({
@@ -38,6 +55,25 @@ export default function SiteLayout({
             </a>
           </p>
         </footer>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ResearchProject",
+              name: "Saving Screen Time",
+              description:
+                "A research project exploring how people with ADHD navigate their relationship with digital technology and screen time.",
+              url: siteUrl,
+              founder: { "@type": "Person", name: "Alex Beattie" },
+              funder: {
+                "@type": "Organization",
+                name: "Victoria University of Wellington",
+                alternateName: "Te Herenga Waka",
+              },
+            }),
+          }}
+        />
         <Script src="/grained.min.js" strategy="beforeInteractive" />
       </body>
     </html>
