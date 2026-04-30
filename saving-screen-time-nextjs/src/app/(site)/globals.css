@@ -1712,3 +1712,53 @@ body.blog-reveal-ready .blog-post-section.is-visible {
   transition: opacity 0.13s;
 }
 .share-platform-btn:hover .share-platform-arrow { opacity: 1; }
+
+/* Container for the tooltip */
+.tooltip-trigger {
+  position: relative;
+  text-decoration: underline dotted #3b82f6; /* Optional: adds a visual cue */
+  cursor: help;
+  font-weight: 600;
+}
+
+/* Tooltip bubble */
+.tooltip-trigger::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 125%; /* Position above the text */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 8px 12px;
+  /* border-radius: 6px; */
+  font-size: 0.85rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in-out;
+  z-index: 10;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Tooltip arrow */
+.tooltip-trigger::before {
+  content: "";
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* Show on hover */
+.tooltip-trigger:hover::after,
+.tooltip-trigger:hover::before {
+  opacity: 1;
+  visibility: visible;
+}

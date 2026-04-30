@@ -67,8 +67,7 @@ export default function StudyPage() {
             Got <span>ADHD</span> and a <em>smartphone?</em>
           </h1>
           <p className="study-sub">
-            Let's talk about screen time. We are looking for participants to share
-            their stories.
+            Let's talk about screen time. We are looking for participants to write short fictional stories based on prompts we provide.”
           </p>
         <div className="nav-links">
           <a href="#aim" onClick={(e) => { e.preventDefault(); scrollTo("aim"); }}>Aim</a>
@@ -106,18 +105,11 @@ export default function StudyPage() {
           <div className="reveal">
             <div className="aim-body">
               <p>
-                Not everyone experiences the internet the same way. This project
-                digs into the strategies used by people with ADHD when connecting
-                and disconnecting from screens — and how that shapes their sense
-                of time, productivity, and relationships. We want to understand
-                how <strong>you</strong> relate your ADHD to technology and
-                disconnection.
+                Not everyone experiences the internet the same way. This project explores how people with ADHD connect and disconnect from screens — and what that means for their sense of time, productivity, and relationships. We use story completion: short fictional prompts that you finish in your own words. This approach lets you engage with sensitive topics like ADHD and screen time at arm's length, so you only ever share what you feel comfortable sharing. We're interested in how you make sense of the relationship between ADHD and digital life.
               </p>
               <p>
                 This is a Marsden Fast Start research project led by Victoria
-                University of Wellington — Te Herenga Waka. The research draws on
-                disability studies to challenge ableist assumptions about what
-                "healthy" screen time looks like.
+                University of Wellington — Te Herenga Waka.
               </p>
             </div>
           </div>
@@ -132,11 +124,17 @@ export default function StudyPage() {
             Story Completion <em>Study</em>
           </div>
 
-          <div className="callout-box reveal">
-            You'll complete a series of story prompts — responses must be at
-            least <strong>1,000 words</strong>. You'll receive a{" "}
-            <strong>$30 gift card</strong> on completion.
-          </div>
+      <div className="callout-box reveal">
+        You'll complete a series of short fictional story prompts — each response is a made up story of at least{" "}
+        <span className="tooltip-trigger" data-tooltip="Roughly 150-200 words, or two short paragraphs.">
+          1,000 characters
+        </span>. 
+        You'll receive a <strong>$30 gift card</strong> on completion.
+        
+        <p className="step-body">
+          These stories can be loosely inspired by your life if you want, but they do not need to be a direct account of your own experiences.
+        </p>
+      </div>
 
           <div className="steps-grid">
             <div className="step-card reveal">
@@ -151,16 +149,14 @@ export default function StudyPage() {
               <div className="step-num">02</div>
               <div className="step-title">Story Prompts</div>
               <div className="step-body">
-                You'll be given prompts on key topics and asked to write stories
-                from your own experience.
+                You'll be given prompts on key topics and asked to write fictional stories about an imagined person with ADHD in these situations.
               </div>
             </div>
             <div className="step-card reveal">
               <div className="step-num">03</div>
-              <div className="step-title">Story Party</div>
+              <div className="step-title">Taking Part</div>
               <div className="step-body">
-                Sessions run online via Zoom. You can take breaks and skip any
-                prompt you're not comfortable with.
+                Take part in your own time online, or join us on Zoom — whichever works best for you.
               </div>
             </div>
           </div>
@@ -177,17 +173,16 @@ export default function StudyPage() {
           <div className="topics-grid">
             <div className="topic-item reveal">
               <span>01</span>
-              Experiencing productivity pressure &amp; managing screen time
+              Experiencing productivity pressure & managing screen time 
               <div className="topic-body">
-                How do you feel when you need to be productive online? What
-                happens to your screen time?
+                Imagine someone with ADHD who needs to be productive online. How do they feel? What happens to their screen time?
               </div>
             </div>
             <div className="topic-item reveal">
               <span>02</span>
               What it means to 'disconnect' — with or without digital media
               <div className="topic-body">
-                What does disconnecting mean to you? How do you actually do it?
+                What does disconnecting mean to this person? How do they actually do it?”
               </div>
             </div>
             <div className="topic-item reveal">
@@ -195,15 +190,14 @@ export default function StudyPage() {
               Benefits, challenges &amp; downsides of disconnecting from the
               internet
               <div className="topic-body">
-                When you go offline, what do you gain — and what do you lose?
+                When they go offline, what do they gain — and what do they lose?
               </div>
             </div>
             <div className="topic-item reveal">
               <span>04</span>
               How disconnecting affects your sense of time &amp; relationships
               <div className="topic-body">
-                Does stepping away change how time feels? How it affects the
-                people around you?
+                Does stepping away change how time feels for them? How does it affect the people around them?”
               </div>
             </div>
           </div>
@@ -250,10 +244,9 @@ export default function StudyPage() {
             </div>
             <div className="right-item reveal">
               <div className="right-num">Right 05</div>
-              <div className="right-title">Skip Any Prompt</div>
+              <div className="right-title">Choose Your Story</div>
               <div className="right-body">
-                You can choose not to answer any story prompt. There are no right
-                or wrong answers.
+                In each section, you’ll see two prompts. Read both and respond to the prompt you feel more compelled to — there are no right or wrong choices here.
               </div>
             </div>
             <div className="right-item reveal">
@@ -278,7 +271,9 @@ export default function StudyPage() {
               <div className="info-icon">✍</div>
               <div>
                 <div className="info-label">Story length</div>
-                <div className="info-text">At least 1,000 words per story</div>
+                <div className="info-text">At least <span className="tooltip-trigger" data-tooltip="Roughly 150-200 words, or two short paragraphs.">
+          1,000 characters
+        </span> per story</div>
                 <div className="info-sub">
                   You choose the content — every experience is valid.
                 </div>
@@ -299,11 +294,10 @@ export default function StudyPage() {
               <div>
                 <div className="info-label">Format</div>
                 <div className="info-text">
-                  Online via Zoom (Story Completion Party)
+                  How it works
                 </div>
                 <div className="info-sub">
-                  Video off and muted. Questions via Zoom Chat. Food and toilet
-                  breaks allowed.
+                  Complete the study in your own time online, or join a Zoom call if you'd prefer. Food and toilet breaks welcome.
                 </div>
               </div>
             </div>
