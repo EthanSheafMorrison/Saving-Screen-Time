@@ -271,11 +271,11 @@ export default function StudyPage() {
               <div className="info-icon">✍</div>
               <div>
                 <div className="info-label">Story length</div>
-                <div className="info-text">At least <span className="tooltip-trigger" data-tooltip="Roughly 150-200 words, or two short paragraphs.">
+                <div className="info-text">Write at least <span className="tooltip-trigger" data-tooltip="Roughly 150-200 words, or two short paragraphs.">
           1,000 characters
-        </span> per story</div>
+        </span> — or <span className="tooltip-trigger" data-tooltip="Roughly 1-2 minutes of speaking.">record an audio story</span> instead</div>
                 <div className="info-sub">
-                  You choose the content — every experience is valid.
+                  Type it out or speak it aloud — you choose the content and the format.
                 </div>
               </div>
             </div>
