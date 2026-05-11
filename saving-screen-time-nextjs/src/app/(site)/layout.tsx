@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import Navbar from "./components/Navbar"; /* Make sure this path is correct */
 import "./globals.css"; /* Make sure this path is correct */
 
@@ -77,6 +78,7 @@ export default function SiteLayout({
         />
         <Script src="/grained.min.js" strategy="beforeInteractive" />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
