@@ -31,9 +31,9 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
       );
     })
     .sort((a, b) => {
-      const da = a.date ?? "";
-      const db = b.date ?? "";
-      return order === "desc" ? db.localeCompare(da) : da.localeCompare(db);
+      const da = a.date ? new Date(a.date).getTime() : 0;
+      const db = b.date ? new Date(b.date).getTime() : 0;
+      return order === "desc" ? db - da : da - db;
     });
 
   return (
