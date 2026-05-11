@@ -117,8 +117,15 @@ export default async function Home() {
 
       <section className="sec-stripes">
         <div className="stripe stripe-blue">
-          <div className="stripe-giant-text">
-            {homepageData?.stripeBlueText || "DISCONNECT"}
+          <div className="ticker">
+            <div className="ticker-track" aria-hidden="true">
+              <span className="stripe-giant-text">
+                {homepageData?.stripeBlueText || "DISCONNECT"}
+              </span>
+              <span className="stripe-giant-text">
+                {homepageData?.stripeBlueText || "DISCONNECT"}
+              </span>
+            </div>
           </div>
         </div>
 

@@ -267,6 +267,31 @@ body {
     text-align: center;
     letter-spacing: -0.02em;
     pointer-events: none;
+    white-space: nowrap;
+    display: inline-block;
+    min-width: max-content;
+}
+
+.ticker {
+    width: 100%;
+    overflow: hidden;
+}
+
+.ticker-track {
+    display: inline-flex;
+    align-items: center;
+    gap: 4rem;
+    width: max-content;
+    animation: ticker-scroll 24s linear infinite;
+}
+
+@keyframes ticker-scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 .stripe-content {
@@ -1761,4 +1786,376 @@ body.blog-reveal-ready .blog-post-section.is-visible {
 .tooltip-trigger:hover::before {
   opacity: 1;
   visibility: visible;
+}
+
+/* ── TOOLS INDEX PAGE ── */
+.tools-index {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.tools-index-header {
+  padding: 7rem 5% 3rem;
+  background: var(--white, #CFCCD3);
+  color: var(--blue, #0F29EC);
+  border-bottom: 2px solid var(--blue, #0F29EC);
+}
+
+.tools-index-eyebrow {
+  display: block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  opacity: 0.6;
+}
+
+.tools-index-title {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 900;
+  line-height: 0.95;
+  margin: 0;
+}
+
+/* Each tool band is a full-bleed coloured row and a link */
+.tool-band {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  align-items: center;
+  gap: 3rem;
+  padding: 4rem 5%;
+  border-bottom: 2px solid currentColor;
+  text-decoration: none;
+  transition: opacity 0.18s;
+  cursor: pointer;
+}
+.tool-band:hover { opacity: 0.82; }
+
+.tool-band--defacer {
+  background: var(--black, #050505);
+  color: var(--red, #ff0000);
+}
+.tool-band--fortune {
+  background: var(--red, #ff0000);
+  color: var(--white, #CFCCD3);
+}
+.tool-band--horoscope {
+  background: var(--yellow, #E7FF00);
+  color: var(--blue, #0F29EC);
+}
+
+.tool-band-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  opacity: 0.5;
+  align-self: flex-start;
+  padding-top: 6px;
+}
+
+.tool-band-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.tool-band-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: 10px;
+}
+
+.tool-band-name {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: clamp(2.8rem, 5.5vw, 5.5rem);
+  font-weight: 900;
+  line-height: 0.95;
+  margin: 0 0 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.tool-band-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+  line-height: 1.55;
+  font-weight: 400;
+  max-width: 52ch;
+  opacity: 0.85;
+  margin: 0;
+}
+
+.tool-band-cta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border: 2px solid currentColor;
+  padding: 12px 20px;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+/* ── PIXEL CHARACTERS ── */
+
+/* Wrapper anchors the character above the CTA button */
+.tool-band-cta-wrap {
+  position: relative;
+  align-self: center;
+}
+
+/* Hidden by default — squished to 0 at the bottom of the CTA */
+.tool-band-character {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) scale(0) translateY(16px);
+  transform-origin: bottom center;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity   0.2s  ease;
+}
+
+/* Pop out on band hover */
+.tool-band:hover .tool-band-character {
+  transform: translateX(-50%) scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* Float animations — only run while hovered, starting after pop-in */
+@keyframes pixel-wobble {
+  0%, 100% { transform: rotate(-3deg) translateY(0px); }
+  50%       { transform: rotate(3deg)  translateY(-8px); }
+}
+@keyframes pixel-float {
+  0%, 100% { transform: scale(1)    translateY(0px); }
+  50%       { transform: scale(1.05) translateY(-8px); }
+}
+@keyframes pixel-drift {
+  0%, 100% { transform: translateY(0px)  rotate(0deg); }
+  40%       { transform: translateY(-9px) rotate(2deg); }
+  70%       { transform: translateY(-5px) rotate(-1deg); }
+}
+
+.tool-band:hover .pixel-character--defacer  { animation: pixel-wobble 1.5s ease-in-out 0.25s infinite; }
+.tool-band:hover .pixel-character--fortune   { animation: pixel-float  2.0s ease-in-out 0.25s infinite; }
+.tool-band:hover .pixel-character--horoscope { animation: pixel-drift  2.4s ease-in-out 0.25s infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tool-band-character {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .tool-band:hover .pixel-character--defacer,
+  .tool-band:hover .pixel-character--fortune,
+  .tool-band:hover .pixel-character--horoscope { animation: none; }
+}
+
+@media (max-width: 768px) {
+  .tool-band {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 3rem 5%;
+  }
+  .tool-band-character { display: none; }
+  .tool-band-cta {
+    align-self: flex-start;
+  }
+}
+
+/* ── TOOL PAGE THEMES ── */
+
+/*
+  All themes remix the site's existing brand palette:
+  --blue #0F29EC · --yellow/--neon #E7FF00 · --red #ff0000
+  --black #050505 · --white #CFCCD3
+*/
+
+/* Horoscope — yellow hero (flip of the usual blue), black extra section */
+[data-theme="horoscope"] .hero {
+  --section-bg: var(--yellow, #E7FF00);
+  --section-fg: var(--blue, #0F29EC);
+}
+[data-theme="horoscope"] .aim {
+  --section-bg: var(--black, #050505);
+  --section-fg: var(--yellow, #E7FF00);
+}
+[data-theme="horoscope"] .event-register {
+  --section-bg: var(--yellow, #E7FF00);
+  --section-fg: var(--blue, #0F29EC);
+}
+[data-theme="horoscope"] .study-footer {
+  --section-bg: var(--black, #050505);
+  --section-fg: var(--yellow, #E7FF00);
+}
+[data-theme="horoscope"] .tool-extra {
+  --section-bg: var(--yellow, #E7FF00);
+  --section-fg: var(--blue, #0F29EC);
+}
+
+/* Fortune — red hero, yellow extra section */
+[data-theme="fortune"] .hero {
+  --section-bg: var(--red, #ff0000);
+  --section-fg: var(--white, #CFCCD3);
+}
+[data-theme="fortune"] .aim {
+  --section-bg: var(--yellow, #E7FF00);
+  --section-fg: var(--blue, #0F29EC);
+}
+[data-theme="fortune"] .event-register {
+  --section-bg: var(--red, #ff0000);
+  --section-fg: var(--white, #CFCCD3);
+}
+[data-theme="fortune"] .study-footer {
+  --section-bg: var(--red, #ff0000);
+  --section-fg: var(--white, #CFCCD3);
+}
+[data-theme="fortune"] .tool-extra {
+  --section-bg: var(--black, #050505);
+  --section-fg: var(--yellow, #E7FF00);
+}
+
+/* Defacer — red hero, black aim with red text */
+[data-theme="defacer"] .hero {
+  --section-bg: var(--red, #ff0000);
+  --section-fg: var(--white, #CFCCD3);
+}
+[data-theme="defacer"] .aim {
+  --section-bg: var(--black, #050505);
+  --section-fg: var(--red, #ff0000);
+}
+[data-theme="defacer"] .event-register {
+  --section-bg: var(--black, #050505);
+  --section-fg: var(--white, #CFCCD3);
+}
+[data-theme="defacer"] .study-footer {
+  --section-bg: var(--black, #050505);
+  --section-fg: var(--white, #CFCCD3);
+}
+[data-theme="defacer"] .tool-extra {
+  --section-bg: var(--red, #ff0000);
+  --section-fg: var(--white, #CFCCD3);
+}
+
+/* Extra section shell */
+.tool-extra {
+  position: relative; overflow: hidden; border-bottom: 2px solid currentColor;
+  background: var(--section-bg, #050505);
+  color: var(--section-fg, #ffffff);
+}
+
+/* Archetype / card grids used in extra sections */
+.archetype-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 40px;
+}
+.archetype-card {
+  border: 1.5px solid currentColor;
+  padding: 28px 22px;
+  transition: opacity 0.2s;
+}
+.archetype-card:hover { opacity: 0.75; }
+.archetype-symbol {
+  font-size: 2.2rem;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.archetype-name {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.archetype-body {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+
+/* Fortune card grid */
+.fortune-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+.fortune-card {
+  border: 1.5px solid currentColor;
+  padding: 32px 26px;
+  position: relative;
+}
+.fortune-card-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: 16px;
+}
+.fortune-card-text {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  line-height: 1.55;
+  font-weight: 500;
+}
+.fortune-card-sig {
+  margin-top: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+/* Capabilities grid (defacer) */
+.caps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 40px;
+}
+.cap-card {
+  border: 1.5px solid currentColor;
+  padding: 28px 22px;
+  transition: opacity 0.2s;
+}
+.cap-card:hover { opacity: 0.75; }
+.cap-icon {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  line-height: 1;
+}
+.cap-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.cap-body {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+
+@media (max-width: 800px) {
+  .archetype-grid,
+  .fortune-cards,
+  .caps-grid { grid-template-columns: 1fr; }
 }

@@ -19,6 +19,8 @@ export interface ToolPageProps {
   featuresTitle: React.ReactNode;
   features: ToolFeature[];
   ctaLabel?: string;
+  theme?: "horoscope" | "fortune" | "defacer";
+  extraSection?: React.ReactNode;
 }
 
 export default function ToolPage({
@@ -31,6 +33,8 @@ export default function ToolPage({
   featuresTitle,
   features,
   ctaLabel = "Launch Tool ↗",
+  theme,
+  extraSection,
 }: ToolPageProps) {
   useEffect(() => {
     const reveals = document.querySelectorAll(".reveal");
@@ -72,7 +76,7 @@ export default function ToolPage({
   };
 
   return (
-    <main className="study-page">
+    <main className="study-page" {...(theme ? { "data-theme": theme } : {})}>
 
       {/* HERO */}
       <section className="hero">
@@ -123,6 +127,9 @@ export default function ToolPage({
           </div>
         </div>
       </section>
+
+      {/* EXTRA SECTION */}
+      {extraSection}
 
       {/* CTA */}
       <section className="event-register">

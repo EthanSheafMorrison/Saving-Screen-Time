@@ -1,53 +1,72 @@
 import Link from "next/link";
+import {
+  DefacerCharacter,
+  FortuneCharacter,
+  HoroscopeCharacter,
+} from "./components/PixelCharacters";
 
 const tools = [
   {
-    name: "Saving Screen Space",
-    description: "[Description goes here]",
+    num: "01",
+    tag: "Browser Extension",
+    name: ["Screen Space", "Defacer"],
+    description:
+      "A browser extension to erase, deface, and reimagine any web page. Delete elements, draw graffiti, blur images — the whole web becomes your canvas.",
     href: "/tools/saving-screen-space",
-    cta: "Launch Tool →",
+    cta: "Get the Extension →",
+    theme: "defacer",
+    Character: DefacerCharacter,
   },
   {
-    name: "Screen Time Fortune",
-    description: "[Description goes here]",
+    num: "02",
+    tag: "Screen Time Tool",
+    name: ["Screen Time", "Fortune"],
+    description:
+      "Your screen time data, read as a mystical fortune. The oracle has seen your notification habits. It has thoughts.",
     href: "/tools/screen-time-fortune",
     cta: "Read Your Fortune →",
+    theme: "fortune",
+    Character: FortuneCharacter,
   },
   {
-    name: "Screen Time Horoscope",
-    description: "[Description goes here]",
+    num: "03",
+    tag: "Screen Time Tool",
+    name: ["Screen Time", "Horoscope"],
+    description:
+      "The stars aligned — your apps didn't. Get a personalised celestial reading based entirely on your screen time habits.",
     href: "/tools/screen-time-horoscope",
     cta: "Get Your Horoscope →",
+    theme: "horoscope",
+    Character: HoroscopeCharacter,
   },
 ];
 
 export default function ToolsPage() {
   return (
-    <section className="section-publications">
-      <div className="section-inner">
-        <h1 className="section-header">Tools</h1>
-        <p className="section-subheader">Explore our screen time analysis tools</p>
+    <div className="tools-index">
+      <div className="tools-index-header">
+        <span className="tools-index-eyebrow">Saving Screen Time</span>
+        <h1 className="tools-index-title">Tools</h1>
       </div>
 
-      <div className="section-inner" style={{ marginTop: "4rem" }}>
-        <div className="index-container">
-          {tools.map((tool) => (
-            <div key={tool.name} className="index-row">
-              <div className="index-content">
-                <h2 className="index-title">{tool.name}</h2>
-                <p style={{ marginTop: "1rem", lineHeight: 1.6 }}>{tool.description}</p>
-                <Link
-                  href={tool.href}
-                  className="stripe-link"
-                  style={{ marginTop: "1.5rem", display: "inline-block" }}
-                >
-                  {tool.cta}
-                </Link>
-              </div>
+      {tools.map(({ Character, ...tool }) => (
+        <Link key={tool.num} href={tool.href} className={`tool-band tool-band--${tool.theme}`}>
+          <div className="tool-band-num">{tool.num}</div>
+          <div className="tool-band-body">
+            <div className="tool-band-tag">{tool.tag}</div>
+            <h2 className="tool-band-name">
+              {tool.name.map((line, i) => <span key={i}>{line}</span>)}
+            </h2>
+            <p className="tool-band-desc">{tool.description}</p>
+          </div>
+          <div className="tool-band-cta-wrap">
+            <div className="tool-band-character">
+              <Character />
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
+            <div className="tool-band-cta">{tool.cta}</div>
+          </div>
+        </Link>
+      ))}
+    </div>
   );
 }
