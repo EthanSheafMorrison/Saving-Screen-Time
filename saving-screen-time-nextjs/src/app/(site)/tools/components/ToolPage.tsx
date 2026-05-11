@@ -21,6 +21,9 @@ export interface ToolPageProps {
   ctaLabel?: string;
   theme?: "horoscope" | "fortune" | "defacer";
   extraSection?: React.ReactNode;
+  onLaunch?: () => void;
+  hideCta?: boolean;
+  heroDecoration?: React.ReactNode;
 }
 
 export default function ToolPage({
@@ -35,6 +38,9 @@ export default function ToolPage({
   ctaLabel = "Launch Tool ↗",
   theme,
   extraSection,
+  onLaunch,
+  hideCta,
+  heroDecoration,
 }: ToolPageProps) {
   useEffect(() => {
     const reveals = document.querySelectorAll(".reveal");
@@ -81,6 +87,7 @@ export default function ToolPage({
       {/* HERO */}
       <section className="hero">
         <div className="hero-text">
+          {heroDecoration}
           <div className="study-tag">{tag}</div>
           <h1>{title}</h1>
           <p className="study-sub">{subtitle}</p>
@@ -90,7 +97,11 @@ export default function ToolPage({
             <Link href="/tools">All Tools</Link>
           </div>
           <div className="hero-cta">
-            <a href={launchUrl} className="study-btn">{ctaLabel}</a>
+            {onLaunch ? (
+              <button className="study-btn" onClick={onLaunch}>{ctaLabel}</button>
+            ) : (
+              <a href={launchUrl} className="study-btn">{ctaLabel}</a>
+            )}
             <a href="#about" className="study-btn" onClick={(e) => { e.preventDefault(); scrollTo("about"); }}>
               Learn More ↓
             </a>
@@ -132,17 +143,23 @@ export default function ToolPage({
       {extraSection}
 
       {/* CTA */}
-      <section className="event-register">
-        <div className="section-inner">
-          <div className="reveal">
-            <div className="section-label">Ready to try it?</div>
-            <div className="section-title">Get <em>Started</em></div>
-            <div style={{ marginTop: "32px" }}>
-              <a href={launchUrl} className="study-btn">{ctaLabel}</a>
+      {!hideCta && (
+        <section className="event-register">
+          <div className="section-inner">
+            <div className="reveal">
+              <div className="section-label">Ready to try it?</div>
+              <div className="section-title">Get <em>Started</em></div>
+              <div style={{ marginTop: "32px" }}>
+                {onLaunch ? (
+                  <button className="study-btn" onClick={onLaunch}>{ctaLabel}</button>
+                ) : (
+                  <a href={launchUrl} className="study-btn">{ctaLabel}</a>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* FOOTER */}
       <footer className="study-footer">

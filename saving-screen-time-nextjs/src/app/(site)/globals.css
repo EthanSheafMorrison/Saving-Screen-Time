@@ -1844,8 +1844,8 @@ body.blog-reveal-ready .blog-post-section.is-visible {
   color: var(--white, #CFCCD3);
 }
 .tool-band--horoscope {
-  background: var(--yellow, #E7FF00);
-  color: var(--blue, #0F29EC);
+  background: var(--black, #050505);
+  color: var(--yellow, #E7FF00);
 }
 
 .tool-band-num {
@@ -1983,26 +1983,110 @@ body.blog-reveal-ready .blog-post-section.is-visible {
   --black #050505 · --white #CFCCD3
 */
 
-/* Horoscope — yellow hero (flip of the usual blue), black extra section */
+/* ── Horoscope modal animations (reused on landing page) ── */
+@keyframes hFloat    { 0%,100% { transform:translateY(0) }    50% { transform:translateY(-5px) } }
+@keyframes hPanelGlow {
+  0%,100% { text-shadow:0 0 3px #E7FF00; opacity:.85; }
+  50%     { text-shadow:0 0 14px #E7FF00,0 0 28px rgba(231,255,0,.35); opacity:1; }
+}
+
+/* Horoscope — neon yellow on black throughout */
 [data-theme="horoscope"] .hero {
-  --section-bg: var(--yellow, #E7FF00);
-  --section-fg: var(--blue, #0F29EC);
+  --section-bg: #050505;
+  --section-fg: #E7FF00;
 }
 [data-theme="horoscope"] .aim {
-  --section-bg: var(--black, #050505);
-  --section-fg: var(--yellow, #E7FF00);
+  --section-bg: #050505;
+  --section-fg: #E7FF00;
+}
+[data-theme="horoscope"] .help {
+  --section-bg: #050505;
+  --section-fg: #E7FF00;
 }
 [data-theme="horoscope"] .event-register {
-  --section-bg: var(--yellow, #E7FF00);
-  --section-fg: var(--blue, #0F29EC);
+  --section-bg: #050505;
+  --section-fg: #E7FF00;
 }
 [data-theme="horoscope"] .study-footer {
-  --section-bg: var(--black, #050505);
-  --section-fg: var(--yellow, #E7FF00);
+  --section-bg: #050505;
+  --section-fg: #E7FF00;
 }
 [data-theme="horoscope"] .tool-extra {
-  --section-bg: var(--yellow, #E7FF00);
-  --section-fg: var(--blue, #0F29EC);
+  --section-bg: #050505;
+  --section-fg: #E7FF00;
+}
+
+/* Horoscope — bespoke ornamental details */
+
+/* ASCII star row layered over the dot grid */
+[data-theme="horoscope"] .hero-stars-deco {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  margin: 0 0 24px;
+  opacity: 0.45;
+  animation: hFloat 4s ease-in-out infinite;
+  user-select: none;
+  line-height: 1.7;
+  white-space: pre;
+  background: transparent;
+}
+
+/* ✦ prefix on every section label */
+[data-theme="horoscope"] .section-label::before { content: '✦ '; }
+
+/* Aim quote — subtle glow pulse */
+[data-theme="horoscope"] .aim-quote {
+  font-family: 'IBM Plex Mono', monospace;
+  animation: hPanelGlow 3.5s ease-in-out infinite;
+}
+
+/* Step numbers and titles — terminal monospace feel */
+[data-theme="horoscope"] .step-num {
+  font-family: 'IBM Plex Mono', monospace;
+  color: #E7FF00;
+  font-size: 2.2rem;
+  text-shadow: 0 0 8px rgba(231,255,0,.45);
+}
+[data-theme="horoscope"] .step-title {
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.08em;
+}
+[data-theme="horoscope"] .step-card {
+  border-color: #1e1e1e;
+  transition: border-color 0.2s, box-shadow 0.2s, opacity 0.2s;
+}
+[data-theme="horoscope"] .step-card:hover {
+  opacity: 1;
+  border-color: #E7FF00;
+  box-shadow: 4px 4px 0 #E7FF00;
+}
+
+/* CTA button — monospace + border glow pulse */
+@keyframes hBtnGlow {
+  0%,100% { box-shadow: 2px 2px 0 #E7FF00; }
+  50%     { box-shadow: 4px 4px 18px rgba(231,255,0,.45), 2px 2px 0 #E7FF00; }
+}
+[data-theme="horoscope"] .study-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.15em;
+  animation: hBtnGlow 3s ease-in-out infinite;
+}
+[data-theme="horoscope"] .study-btn:hover {
+  opacity: 1;
+  box-shadow: 6px 6px 0 #E7FF00;
+}
+
+/* Archetype symbols — gentle float with staggered delay */
+[data-theme="horoscope"] .archetype-symbol {
+  display: inline-block;
+  animation: hFloat 3.5s ease-in-out infinite;
+}
+[data-theme="horoscope"] .archetype-card:nth-child(even) .archetype-symbol {
+  animation-delay: 0.55s;
+}
+[data-theme="horoscope"] .archetype-card:nth-child(3n) .archetype-symbol {
+  animation-delay: 1.1s;
 }
 
 /* Fortune — red hero, yellow extra section */
