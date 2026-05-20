@@ -2132,6 +2132,167 @@ body.blog-reveal-ready .blog-post-section.is-visible {
   --section-bg: var(--red, #ff0000);
   --section-fg: var(--white, #CFCCD3);
 }
+/* alternate the stacked defacer extra sections so they don't blend together */
+[data-theme="defacer"] .tool-extra.defaced-demo {
+  --section-bg: var(--black, #050505);
+  --section-fg: var(--white, #CFCCD3);
+}
+[data-theme="defacer"] .tool-extra.defacer-sandbox {
+  --section-bg: var(--black, #050505);
+  --section-fg: var(--white, #CFCCD3);
+}
+
+/* Hero scribble overlay — animated */
+[data-theme="defacer"] .hero { position: relative; overflow: hidden; }
+.hero-scribble-deco {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--section-fg, #CFCCD3);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Each path draws itself in via stroke-dashoffset, then erases, then loops */
+@keyframes scribble-draw {
+  0%   { stroke-dashoffset: var(--len); opacity: 0; }
+  4%   { opacity: 0.55; }
+  45%  { stroke-dashoffset: 0; opacity: 0.55; }
+  72%  { stroke-dashoffset: 0; opacity: 0.55; }
+  90%  { stroke-dashoffset: var(--len); opacity: 0; }
+  100% { stroke-dashoffset: var(--len); opacity: 0; }
+}
+
+.scribble-path {
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: var(--len);
+  animation: scribble-draw var(--dur, 9s) var(--delay, 0s) ease-in-out infinite;
+}
+.scribble-path--1 { --len: 1200; --dur: 11s; --delay: 0s;    }
+.scribble-path--2 { --len: 550;  --dur: 8s;  --delay: 1.4s;  }
+.scribble-path--3 { --len: 550;  --dur: 8s;  --delay: 2.4s;  }
+.scribble-path--4 { --len: 380;  --dur: 7s;  --delay: 0.8s;  }
+.scribble-path--5 { --len: 260;  --dur: 7s;  --delay: 3.2s;  }
+.scribble-path--6 { --len: 900;  --dur: 9s;  --delay: 1.8s;  }
+
+@media (prefers-reduced-motion: reduce) {
+  .scribble-path { animation: none; stroke-dashoffset: 0; opacity: 0.3; }
+}
+
+/* Marked-up ad demo */
+.defaced-ad {
+  position: relative;
+  max-width: 640px;
+  margin: 44px auto 0;
+  padding: 38px 34px 46px;
+  background: #f4f1ea;
+  color: #111;
+  border: 2px solid currentColor;
+  overflow: hidden;
+  transform: rotate(-1deg);
+}
+.defaced-ad-tag {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-bottom: 14px;
+}
+.defaced-ad-headline {
+  font-size: 1.9rem;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+}
+.defaced-ad-sub {
+  font-size: 0.95rem;
+  font-weight: 600;
+  opacity: 0.75;
+}
+.defaced-ad-scrawl {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--red, #ff0000);
+  opacity: 0.9;
+  pointer-events: none;
+}
+.defaced-caption {
+  max-width: 560px;
+  margin: 30px auto 0;
+  text-align: center;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  opacity: 0.82;
+}
+
+/* Sandbox iframe demo */
+/* The sandbox section sits in a lower z-layer; flanking sections float above it */
+[data-theme="defacer"] .tool-extra.defacer-sandbox {
+  z-index: 1;
+  border-bottom: none; /* frame is the bottom edge */
+}
+/* Sections immediately before and after the sandbox float above it */
+[data-theme="defacer"] .tool-extra:not(.defacer-sandbox) {
+  position: relative;
+  z-index: 3;
+}
+/* Section above casts a shadow downward onto the sandbox */
+[data-theme="defacer"] .tool-extra:not(.defacer-sandbox):has(+ .defacer-sandbox) {
+  box-shadow: 0 28px 70px 10px rgba(0, 0, 0, 0.7);
+}
+/* Section below casts a shadow upward onto the sandbox */
+[data-theme="defacer"] .defacer-sandbox + .tool-extra {
+  box-shadow: 0 -28px 70px 10px rgba(0, 0, 0, 0.3);
+}
+
+.sandbox-header {
+  padding-bottom: 40px !important;
+}
+.sandbox-intro {
+  max-width: 640px;
+  margin: 0 auto 0;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.65;
+  opacity: 0.82;
+}
+/* Full-bleed frame — outside section-inner */
+.sandbox-frame-wrap {
+  position: relative;
+  width: 100%;
+  height: 780px;
+  overflow: hidden;
+}
+.sandbox-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  background: #fff;
+}
+@media (max-width: 800px) {
+  .sandbox-frame-wrap { height: 520px; }
+}
+
+/* Closing provocation pull-quote */
+.defacer-provocation {
+  margin: 56px auto 0;
+  max-width: 760px;
+  border: none;
+  border-top: 2px solid currentColor;
+  padding-top: 32px;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1.4rem, 3vw, 2.1rem);
+  line-height: 1.3;
+  font-weight: 500;
+  text-align: center;
+}
 
 /* Extra section shell */
 .tool-extra {

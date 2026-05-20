@@ -23,6 +23,7 @@ export interface ToolPageProps {
   extraSection?: React.ReactNode;
   onLaunch?: () => void;
   hideCta?: boolean;
+  hideFeatures?: boolean;
   heroDecoration?: React.ReactNode;
 }
 
@@ -40,6 +41,7 @@ export default function ToolPage({
   extraSection,
   onLaunch,
   hideCta,
+  hideFeatures,
   heroDecoration,
 }: ToolPageProps) {
   useEffect(() => {
@@ -123,21 +125,23 @@ export default function ToolPage({
       </section>
 
       {/* FEATURES */}
-      <section className="help" id="features">
-        <div className="section-inner">
-          <div className="section-label">How it works</div>
-          <div className="section-title">{featuresTitle}</div>
-          <div className="steps-grid">
-            {features.map((f) => (
-              <div key={f.num} className="step-card reveal">
-                <div className="step-num">{f.num}</div>
-                <div className="step-title">{f.title}</div>
-                <div className="step-body">{f.body}</div>
-              </div>
-            ))}
+      {!hideFeatures && (
+        <section className="help" id="features">
+          <div className="section-inner">
+            <div className="section-label">How it works</div>
+            <div className="section-title">{featuresTitle}</div>
+            <div className="steps-grid">
+              {features.map((f) => (
+                <div key={f.num} className="step-card reveal">
+                  <div className="step-num">{f.num}</div>
+                  <div className="step-title">{f.title}</div>
+                  <div className="step-body">{f.body}</div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* EXTRA SECTION */}
       {extraSection}
