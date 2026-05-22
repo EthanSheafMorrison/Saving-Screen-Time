@@ -1,7 +1,6 @@
 import Link from "next/link";
 import {
   DefacerCharacter,
-  FortuneCharacter,
   HoroscopeCharacter,
 } from "./components/PixelCharacters";
 
@@ -17,17 +16,17 @@ const tools = [
     theme: "defacer",
     Character: DefacerCharacter,
   },
-  {
-    num: "02",
-    tag: "Screen Time Tool",
-    name: ["Screen Time", "Fortune"],
-    description:
-      "Your screen time data, read as a mystical fortune. The oracle has seen your notification habits. It has thoughts.",
-    href: "/tools/screen-time-fortune",
-    cta: "Read Your Fortune →",
-    theme: "fortune",
-    Character: FortuneCharacter,
-  },
+  // {
+  //   num: "02",
+  //   tag: "Screen Time Tool",
+  //   name: ["Screen Time", "Fortune"],
+  //   description:
+  //     "Your screen time data, read as a mystical fortune. The oracle has seen your notification habits. It has thoughts.",
+  //   href: "/tools/screen-time-fortune",
+  //   cta: "Read Your Fortune →",
+  //   theme: "fortune",
+  //   Character: FortuneCharacter,
+  // },
   {
     num: "03",
     tag: "Screen Time Tool",
@@ -60,9 +59,9 @@ export default function ToolsPage() {
             <p className="tool-band-desc">{tool.description}</p>
           </div>
           <div className="tool-band-cta-wrap">
-            <div className="tool-band-character">
+            {/* <div className="tool-band-character">
               <Character />
-            </div>
+            </div> */}
             <div className="tool-band-cta">{tool.cta}</div>
           </div>
         </Link>
