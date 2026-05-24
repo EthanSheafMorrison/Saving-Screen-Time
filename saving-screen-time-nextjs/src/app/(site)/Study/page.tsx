@@ -67,7 +67,7 @@ export default function StudyPage() {
             Got <span>ADHD</span> and a <em>smartphone?</em>
           </h1>
           <p className="study-sub">
-            Let's talk about screen time. We are looking for participants to write short fictional stories based on prompts we provide.”
+            Let's talk about screen time. We are looking for participants to write short fictional stories based on prompts we provide.
           </p>
         <div className="nav-links">
           <a href="#aim" onClick={(e) => { e.preventDefault(); scrollTo("aim"); }}>Aim</a>
@@ -77,17 +77,18 @@ export default function StudyPage() {
           <Link href="/Studies">See all studies</Link>
         </div>
           <div className="hero-cta">
+            <a href="#aim" className="study-btn" onClick={(e) => { e.preventDefault(); scrollTo("aim"); }}>
+              Do It Now
+            </a>
             <a
-              href="https://luma.com/event/evt-2wOktzcujLoeMsV"
+              href="https://luma.com/event/evt-aPZHhPevoYCGXNB"
               className="study-btn"
               data-luma-action="checkout"
-              data-luma-event-id="evt-2wOktzcujLoeMsV"
+              data-luma-event-id="evt-aPZHhPevoYCGXNB"
             >
-              Register for Study ↗
+              Do It Later
             </a>
-            <a href="#aim" className="study-btn" onClick={(e) => { e.preventDefault(); scrollTo("aim"); }}>
-              Learn More ↓
-            </a>
+
           </div>
         </div>
       </section>
