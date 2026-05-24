@@ -75,7 +75,7 @@ export default function StudyPage() {
           <a href="#help" onClick={(e) => { e.preventDefault(); scrollTo("help"); }}>Participate</a>
           <a href="#rights" onClick={(e) => { e.preventDefault(); scrollTo("rights"); }}>Rights</a>
           <a href="#team" onClick={(e) => { e.preventDefault(); scrollTo("team"); }}>Team</a>
-          <Link href="/Studies">See all studies</Link>
+          {/* <Link href="/Studies">See all studies</Link> */}
         </div>
           <div className="hero-cta">
             <a href="https://vuw.qualtrics.com/jfe/form/SV_2blzJ2WlveoVi4u" className="study-btn" target="_blank" rel="noopener noreferrer">
