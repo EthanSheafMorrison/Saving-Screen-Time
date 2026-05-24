@@ -68,7 +68,7 @@ export default function StudyPage() {
             Got <span>ADHD</span> and a <em>smartphone?</em>
           </h1>
           <p className="study-sub">
-            Let's talk about screen time. We are looking for participants to write short fictional stories based on prompts we provide.
+            Let's talk about screen time. We are looking for people with <span style={{ backgroundColor: "var(--blue)", color: "var(--neon)", padding: "0 4px" }}>ADHD (formally or self‑diagnosed)</span> to write short fictional stories based on prompts we provide.
           </p>
         <div className="nav-links">
           <a href="#aim" onClick={(e) => { e.preventDefault(); scrollTo("aim"); }}>Aim</a>
@@ -106,10 +106,10 @@ export default function StudyPage() {
           <div className="reveal">
             <div className="aim-body">
               <p>
-                Not everyone experiences the internet the same way. This project explores how people with ADHD connect and disconnect from screens — and what that means for their sense of time, productivity, and relationships. We use story completion: short fictional prompts that you finish in your own words. This approach lets you engage with sensitive topics like ADHD and screen time at arm's length, so you only ever share what you feel comfortable sharing. We're interested in how you make sense of the relationship between ADHD and digital life.
+                Not everyone experiences the internet the same way. This project explores how people with <strong>ADHD (formally or self‑diagnosed)</strong> connect and disconnect from screens — and what that means for their sense of time, productivity, and relationships. We use story completion: short fictional prompts that you finish in your own words. This approach lets you engage with sensitive topics like ADHD and screen time at arm's length, so you only ever share what you feel comfortable sharing. We're interested in how you make sense of the relationship between ADHD and digital life.
               </p>
               <p>
-                This is a Marsden Fast Start research project led by Victoria
+                This is a Marsden Fast Start research project led by a team of researchers at Victoria
                 University of Wellington — Te Herenga Waka.
               </p>
             </div>
@@ -130,7 +130,7 @@ export default function StudyPage() {
         <span className="tooltip-trigger" data-tooltip="Roughly 150-200 words, or two short paragraphs.">
           1,000 characters
         </span>. 
-        You'll receive a <strong>$30 gift card</strong> on completion.
+        You'll receive a <strong>$30 (NZD) gift card</strong> on completion.
         
         <p className="step-body">
           These stories can be loosely inspired by your life if you want, but they do not need to be a direct account of your own experiences.
@@ -284,7 +284,7 @@ export default function StudyPage() {
               <div className="info-icon">$</div>
               <div>
                 <div className="info-label">Compensation</div>
-                <div className="info-text">$30 gift card on completion</div>
+                <div className="info-text">$30 (NZD) gift card on completion</div>
                 <div className="info-sub">
                   Sent to you after you finish the study.
                 </div>
