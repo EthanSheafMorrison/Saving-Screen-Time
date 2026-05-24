@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import Script from "next/script";
 
 export default function StudyPage() {
+  const [calendarOpen, setCalendarOpen] = useState(false);
+
   const scrollTo = (id: string) => {
     const target = document.getElementById(id);
     if (!target) return;
@@ -77,17 +78,16 @@ export default function StudyPage() {
           <Link href="/Studies">See all studies</Link>
         </div>
           <div className="hero-cta">
-            <a href="#aim" className="study-btn" onClick={(e) => { e.preventDefault(); scrollTo("aim"); }}>
+            <a href="https://vuw.qualtrics.com/jfe/form/SV_2blzJ2WlveoVi4u" className="study-btn" target="_blank" rel="noopener noreferrer">
               Do It Now
             </a>
-            <a
-              href="https://luma.com/event/evt-aPZHhPevoYCGXNB"
+            <button
               className="study-btn"
-              data-luma-action="checkout"
-              data-luma-event-id="evt-aPZHhPevoYCGXNB"
+              onClick={() => setCalendarOpen(true)}
             >
               Do It Later
-            </a>
+            </button>
+            
 
           </div>
         </div>
@@ -463,26 +463,79 @@ export default function StudyPage() {
 
       
 
-      {/* EVENT REGISTER */}
+      {/* CTA */}
       <section className="event-register">
         <div className="section-inner">
           <div className="reveal">
-            <div className="section-label">Upcoming session</div>
-            <div className="section-title">Register for a <em>Story Party</em></div>
-            <div style={{ marginTop: "32px" }}>
+            <div className="section-label">Ready to take part?</div>
+            <div className="section-title">Join the <em>Study</em></div>
+            <p style={{ marginBottom: "32px", maxWidth: "48ch", fontSize: "1.05rem", fontWeight: 500, lineHeight: 1.55 }}>
+              Complete the study in your own time online, or register for an upcoming Story Party — a Zoom session where you write alongside others.
+            </p>
+            <div className="hero-cta" style={{ justifyContent: "flex-start" }}>
               <a
-                href="https://luma.com/event/evt-2wOktzcujLoeMsV"
+                href="https://vuw.qualtrics.com/jfe/form/SV_2blzJ2WlveoVi4u"
                 className="study-btn"
-                data-luma-action="checkout"
-                data-luma-event-id="evt-2wOktzcujLoeMsV"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                Register for Event
+                Do It Now
               </a>
+              <button
+                className="study-btn"
+                onClick={() => setCalendarOpen(true)}
+              >
+                Register for a Story Party
+              </button>
             </div>
           </div>
         </div>
-        <Script id="luma-checkout" src="https://embed.lu.ma/checkout-button.js" strategy="afterInteractive" />
       </section>
+
+      {/* CALENDAR MODAL */}
+      {calendarOpen && (
+        <div
+          className="study-modal-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="study-modal-title"
+          onClick={() => setCalendarOpen(false)}
+        >
+          <div className="study-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="study-modal-header">
+              <div>
+                <div className="study-modal-label">Upcoming Sessions</div>
+                <h2 id="study-modal-title" className="study-modal-title">
+                  Pick a <em>Date</em>
+                </h2>
+              </div>
+              <button
+                className="study-modal-close"
+                onClick={() => setCalendarOpen(false)}
+                aria-label="Close calendar"
+              >
+                ×
+              </button>
+            </div>
+            <p className="study-modal-intro">
+              Story Parties are <strong>Zoom room sessions</strong> where you join a group to complete the story prompts together — cameras off, microphone muted, at your own pace.
+            </p>
+            <p className="study-modal-intro">
+              Sessions run on <strong>Monday 8th June</strong> or <strong>Wednesday 10th June</strong>.
+            </p>
+            <p className="study-modal-intro">
+              When registering, a name is required — but it doesn&apos;t need to be your real one. A nickname, initials, or anything else is fine.
+            </p>
+            <iframe
+              className="study-modal-iframe"
+              src="https://luma.com/embed/calendar/cal-jUtUgGJBnPnDOAD/events"
+              allowFullScreen
+              tabIndex={0}
+              title="Story Party calendar"
+            />
+          </div>
+        </div>
+      )}
 
       {/* FOOTER */}
       <footer className="study-footer">

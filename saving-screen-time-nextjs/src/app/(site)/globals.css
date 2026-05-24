@@ -992,6 +992,9 @@ body {
 }
 .study-btn {
   display: inline-block;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
   font-weight: 800; font-size: 0.95rem;
   letter-spacing: 0.1em; text-transform: uppercase;
   text-decoration: none;
@@ -1001,6 +1004,98 @@ body {
   transition: opacity 0.15s, background 0.15s, color 0.15s;
 }
 .study-btn:hover { opacity: 0.7; }
+
+/* ── CALENDAR MODAL ── */
+.study-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 5, 5, 0.78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  z-index: 1000;
+  animation: studyModalFade 0.18s ease-out;
+}
+.study-modal-overlay::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle, var(--white, #CFCCD3) 1px, transparent 1px);
+  background-size: 12px 12px;
+  opacity: 0.08;
+  pointer-events: none;
+}
+.study-modal {
+  position: relative;
+  background: var(--white, #CFCCD3);
+  color: var(--blue, #0F29EC);
+  border: 2.5px solid var(--blue, #0F29EC);
+  padding: 28px 32px 32px;
+  width: 100%;
+  max-width: 880px;
+  max-height: calc(100vh - 64px);
+  overflow: auto;
+  font-family: eb garamond, serif;
+}
+.study-modal-intro {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.55;
+  margin: 0 0 20px;
+  /* max-width: 60ch; */
+}
+.study-modal-intro strong { font-weight: 800; }
+.study-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+.study-modal-label {
+  font-size: 0.68rem; font-weight: 800;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.study-modal-title {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 900; line-height: 1; margin: 0;
+}
+.study-modal-title em { font-style: italic; }
+.study-modal-close {
+  background: transparent;
+  border: 2px solid currentColor;
+  color: inherit;
+  font: inherit;
+  font-weight: 900;
+  font-size: 1.1rem;
+  width: 36px; height: 36px;
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  line-height: 1;
+  padding: 0;
+}
+.study-modal-close:hover {
+  background: currentColor;
+  color: var(--white, #CFCCD3);
+}
+.study-modal-iframe {
+  display: block;
+  width: 100%;
+  height: 520px;
+  border: 1.5px solid currentColor;
+}
+@keyframes studyModalFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (max-width: 640px) {
+  .study-modal-overlay { padding: 16px; }
+  .study-modal { padding: 24px 20px; }
+  .study-modal-iframe { height: 60vh; min-height: 360px; }
+}
 .btn-fill { background: currentColor; color: var(--section-bg, var(--white, #ffffff)); }
 .btn-fill:hover { background: transparent; color: currentColor; opacity: 1; }
 
