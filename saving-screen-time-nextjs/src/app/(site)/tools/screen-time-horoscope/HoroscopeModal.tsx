@@ -189,7 +189,7 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
     if (rightPanelRef.current) {
       rightPanelRef.current.scrollTo({ top: rightPanelRef.current.scrollHeight, behavior: 'smooth' });
     }
-  }, [displayText, phase, showWave]);
+  }, [displayText, phase, showWave, printing]);
 
   useEffect(() => {
     if (phase !== 'idle') return;
@@ -367,23 +367,75 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
     copyTimeoutRef.current = setTimeout(() => setCopied(false), 1600);
   };
 
+  const receiptBody = (printing || printed) ? (
+    <div
+      style={st.receipt}
+      className={printing ? 'ooo-receipt-printing' : 'ooo-receipt-resting'}
+      onAnimationEnd={(e) => {
+        if (e.animationName === 'hPrintOut') handlePrintAnimationEnd();
+      }}
+    >
+      <div style={st.receiptJagTop} aria-hidden />
+      <div style={st.receiptInner}>
+        <div style={st.receiptHeader}>
+          <span>OUT-OF-OFFICE</span>
+          <span>★ {selectedSign?.name?.toUpperCase()}</span>
+        </div>
+        <pre style={st.receiptText} key={oooText}>{oooText}</pre>
+        <div style={st.receiptFooter}>
+          <button
+            onClick={handleRegenerate}
+            style={st.receiptRegenBtn}
+            disabled={!printed}
+            aria-label="Regenerate out-of-office"
+          >
+            ↻ regenerate
+          </button>
+          <button
+            onClick={handleCopy}
+            style={st.receiptCopyBtn}
+            disabled={!printed}
+            aria-label="Copy out-of-office to clipboard"
+          >
+            {copied ? '✓ copied' : 'copy to clipboard'}
+          </button>
+        </div>
+      </div>
+      <div style={st.receiptJagBottom} aria-hidden />
+    </div>
+  ) : null;
+
   return (
-    <div style={{
-      ...st.terminalWrap,
-      animation: closing
-        ? 'hTermOut 0.26s ease forwards'
-        : 'hTermIn 0.48s cubic-bezier(0.22,1,0.36,1) both',
-    }}>
+    <div
+      className="hterm-wrap"
+      style={{
+        ...st.terminalWrap,
+        animation: closing
+          ? 'hTermOut 0.26s ease forwards'
+          : 'hTermIn 0.48s cubic-bezier(0.22,1,0.36,1) both',
+      }}
+    >
       <style>{CSS}</style>
 
-      <button onClick={onClose} style={st.closeBtn} aria-label="Close">✕</button>
+      <button onClick={onClose} style={st.closeBtn} className="hterm-close-desktop" aria-label="Close">✕</button>
 
       <div
         style={{ ...st.terminal, position: 'relative' }}
         className={`void-layout${!closing ? ' hterm-opening' : ''}`}
       >
 
-        <pre style={st.starsRow}>
+        <div className="hterm-mobile-header" style={st.mobileHeader}>
+          <span style={st.mobileHeaderLabel}>● FORTUNE-BOT v0.1</span>
+          <button
+            onClick={onClose}
+            style={st.mobileHeaderClose}
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
+
+        <pre style={st.starsRow} className="hterm-stars">
           <span style={st.ftFigure}>{FT_STARS}</span>
         </pre>
 
@@ -415,32 +467,33 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
             <div style={st.rightContent}>
 
               {phase === 'idle' && speechDone && (
-                <div style={st.grid}>
+                <div style={st.grid} className="hterm-sign-grid">
                   {ZODIAC_SIGNS.map((sign, i) => (
                     <button
                       key={sign.id}
                       onClick={() => handleSignSelect(sign as ZodiacSign)}
+                      className="hterm-sign-btn"
                       style={{ ...st.signBtn, animation: `hStaggerIn 0.35s ease ${i * 55}ms both` }}
                     >
-                      <span style={st.signSymbol}>{sign.symbol}</span>
-                      <span style={st.signName}>{sign.name}</span>
-                      <span style={st.signDates}>{sign.dates}</span>
+                      <span style={st.signSymbol} className="hterm-sign-symbol">{sign.symbol}</span>
+                      <span style={st.signName} className="hterm-sign-name">{sign.name}</span>
+                      <span style={st.signDates} className="hterm-sign-dates">{sign.dates}</span>
                     </button>
                   ))}
                 </div>
               )}
 
               {phase === 'q2' && speechDone && (
-                <div style={st.stGrid}>
+                <div style={st.stGrid} className="hterm-st-grid">
                   {SCREEN_TIME_OPTIONS.map((opt, i) => (
                     <button
                       key={opt.value}
-                      className="ft-st-btn"
+                      className="ft-st-btn hterm-st-btn"
                       onClick={() => handleScreenTimeSelect(opt.value)}
                       style={{ ...st.stBtn, animation: `hStaggerIn 0.35s ease ${i * 80}ms both` }}
                     >
-                      <span style={st.stValue}>{opt.label}</span>
-                      <span style={st.stDesc}>{opt.desc}</span>
+                      <span style={st.stValue} className="hterm-st-value">{opt.label}</span>
+                      <span style={st.stDesc} className="hterm-st-desc">{opt.desc}</span>
                     </button>
                   ))}
                 </div>
@@ -463,7 +516,7 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
                     )}
 
                     {!showWave && phase !== 'revealed' && (
-                      <p style={{ ...st.cardText, color: '#6a6060' }}>
+                      <p style={{ ...st.cardText, color: '#8a8084' }}>
                         {displayText}
                         {showCursor && <span style={st.cursor}>▊</span>}
                       </p>
@@ -527,6 +580,12 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
                     </div>
                   )}
 
+                  {receiptBody && (
+                    <div className="hterm-receipt-mobile" style={st.receiptMobileWrap}>
+                      {receiptBody}
+                    </div>
+                  )}
+
                   {phase === 'revealed' && (
                     <button onClick={reset} style={st.resetBtn}>
                       ← Consult the Oracle again
@@ -541,43 +600,9 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
         </div>
       </div>
 
-      {(printing || printed) && (
-        <div style={st.receiptAnchor} aria-live="polite">
-          <div
-            style={st.receipt}
-            className={printing ? 'ooo-receipt-printing' : 'ooo-receipt-resting'}
-            onAnimationEnd={(e) => {
-              if (e.animationName === 'hPrintOut') handlePrintAnimationEnd();
-            }}
-          >
-            <div style={st.receiptJagTop} aria-hidden />
-            <div style={st.receiptInner}>
-              <div style={st.receiptHeader}>
-                <span>OUT-OF-OFFICE</span>
-                <span>★ {selectedSign?.name?.toUpperCase()}</span>
-              </div>
-              <pre style={st.receiptText} key={oooText}>{oooText}</pre>
-              <div style={st.receiptFooter}>
-                <button
-                  onClick={handleRegenerate}
-                  style={st.receiptRegenBtn}
-                  disabled={!printed}
-                  aria-label="Regenerate out-of-office"
-                >
-                  ↻ regenerate
-                </button>
-                <button
-                  onClick={handleCopy}
-                  style={st.receiptCopyBtn}
-                  disabled={!printed}
-                  aria-label="Copy out-of-office to clipboard"
-                >
-                  {copied ? '✓ copied' : 'copy to clipboard'}
-                </button>
-              </div>
-            </div>
-            <div style={st.receiptJagBottom} aria-hidden />
-          </div>
+      {receiptBody && (
+        <div style={st.receiptAnchor} className="hterm-receipt-desktop" aria-live="polite">
+          {receiptBody}
         </div>
       )}
     </div>
@@ -616,6 +641,7 @@ export default function HoroscopeModal({ open, onClose }: HoroscopeModalProps) {
 
   return (
     <div
+      className="hterm-overlay"
       style={{
         ...st.overlay,
         animation: closing
@@ -662,7 +688,7 @@ const st: Record<string, React.CSSProperties> = {
     right: 0,
     background: 'transparent',
     border: 'none',
-    color: '#555',
+    color: '#7a7a7a',
     fontSize: 18,
     cursor: 'pointer',
     fontFamily: fonts.mono,
@@ -831,7 +857,7 @@ const st: Record<string, React.CSSProperties> = {
 
   signDates: {
     fontSize: 8,
-    color: '#555',
+    color: '#7a7a7a',
     fontFamily: fonts.mono,
     letterSpacing: '0.02em',
   },
@@ -867,7 +893,7 @@ const st: Record<string, React.CSSProperties> = {
 
   stDesc: {
     fontSize: 10,
-    color: '#555',
+    color: '#7a7a7a',
     fontFamily: fonts.mono,
     letterSpacing: '0.04em',
     textTransform: 'uppercase',
@@ -934,7 +960,7 @@ const st: Record<string, React.CSSProperties> = {
   thinkTxt: {
     fontSize: 10,
     fontWeight: 700,
-    color: '#555',
+    color: '#7a7a7a',
     letterSpacing: '0.04em',
     fontFamily: fonts.sans,
     textTransform: 'uppercase',
@@ -971,7 +997,7 @@ const st: Record<string, React.CSSProperties> = {
     fontSize: 8,
     fontWeight: 700,
     letterSpacing: '0.2em',
-    color: '#444',
+    color: '#6e6e6e',
     fontFamily: fonts.mono,
     textTransform: 'uppercase',
   },
@@ -988,7 +1014,7 @@ const st: Record<string, React.CSSProperties> = {
     fontSize: 12,
     fontFamily: fonts.serif,
     fontStyle: 'italic',
-    color: '#666',
+    color: '#8a8a8a',
     lineHeight: 1.5,
   },
 
@@ -1005,7 +1031,7 @@ const st: Record<string, React.CSSProperties> = {
     fontSize: 8,
     fontWeight: 700,
     letterSpacing: '0.2em',
-    color: '#444',
+    color: '#6e6e6e',
     fontFamily: fonts.mono,
     textTransform: 'uppercase',
   },
@@ -1081,7 +1107,7 @@ const st: Record<string, React.CSSProperties> = {
   subFine: {
     margin: 0,
     fontSize: 9,
-    color: '#333',
+    color: '#5f5f5f',
     fontFamily: fonts.mono,
     letterSpacing: '0.08em',
   },
@@ -1096,7 +1122,7 @@ const st: Record<string, React.CSSProperties> = {
     fontWeight: 700,
     cursor: 'pointer',
     fontFamily: fonts.sans,
-    color: '#555',
+    color: '#7a7a7a',
     letterSpacing: '0.05em',
     textTransform: 'uppercase',
     transition: 'color 0.12s, border-color 0.12s',
@@ -1138,6 +1164,46 @@ const st: Record<string, React.CSSProperties> = {
     pointerEvents: 'none',
     zIndex: -1,
     overflow: 'visible',
+  },
+
+  receiptMobileWrap: {
+    width: '100%',
+    marginTop: 16,
+    overflow: 'hidden',
+  },
+
+  mobileHeader: {
+    display: 'none',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '12px 16px',
+    background: colors.black,
+    borderBottom: `1px solid #1e1e1e`,
+    position: 'sticky',
+    top: 0,
+    zIndex: 5,
+    flexShrink: 0,
+  },
+
+  mobileHeaderLabel: {
+    fontFamily: fonts.mono,
+    fontSize: 11,
+    letterSpacing: '0.14em',
+    color: colors.yellow,
+    opacity: 0.85,
+  },
+
+  mobileHeaderClose: {
+    background: 'transparent',
+    border: 'none',
+    color: colors.yellow,
+    fontSize: 22,
+    lineHeight: 1,
+    cursor: 'pointer',
+    fontFamily: fonts.mono,
+    padding: '4px 8px',
+    minWidth: 44,
+    minHeight: 44,
   },
 
   receipt: {
@@ -1392,19 +1458,66 @@ const CSS = `
     background: #f8ffa0;
   }
 
+  .hterm-receipt-mobile { display: none; }
+
   @media (max-width: 700px) {
+    .hterm-overlay {
+      padding: 0 !important;
+      align-items: stretch !important;
+    }
+    .hterm-wrap {
+      margin: 0 !important;
+      max-width: none !important;
+      height: auto !important;
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
     .void-layout {
       flex-direction: column !important;
+      border: none !important;
+      box-shadow: none !important;
+      min-height: 100vh;
+      min-height: 100dvh;
     }
-    .void-left {
-      width: 100% !important;
-      border-right: none !important;
-      border-bottom: 1px solid #222 !important;
-      padding: 20px 16px !important;
-      justify-content: flex-start !important;
+    .hterm-close-desktop { display: none !important; }
+    .hterm-mobile-header { display: flex !important; }
+    .hterm-stars { display: none !important; }
+
+    .void-left { display: none !important; }
+    .void-right { flex: 1 !important; }
+
+    /* tighter horizontal padding inside the right panel */
+    .void-right > div:first-of-type { padding: 16px 18px 12px !important; }
+
+    .hterm-sign-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 10px !important;
     }
-    .void-right {
-      flex: 1 !important;
+    .hterm-sign-btn {
+      padding: 18px 12px !important;
+      min-height: 84px !important;
+      gap: 6px !important;
     }
+    .hterm-sign-symbol { font-size: 28px !important; }
+    .hterm-sign-name { font-size: 12px !important; }
+    .hterm-sign-dates { font-size: 10px !important; }
+
+    .hterm-st-grid {
+      grid-template-columns: 1fr !important;
+      gap: 10px !important;
+    }
+    .hterm-st-btn {
+      padding: 18px 20px !important;
+      min-height: 64px !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 12px !important;
+    }
+    .hterm-st-value { font-size: 18px !important; }
+    .hterm-st-desc { font-size: 11px !important; }
+
+    .hterm-receipt-desktop { display: none !important; }
+    .hterm-receipt-mobile { display: block !important; }
   }
 `;
