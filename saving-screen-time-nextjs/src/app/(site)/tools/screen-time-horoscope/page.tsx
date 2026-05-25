@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import ToolPage from "../components/ToolPage";
 import HoroscopeModal from "./HoroscopeModal";
+import OOOInline from "./OOOInline";
 
 const archetypes = [
   {
@@ -122,6 +123,7 @@ export default function ScreenTimeHoroscopePage() {
                   <p>We’re not the first to make out-of-office replies a little weird. Iceland’s tourism campaign famously let a horse “answer” your emails while you were away, turning auto-response into performance art. Our horoscope-based reply does something similarly odd: it lets a speculative, mystical register leak into one of the most tightly managed corners of professional life, and uses that leak to justify stepping away.</p>
                   <p>It could also give off a slightly unhinged vibe — which, frankly, is an excellent way to discourage anyone from emailing you in the first place.</p>
                 </div>
+                <OOOInline />
               </div>
             </section>
           </>
