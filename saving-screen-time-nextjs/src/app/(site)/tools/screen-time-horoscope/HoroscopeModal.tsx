@@ -6,8 +6,11 @@ import {
   SIGN_HOROSCOPES,
   VERDICTS,
   SCREEN_TIME_CONTEXT,
+  rollOOO,
   type ZodiacId,
 } from './horoscope-data';
+
+const SUBSCRIBE_ENABLED = false;
 
 const colors = {
   black: '#050505',
@@ -173,8 +176,14 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
+  const [oooText, setOooText] = useState('');
+  const [printing, setPrinting] = useState(false);
+  const [printed, setPrinted] = useState(false);
+  const [copied, setCopied] = useState(false);
+
   const cancelRef = useRef(false);
   const rightPanelRef = useRef<HTMLDivElement>(null);
+  const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (rightPanelRef.current) {
@@ -303,6 +312,14 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
     setShowCursor(false);
     setEmail('');
     setSubscribed(false);
+    setOooText('');
+    setPrinting(false);
+    setPrinted(false);
+    setCopied(false);
+    if (copyTimeoutRef.current) {
+      clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = null;
+    }
   };
 
   const handleSubscribe = (e: React.FormEvent) => {
@@ -312,6 +329,42 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
       setSpeechText("✦ Your cosmic inbox is ready. Almost.");
       setSpeechDone(true);
     }
+  };
+
+  const handlePrint = () => {
+    if (!selectedSign) return;
+    setOooText(rollOOO(selectedSign.id, screenTime));
+    setPrinted(false);
+    setPrinting(true);
+  };
+
+  const handlePrintAnimationEnd = () => {
+    setPrinting(false);
+    setPrinted(true);
+  };
+
+  const handleRegenerate = () => {
+    if (!selectedSign) return;
+    setOooText(rollOOO(selectedSign.id, screenTime));
+  };
+
+  const handleCopy = async () => {
+    if (!oooText) return;
+    try {
+      await navigator.clipboard.writeText(oooText);
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = oooText;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch { /* ignore */ }
+      document.body.removeChild(ta);
+    }
+    setCopied(true);
+    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    copyTimeoutRef.current = setTimeout(() => setCopied(false), 1600);
   };
 
   return (
@@ -442,7 +495,7 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
                     )}
                   </div>
 
-                  {phase === 'revealed' && (
+                  {SUBSCRIBE_ENABLED && phase === 'revealed' && (
                     <div style={st.sub}>
                       <p style={st.subFine}>Weekly horoscopes · No data harvesting · Just vibes</p>
                       {subscribed ? (
@@ -465,6 +518,15 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
                     </div>
                   )}
 
+                  {phase === 'revealed' && !printing && !printed && (
+                    <div style={st.printRow}>
+                      <p style={st.subFine}>Take your reading with you · Print an out-of-office</p>
+                      <button onClick={handlePrint} style={st.printBtn}>
+                        Print your out-of-office
+                      </button>
+                    </div>
+                  )}
+
                   {phase === 'revealed' && (
                     <button onClick={reset} style={st.resetBtn}>
                       ← Consult the Oracle again
@@ -478,6 +540,46 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
 
         </div>
       </div>
+
+      {(printing || printed) && (
+        <div style={st.receiptAnchor} aria-live="polite">
+          <div
+            style={st.receipt}
+            className={printing ? 'ooo-receipt-printing' : 'ooo-receipt-resting'}
+            onAnimationEnd={(e) => {
+              if (e.animationName === 'hPrintOut') handlePrintAnimationEnd();
+            }}
+          >
+            <div style={st.receiptJagTop} aria-hidden />
+            <div style={st.receiptInner}>
+              <div style={st.receiptHeader}>
+                <span>OUT-OF-OFFICE</span>
+                <span>★ {selectedSign?.name?.toUpperCase()}</span>
+              </div>
+              <pre style={st.receiptText} key={oooText}>{oooText}</pre>
+              <div style={st.receiptFooter}>
+                <button
+                  onClick={handleRegenerate}
+                  style={st.receiptRegenBtn}
+                  disabled={!printed}
+                  aria-label="Regenerate out-of-office"
+                >
+                  ↻ regenerate
+                </button>
+                <button
+                  onClick={handleCopy}
+                  style={st.receiptCopyBtn}
+                  disabled={!printed}
+                  aria-label="Copy out-of-office to clipboard"
+                >
+                  {copied ? '✓ copied' : 'copy to clipboard'}
+                </button>
+              </div>
+            </div>
+            <div style={st.receiptJagBottom} aria-hidden />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -534,15 +636,19 @@ const st: Record<string, React.CSSProperties> = {
     zIndex: 9999,
     background: 'rgba(5,5,5,0.92)',
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
+    overflowY: 'auto',
+    padding: '6vh 0 8vh',
+    boxSizing: 'border-box',
   },
 
   terminalWrap: {
     position: 'relative',
+    zIndex: 0,
     width: '100%',
     maxWidth: 960,
-    height: '85vh',
+    height: '55vh',
     margin: '0 24px',
     display: 'flex',
     flexDirection: 'column',
@@ -566,6 +672,8 @@ const st: Record<string, React.CSSProperties> = {
   },
 
   terminal: {
+    position: 'relative',
+    zIndex: 1,
     flex: 1,
     minHeight: 0,
     display: 'flex',
@@ -993,6 +1101,139 @@ const st: Record<string, React.CSSProperties> = {
     textTransform: 'uppercase',
     transition: 'color 0.12s, border-color 0.12s',
   },
+
+  printRow: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 10,
+    animation: 'hFadeIn 0.6s ease',
+    borderTop: `1px solid #1e1e1e`,
+    paddingTop: 16,
+    marginTop: 4,
+  },
+
+  printBtn: {
+    alignSelf: 'flex-start',
+    padding: '12px 20px',
+    background: colors.yellow,
+    color: colors.black,
+    border: `1px solid ${colors.yellow}`,
+    borderRadius: 0,
+    fontSize: 12,
+    fontWeight: 700,
+    cursor: 'pointer',
+    fontFamily: fonts.sans,
+    letterSpacing: '0.08em',
+    textTransform: 'uppercase',
+    whiteSpace: 'nowrap',
+    transition: 'background 0.12s',
+  },
+
+  receiptAnchor: {
+    position: 'absolute',
+    top: '100%',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    width: 'min(86%, 460px)',
+    pointerEvents: 'none',
+    zIndex: -1,
+    overflow: 'visible',
+  },
+
+  receipt: {
+    pointerEvents: 'auto',
+    position: 'relative',
+    transformOrigin: 'top center',
+    background: '#f5f5f0',
+    color: '#1a1a1a',
+    boxShadow: '0 22px 40px rgba(0,0,0,0.55), 0 0 0 1px rgba(0,0,0,0.15)',
+    marginTop: -2,
+  },
+
+  receiptJagTop: {
+    height: 10,
+    background:
+      'linear-gradient(135deg, #f5f5f0 25%, transparent 25%) 0 0/10px 10px, ' +
+      'linear-gradient(225deg, #f5f5f0 25%, transparent 25%) 0 0/10px 10px',
+    backgroundColor: 'transparent',
+    marginTop: -10,
+  },
+
+  receiptJagBottom: {
+    height: 10,
+    background:
+      'linear-gradient(45deg, #f5f5f0 25%, transparent 25%) 0 0/10px 10px, ' +
+      'linear-gradient(315deg, #f5f5f0 25%, transparent 25%) 0 0/10px 10px',
+    backgroundColor: 'transparent',
+  },
+
+  receiptInner: {
+    padding: '20px 24px 22px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 14,
+  },
+
+  receiptHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
+    fontFamily: fonts.mono,
+    fontSize: 9,
+    letterSpacing: '0.22em',
+    color: '#555',
+    borderBottom: '1px dashed #bdbdb6',
+    paddingBottom: 10,
+  },
+
+  receiptText: {
+    margin: 0,
+    fontFamily: fonts.mono,
+    fontSize: 12.5,
+    lineHeight: 1.65,
+    color: '#1a1a1a',
+    whiteSpace: 'pre-wrap',
+    wordBreak: 'break-word',
+    animation: 'hPaperFadeIn 0.3s ease',
+  },
+
+  receiptFooter: {
+    marginTop: 4,
+    paddingTop: 12,
+    borderTop: '1px dashed #bdbdb6',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: 12,
+    animation: 'hPaperFadeIn 0.4s ease 0.1s both',
+  },
+
+  receiptRegenBtn: {
+    background: 'transparent',
+    border: 'none',
+    padding: '4px 6px',
+    fontFamily: fonts.mono,
+    fontSize: 11,
+    color: '#555',
+    cursor: 'pointer',
+    letterSpacing: '0.04em',
+    textDecoration: 'underline',
+    textUnderlineOffset: 3,
+  },
+
+  receiptCopyBtn: {
+    background: colors.yellow,
+    color: colors.black,
+    border: `1px solid ${colors.yellow}`,
+    padding: '8px 14px',
+    fontFamily: fonts.sans,
+    fontSize: 11,
+    fontWeight: 700,
+    letterSpacing: '0.08em',
+    textTransform: 'uppercase',
+    cursor: 'pointer',
+    whiteSpace: 'nowrap',
+  },
 };
 
 const CSS = `
@@ -1065,6 +1306,36 @@ const CSS = `
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  @keyframes hPrintOut {
+    0%   { transform: translateY(-100%); }
+    100% { transform: translateY(0); }
+  }
+
+  @keyframes hPaperFadeIn {
+    from { opacity: 0; transform: translateY(-3px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .ooo-receipt-printing {
+    animation: hPrintOut 1.6s cubic-bezier(0.16, 0.84, 0.44, 1) both;
+    will-change: transform;
+  }
+  .ooo-receipt-resting {
+    transform: translateY(0);
+  }
+
+  .ooo-receipt-printing button:hover,
+  .ooo-receipt-resting button:hover {
+    background: #1a1a1a !important;
+    color: #f5f5f0 !important;
+    border-color: #1a1a1a !important;
+  }
+  .ooo-receipt-printing button:disabled,
+  .ooo-receipt-resting button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
   @keyframes botBlink {
     0%, 88%, 96%, 100% { opacity: 1; }
     90%, 94%            { opacity: 0; }
@@ -1092,6 +1363,33 @@ const CSS = `
 
   button:hover span {
     color: #050505 !important;
+  }
+
+  .void-right,
+  .void-right * {
+    scrollbar-width: thin;
+    scrollbar-color: ${colors.yellow} #111;
+  }
+
+  .void-right::-webkit-scrollbar,
+  .void-right *::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .void-right::-webkit-scrollbar-track,
+  .void-right *::-webkit-scrollbar-track {
+    background: #111;
+  }
+
+  .void-right::-webkit-scrollbar-thumb,
+  .void-right *::-webkit-scrollbar-thumb {
+    background: ${colors.yellow};
+    border-radius: 0;
+  }
+
+  .void-right::-webkit-scrollbar-thumb:hover,
+  .void-right *::-webkit-scrollbar-thumb:hover {
+    background: #f8ffa0;
   }
 
   @media (max-width: 700px) {
