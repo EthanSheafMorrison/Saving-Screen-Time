@@ -956,6 +956,7 @@ body {
   display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
   position: relative; z-index: 2;
   font-family: eb garamond, serif;
+  min-width: 0;
 }
 .study-tag {
   display: inline-block;
@@ -1330,6 +1331,45 @@ body {
   .aim .section-inner, .keyinfo .section-inner { grid-template-columns: 1fr; gap: 32px; }
   .steps-grid, .rights-grid, .team-grid, .guide-grid { grid-template-columns: 1fr; }
   .topics-grid, .data-grid { grid-template-columns: 1fr; }
+  .hero {
+    overflow-x: hidden;
+  }
+  .hero-text {
+    padding: 48px 20px 40px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    align-items: stretch;
+  }
+  .hero-text > * {
+    max-width: 100%;
+    min-width: 0;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 9vw, 3rem);
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    max-width: 100%;
+  }
+  .hero h1 em {
+    font-size: 1em;
+  }
+  .hero-text .study-tag {
+    align-self: center;
+  }
+  .hero-text .nav-links {
+    justify-content: center;
+  }
+  .hero-text .nav-links > :nth-child(3) {
+    display: none;
+  }
+  [data-theme="horoscope"] .hero-stars-deco {
+    overflow: hidden;
+    max-width: 100%;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
 }
 
 /* ── BLOG POST ── */
@@ -2129,6 +2169,14 @@ body.blog-reveal-ready .blog-post-section.is-visible {
 
 /* ✦ prefix on every section label */
 [data-theme="horoscope"] .section-label::before { content: '✦ '; }
+
+@media (max-width: 800px) {
+  [data-theme="horoscope"] .hero-stars-deco {
+    white-space: pre-wrap;
+    overflow: hidden;
+    max-width: 100%;
+  }
+}
 
 /* Aim quote — subtle glow pulse */
 [data-theme="horoscope"] .aim-quote {

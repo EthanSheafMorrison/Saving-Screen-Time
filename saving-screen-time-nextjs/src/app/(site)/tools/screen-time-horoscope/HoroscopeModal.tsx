@@ -284,11 +284,17 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
     await wait(300);
     setShowCursor(false);
     setDisplayText(horoscope);
-    setShowWave(true);
 
-    await wait(horoscope.length * 18 + 900);
+    const isMobile =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(max-width: 700px)').matches;
+
+    if (!isMobile) {
+      setShowWave(true);
+      await wait(horoscope.length * 18 + 900);
+      setShowWave(false);
+    }
     setPhase('revealed');
-    setShowWave(false);
 
     await typeSpeech("Wish to replace your screen time report with the stars? Sign up for weekly horoscopes.");
   }, [phase]); // eslint-disable-line react-hooks/exhaustive-deps
