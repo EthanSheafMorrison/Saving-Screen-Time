@@ -8,7 +8,14 @@ import {
   SCREEN_TIME_CONTEXT,
   rollOOO,
   type ZodiacId,
+  type OOOTone,
 } from './horoscope-data';
+
+const TONE_OPTIONS: { value: OOOTone; label: string }[] = [
+  { value: 'polite',    label: 'Polite-ish' },
+  { value: 'unhinged',  label: 'Fully Unhinged' },
+  { value: 'corporate', label: 'Corporate Parody' },
+];
 
 const SUBSCRIBE_ENABLED = false;
 
@@ -180,6 +187,7 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
   const [printing, setPrinting] = useState(false);
   const [printed, setPrinted] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [tone, setTone] = useState<OOOTone>('polite');
 
   const cancelRef = useRef(false);
   const rightPanelRef = useRef<HTMLDivElement>(null);
@@ -316,6 +324,7 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
     setPrinting(false);
     setPrinted(false);
     setCopied(false);
+    setTone('polite');
     if (copyTimeoutRef.current) {
       clearTimeout(copyTimeoutRef.current);
       copyTimeoutRef.current = null;
@@ -333,7 +342,7 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
 
   const handlePrint = () => {
     if (!selectedSign) return;
-    setOooText(rollOOO(selectedSign.id, screenTime));
+    setOooText(rollOOO(selectedSign.id, screenTime, tone));
     setPrinted(false);
     setPrinting(true);
   };
@@ -345,7 +354,15 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
 
   const handleRegenerate = () => {
     if (!selectedSign) return;
-    setOooText(rollOOO(selectedSign.id, screenTime));
+    setOooText(rollOOO(selectedSign.id, screenTime, tone));
+  };
+
+  const handleToneChange = (next: OOOTone) => {
+    if (next === tone) return;
+    setTone(next);
+    if (selectedSign && (printed || printing)) {
+      setOooText(rollOOO(selectedSign.id, screenTime, next));
+    }
   };
 
   const handleCopy = async () => {
@@ -571,6 +588,28 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
                     </div>
                   )}
 
+                  {phase === 'revealed' && (printing || printed) && (
+                    <div style={st.toneRow}>
+                      <span style={st.toneLabel}>CHANGE THE TONE</span>
+                      <div style={st.toneBtnGrid} className="hterm-tone-grid">
+                        {TONE_OPTIONS.map((opt) => {
+                          const active = tone === opt.value;
+                          return (
+                            <button
+                              key={opt.value}
+                              onClick={() => handleToneChange(opt.value)}
+                              className="hterm-tone-btn"
+                              style={active ? { ...st.toneBtn, ...st.toneBtnActive } : st.toneBtn}
+                              aria-pressed={active}
+                            >
+                              {opt.label}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
                   {phase === 'revealed' && !printing && !printed && (
                     <div style={st.printRow}>
                       <p style={st.subFine}>Take your reading with you · Print an out-of-office</p>
@@ -674,7 +713,7 @@ const st: Record<string, React.CSSProperties> = {
     zIndex: 0,
     width: '100%',
     maxWidth: 960,
-    height: '55vh',
+    height: '68vh',
     margin: '0 24px',
     display: 'flex',
     flexDirection: 'column',
@@ -753,7 +792,7 @@ const st: Record<string, React.CSSProperties> = {
 
   ftAscii: {
     fontFamily: fonts.mono,
-    fontSize: 16,
+    fontSize: 19,
     lineHeight: 1.5,
     margin: 0,
     padding: '16px 20px',
@@ -802,7 +841,7 @@ const st: Record<string, React.CSSProperties> = {
   },
 
   ftSpeechText: {
-    fontSize: 14,
+    fontSize: 22,
     fontFamily: fonts.serif,
     fontStyle: 'italic',
     color: colors.yellow,
@@ -847,7 +886,7 @@ const st: Record<string, React.CSSProperties> = {
   },
 
   signName: {
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: 700,
     letterSpacing: '0.08em',
     color: '#cfccd3',
@@ -856,7 +895,7 @@ const st: Record<string, React.CSSProperties> = {
   },
 
   signDates: {
-    fontSize: 8,
+    fontSize: 10,
     color: '#7a7a7a',
     fontFamily: fonts.mono,
     letterSpacing: '0.02em',
@@ -892,7 +931,7 @@ const st: Record<string, React.CSSProperties> = {
   },
 
   stDesc: {
-    fontSize: 10,
+    fontSize: 12,
     color: '#7a7a7a',
     fontFamily: fonts.mono,
     letterSpacing: '0.04em',
@@ -958,7 +997,7 @@ const st: Record<string, React.CSSProperties> = {
   },
 
   thinkTxt: {
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: 700,
     color: '#7a7a7a',
     letterSpacing: '0.04em',
@@ -968,7 +1007,7 @@ const st: Record<string, React.CSSProperties> = {
 
   cardText: {
     margin: 0,
-    fontSize: 15,
+    fontSize: 20,
     lineHeight: 1.7,
     fontFamily: fonts.serif,
     fontStyle: 'italic',
@@ -1003,7 +1042,7 @@ const st: Record<string, React.CSSProperties> = {
   },
 
   screenTimeCtxVal: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 700,
     fontFamily: fonts.mono,
     color: colors.yellow,
@@ -1011,15 +1050,15 @@ const st: Record<string, React.CSSProperties> = {
 
   screenTimeCtxText: {
     margin: 0,
-    fontSize: 12,
+    fontSize: 16,
     fontFamily: fonts.serif,
     fontStyle: 'italic',
-    color: '#8a8a8a',
+    color: '#cbcbcb',
     lineHeight: 1.5,
   },
 
   verdict: {
-    marginTop: 14,
+    marginTop: 16,
     display: 'flex',
     flexDirection: 'column',
     gap: 4,
@@ -1126,6 +1165,56 @@ const st: Record<string, React.CSSProperties> = {
     letterSpacing: '0.05em',
     textTransform: 'uppercase',
     transition: 'color 0.12s, border-color 0.12s',
+  },
+
+  toneRow: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 8,
+    animation: 'hFadeIn 0.5s ease',
+    borderTop: `1px solid #1e1e1e`,
+    paddingTop: 16,
+    marginTop: 4,
+  },
+
+  toneLabel: {
+    fontSize: 8,
+    fontWeight: 700,
+    letterSpacing: '0.2em',
+    color: '#6e6e6e',
+    fontFamily: fonts.mono,
+    textTransform: 'uppercase',
+  },
+
+  toneBtnGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gap: 6,
+    width: '100%',
+  },
+
+  toneBtn: {
+    padding: '10px 8px',
+    background: 'transparent',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: '#1e1e1e',
+    borderRadius: 0,
+    cursor: 'pointer',
+    fontFamily: fonts.sans,
+    fontSize: 11,
+    fontWeight: 700,
+    letterSpacing: '0.08em',
+    textTransform: 'uppercase',
+    color: '#cfccd3',
+    transition: 'background 0.12s, border-color 0.12s, color 0.12s',
+    whiteSpace: 'nowrap',
+  },
+
+  toneBtnActive: {
+    background: colors.yellow,
+    color: colors.black,
+    borderColor: colors.yellow,
   },
 
   printRow: {
@@ -1499,8 +1588,8 @@ const CSS = `
       gap: 6px !important;
     }
     .hterm-sign-symbol { font-size: 28px !important; }
-    .hterm-sign-name { font-size: 12px !important; }
-    .hterm-sign-dates { font-size: 10px !important; }
+    .hterm-sign-name { font-size: 14px !important; }
+    .hterm-sign-dates { font-size: 11px !important; }
 
     .hterm-st-grid {
       grid-template-columns: 1fr !important;
@@ -1514,10 +1603,24 @@ const CSS = `
       justify-content: space-between !important;
       gap: 12px !important;
     }
-    .hterm-st-value { font-size: 18px !important; }
-    .hterm-st-desc { font-size: 11px !important; }
+    .hterm-st-value { font-size: 20px !important; }
+    .hterm-st-desc { font-size: 13px !important; }
 
     .hterm-receipt-desktop { display: none !important; }
     .hterm-receipt-mobile { display: block !important; }
+
+    .hterm-tone-grid {
+      grid-template-columns: 1fr 1fr !important;
+    }
+    .hterm-tone-btn {
+      padding: 12px 6px !important;
+      min-height: 44px !important;
+      white-space: normal !important;
+      font-size: 11px !important;
+      line-height: 1.2 !important;
+    }
+    .hterm-tone-btn:last-of-type {
+      grid-column: 1 / -1 !important;
+    }
   }
 `;
