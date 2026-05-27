@@ -2396,6 +2396,39 @@ body.blog-reveal-ready .blog-post-section.is-visible {
   color: var(--section-fg, #ffffff);
 }
 
+/* Expandable section toggle */
+.expand-toggle {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  padding: 0;
+}
+.expand-toggle:hover { opacity: 0.75; }
+.expand-toggle .section-title { margin-bottom: 0; }
+.expand-chevron {
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 4px;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+.expand-toggle:hover .expand-chevron { opacity: 1; }
+.expand-body { animation: expandFadeIn 0.2s ease; }
+@keyframes expandFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* Archetype / card grids used in extra sections */
 .archetype-grid {
   display: grid;
