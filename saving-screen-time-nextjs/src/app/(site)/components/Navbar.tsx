@@ -90,7 +90,7 @@ export default function Navbar() {
           </div>
           <Link href="/blog" onClick={closeMenu}>Blog</Link>
           <Link href="/team" onClick={closeMenu}>Team</Link>
-          {/* <Link href="/tools" onClick={closeMenu}>Tools</Link> */} {/* Deploy Tools */}
+          <Link href="/tools/screen-time-horoscope" onClick={closeMenu}>Horoscope</Link>
           <Link href="/Study" onClick={closeMenu}>Current Study</Link>
           <SearchBar onSubmit={closeMenu} />
         </div>
