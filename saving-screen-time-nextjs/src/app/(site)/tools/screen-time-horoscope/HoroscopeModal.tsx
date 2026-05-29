@@ -7,6 +7,8 @@ import {
   VERDICTS,
   SCREEN_TIME_CONTEXT,
   rollOOO,
+  HOROSCOPE_URL,
+  HOROSCOPE_LINK_LABEL,
   type ZodiacId,
   type OOOTone,
 } from './horoscope-data';
@@ -159,6 +161,16 @@ function WaveText({ text, style }: { text: string; style?: React.CSSProperties }
       ))}
     </p>
   );
+}
+
+function buildOOOClipboard(body: string) {
+  const plain = `${body}\n\n${HOROSCOPE_LINK_LABEL}\n${HOROSCOPE_URL}`;
+  const esc = (s: string) =>
+    s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const html =
+    `<div>${esc(body).replace(/\n/g, '<br>')}<br><br>` +
+    `<a href="${HOROSCOPE_URL}">${HOROSCOPE_LINK_LABEL}</a></div>`;
+  return { plain, html };
 }
 
 type Phase = 'idle' | 'q2' | 'reading' | 'revealed';
@@ -373,11 +385,23 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
 
   const handleCopy = async () => {
     if (!oooText) return;
+    const { plain, html } = buildOOOClipboard(oooText);
     try {
-      await navigator.clipboard.writeText(oooText);
+      if (navigator.clipboard && typeof ClipboardItem !== 'undefined') {
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            'text/html': new Blob([html], { type: 'text/html' }),
+            'text/plain': new Blob([plain], { type: 'text/plain' }),
+          }),
+        ]);
+      } else if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(plain);
+      } else {
+        throw new Error('no clipboard');
+      }
     } catch {
       const ta = document.createElement('textarea');
-      ta.value = oooText;
+      ta.value = plain;
       ta.style.position = 'fixed';
       ta.style.opacity = '0';
       document.body.appendChild(ta);
@@ -405,6 +429,10 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
           <span>★ {selectedSign?.name?.toUpperCase()}</span>
         </div>
         <pre style={st.receiptText} key={oooText}>{oooText}</pre>
+        <div style={st.receiptAttribution}>
+          {HOROSCOPE_LINK_LABEL}
+          {'\n'}{HOROSCOPE_URL}
+        </div>
         <div style={st.receiptFooter}>
           <button
             onClick={handleRegenerate}
@@ -1356,6 +1384,18 @@ const st: Record<string, React.CSSProperties> = {
     whiteSpace: 'pre-wrap',
     wordBreak: 'break-word',
     animation: 'hPaperFadeIn 0.3s ease',
+  },
+
+  receiptAttribution: {
+    marginTop: 4,
+    paddingTop: 12,
+    borderTop: '1px dashed #bdbdb6',
+    fontFamily: fonts.mono,
+    fontSize: 11,
+    lineHeight: 1.5,
+    color: '#555',
+    whiteSpace: 'pre-wrap',
+    wordBreak: 'break-word',
   },
 
   receiptFooter: {

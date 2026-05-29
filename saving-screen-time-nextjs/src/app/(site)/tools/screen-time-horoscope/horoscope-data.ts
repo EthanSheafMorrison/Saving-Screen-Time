@@ -17,6 +17,9 @@ export type ZodiacId = typeof ZODIAC_SIGNS[number]['id'];
 
 export type OOOTone = 'polite' | 'unhinged' | 'corporate';
 
+export const HOROSCOPE_URL = "https://www.savingscreentime.com/tools/screen-time-horoscope";
+export const HOROSCOPE_LINK_LABEL = "Screen Time Horoscopes";
+
 export const SIGN_HOROSCOPES: Record<ZodiacId, string> = {
   aries:
     "The Ram does not check notifications — the Ram IS the notification. Your screen time is not a problem; it is a personality trait. Mars urges action, and action requires a device. The hours logged today were not wasted: they were charged.",
