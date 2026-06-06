@@ -109,7 +109,7 @@ export default function SavingScreenSpacePage() {
           />
         </svg>
       }
-      aboutQuote="If you were the kid who drew on the desk — what might it mean to start drawing on your newsfeed?"
+      aboutQuote="If you were the kid who drew on the desk — what might it mean to start drawing on your Screen?"
       aboutBody={
         <>
           <p>Were you the kid who drew on the desk? Shaded in the margins, carved patterns into the wood, couldn&apos;t quite sit still? Today&apos;s internet is barely bearable — ads on every surface, feeds tuned for maximum stickiness, your attention measured and sold. Screen Space Defacer hands the desk back. It&apos;s a browser extension that lets you scratch, smear, and scribble over the ads instead of just tolerating them or hiding them away. Where an ad blocker makes the commercial layer <em>invisible</em>, this makes it <em>tangible</em> — a banner stops being a one-way demand for your attention and becomes a surface you can touch, mark, and slowly wear down.</p>

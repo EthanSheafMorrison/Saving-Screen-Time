@@ -291,6 +291,16 @@ export default function StudyPage() {
               </div>
             </div>
             <div className="info-item reveal">
+              <div className="info-icon">⏱</div>
+              <div>
+                <div className="info-label">Time commitment</div>
+                <div className="info-text">On average this takes 15–30 minutes</div>
+                <div className="info-sub">
+                  No need to do it all at once — you can pause and come back.
+                </div>
+              </div>
+            </div>
+            <div className="info-item reveal">
               <div className="info-icon">🖥</div>
               <div>
                 <div className="info-label">Format</div>
