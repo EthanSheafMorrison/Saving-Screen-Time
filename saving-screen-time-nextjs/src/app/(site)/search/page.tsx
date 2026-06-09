@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { client } from "../../../sanity/lib/client";
+import { matchPages } from "../../../lib/searchPages";
 
 export const revalidate = 60;
 
 interface SearchResult {
   _id: string;
-  _type: "blogPost" | "publication" | "mediaItem";
+  _type: "page" | "blogPost" | "publication" | "mediaItem";
   title: string;
   slug?: { current: string };
   authors?: string;
@@ -16,10 +17,13 @@ interface SearchResult {
   excerpt?: string;
   description?: string;
   link?: string;
+  href?: string;
+  label?: string;
 }
 
 function groupByType(results: SearchResult[]) {
   const groups: Record<string, SearchResult[]> = {
+    page: [],
     blogPost: [],
     publication: [],
     mediaItem: [],
@@ -31,12 +35,14 @@ function groupByType(results: SearchResult[]) {
 }
 
 const groupLabels: Record<string, string> = {
+  page: "Pages",
   blogPost: "Blog posts",
   publication: "Publications",
   mediaItem: "Press",
 };
 
 function resultHref(r: SearchResult): string | null {
+  if (r._type === "page") return r.href ?? null;
   if (r._type === "blogPost") {
     return r.slug?.current ? `/blog/${r.slug.current}` : null;
   }
@@ -52,6 +58,7 @@ function resultMeta(r: SearchResult): string {
 }
 
 function resultByline(r: SearchResult): string {
+  if (r._type === "page") return r.label ?? "";
   if (r._type === "blogPost") return r.author ?? "";
   if (r._type === "publication") return r.authors ?? "";
   if (r._type === "mediaItem") return r.outlet ?? "";
@@ -68,7 +75,8 @@ export default async function SearchPage({
 
   let results: SearchResult[] = [];
   if (term) {
-    results = await client.fetch(
+    const pages = matchPages(term, 20) as SearchResult[];
+    const content: SearchResult[] = await client.fetch(
       `*[_type in ["blogPost", "publication", "mediaItem"] && (
         title match $q ||
         author match $q ||
@@ -92,6 +100,7 @@ export default async function SearchPage({
       }`,
       { q: `${term}*` }
     );
+    results = [...pages, ...content];
   }
 
   const groups = groupByType(results);
