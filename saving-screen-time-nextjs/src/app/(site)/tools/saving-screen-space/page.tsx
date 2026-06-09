@@ -63,7 +63,7 @@ export default function SavingScreenSpacePage() {
       tag="Tool — Screen Space Defacer"
       title={<>Screen Space <em>Defacer</em></>}
       subtitle="A browser extension that lets you scratch, smear, and scribble back at the ads that fill your screen."
-      launchUrl="[URL_GOES_HERE]"
+      launchUrl="https://chromewebstore.google.com/detail/nnihmbgnlpcniihccdcliiiiilakafbm?utm_source=item-share-cb"
       ctaLabel="Get the Extension ↗"
       heroDecoration={
         <svg

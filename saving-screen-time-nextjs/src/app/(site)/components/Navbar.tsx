@@ -8,23 +8,32 @@ import SearchBar from "./SearchBar";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [toolsOpen, setToolsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const toolsRef = useRef<HTMLDivElement>(null);
 
   const closeMenu = () => {
     setIsOpen(false);
     setDropdownOpen(false);
+    setToolsOpen(false);
   };
 
-  // Close dropdown on outside click (desktop) and on Escape
+  // Close dropdowns on outside click (desktop) and on Escape
   useEffect(() => {
-    if (!dropdownOpen) return;
+    if (!dropdownOpen && !toolsOpen) return;
     const handleClick = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setDropdownOpen(false);
       }
+      if (toolsRef.current && !toolsRef.current.contains(e.target as Node)) {
+        setToolsOpen(false);
+      }
     };
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setDropdownOpen(false);
+      if (e.key === "Escape") {
+        setDropdownOpen(false);
+        setToolsOpen(false);
+      }
     };
     document.addEventListener("mousedown", handleClick);
     document.addEventListener("keydown", handleKey);
@@ -32,7 +41,7 @@ export default function Navbar() {
       document.removeEventListener("mousedown", handleClick);
       document.removeEventListener("keydown", handleKey);
     };
-  }, [dropdownOpen]);
+  }, [dropdownOpen, toolsOpen]);
 
   return (
     <nav className="nav-bar">
@@ -90,7 +99,32 @@ export default function Navbar() {
           </div>
           <Link href="/blog" onClick={closeMenu}>Blog</Link>
           <Link href="/team" onClick={closeMenu}>Team</Link>
-          <Link href="/tools/screen-time-horoscope" onClick={closeMenu}>Horoscope</Link>
+          <div className="nav-dropdown" ref={toolsRef}>
+            <div className="nav-dropdown-split">
+              <Link href="/tools" onClick={closeMenu}>Tools</Link>
+              <button
+                type="button"
+                className="nav-dropdown-caret"
+                onClick={() => setToolsOpen(!toolsOpen)}
+                aria-haspopup="menu"
+                aria-expanded={toolsOpen}
+                aria-label="Toggle tools menu"
+              >
+                <span aria-hidden="true">▾</span>
+              </button>
+            </div>
+            <div
+              className={`nav-dropdown-panel ${toolsOpen ? "open" : ""}`}
+              role="menu"
+            >
+              <Link href="/tools/screen-time-horoscope" onClick={closeMenu} role="menuitem">
+                Horoscope
+              </Link>
+              <Link href="/tools/saving-screen-space" onClick={closeMenu} role="menuitem">
+                Defacer
+              </Link>
+            </div>
+          </div>
           <Link href="/Study" onClick={closeMenu}>Current Study</Link>
           <SearchBar onSubmit={closeMenu} />
         </div>

@@ -1693,6 +1693,26 @@ body.blog-reveal-ready .blog-post-section.is-visible {
   outline: none;
 }
 
+/* Split toggle: a navigable label + a caret button for the dropdown */
+.nav-dropdown-split {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.nav-dropdown-caret {
+  background: transparent;
+  border: none;
+  color: var(--white);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+.nav-dropdown-caret:focus-visible {
+  outline: 1px solid var(--white);
+}
+
 /* ── NAV SEARCH ── */
 .nav-search {
   display: flex;
@@ -1725,6 +1745,9 @@ body.blog-reveal-ready .blog-post-section.is-visible {
     width: 100%;
   }
   .nav-menu .nav-links.open .nav-dropdown-toggle {
+    display: none;
+  }
+  .nav-menu .nav-links.open .nav-dropdown-caret {
     display: none;
   }
   .nav-menu .nav-links.open .nav-dropdown-panel {
