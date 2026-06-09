@@ -143,6 +143,69 @@ export default async function Home() {
           </div>
         </div>
 
+        <div className="stripe stripe-tools-intro">
+          <span className="stripe-tool-plus stp-tl" aria-hidden="true">+</span>
+          <span className="stripe-tool-plus stp-br" aria-hidden="true">+</span>
+          <div className="tools-intro-ticker" aria-hidden="true">
+            <div className="ticker">
+              <div className="ticker-track">
+                <span className="stripe-giant-text">TOOLS ✦ OUTPUTS ✦ EXPERIMENTS ✦&nbsp;</span>
+                <span className="stripe-giant-text">TOOLS ✦ OUTPUTS ✦ EXPERIMENTS ✦&nbsp;</span>
+              </div>
+            </div>
+          </div>
+          <div className="tools-intro-inner">
+            <div className="tools-intro-eyebrow">Beyond the study</div>
+            <h2 className="tools-intro-title">The Tools</h2>
+            <p className="tools-intro-body">
+              Saving Screen Time isn&apos;t only a study. Alongside the research we build small, free tools — playful experiments in screen time, and <span className="text-highlight">additional outputs of the project</span>. Two are live now.
+            </p>
+          </div>
+        </div>
+
+        <a href="/tools/saving-screen-space" className="stripe stripe-tool stripe-tool--defacer">
+          <span className="stripe-tool-plus stp-tr" aria-hidden="true">+</span>
+          <span className="stripe-tool-plus stp-bl" aria-hidden="true">+</span>
+          <span className="stripe-tool-ghost" aria-hidden="true">DEFACE</span>
+          <svg className="stripe-tool-scribble" viewBox="0 0 900 420" fill="none" aria-hidden="true" preserveAspectRatio="none">
+            <path className="scribble-path scribble-path--1" d="M60 200 C 140 120, 220 280, 340 180 S 500 280, 620 160 S 780 260, 880 140" stroke="currentColor" strokeWidth="5" strokeLinecap="round" />
+            <path className="scribble-path scribble-path--2" d="M200 130 L 680 300" stroke="currentColor" strokeWidth="6" strokeLinecap="round" />
+            <path className="scribble-path scribble-path--3" d="M200 300 L 680 130" stroke="currentColor" strokeWidth="6" strokeLinecap="round" />
+            <path className="scribble-path scribble-path--6" d="M120 380 q 80 -28 160 8 t 180 -8 t 200 10 t 180 -12" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" />
+          </svg>
+          <div className="stripe-tool-inner">
+            <div className="stripe-tool-text">
+              <div className="stripe-tool-tag">Browser Extension</div>
+              <h2 className="stripe-tool-name">Screen Space Defacer</h2>
+              <p className="stripe-tool-desc">
+                Scratch, smear, and scribble back at the ads that fill your screen — the whole web becomes your canvas.
+              </p>
+              <span className="stripe-tool-cta">Deface Your Screen ↗</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="/tools/screen-time-horoscope" className="stripe stripe-tool stripe-tool--horoscope">
+          <span className="stripe-tool-plus stp-tr" aria-hidden="true">+</span>
+          <span className="stripe-tool-plus stp-bl" aria-hidden="true">+</span>
+          <span className="stripe-tool-ghost" aria-hidden="true">HOROSCOPE</span>
+          <div className="stripe-tool-glyphs" aria-hidden="true">
+            {([["✦","8%","18%"],["☽","22%","70%"],["♄","42%","12%"],["☿","68%","82%"],["♊","80%","30%"],["☀","14%","52%"],["⊕","58%","60%"],["✦","88%","8%"]] as [string, string, string][]).map(([g, top, left], i) => (
+              <span key={i} style={{ top, left }}>{g}</span>
+            ))}
+          </div>
+          <div className="stripe-tool-inner">
+            <div className="stripe-tool-text">
+              <div className="stripe-tool-tag">Screen Time Tool</div>
+              <h2 className="stripe-tool-name">Screen Time Horoscope</h2>
+              <p className="stripe-tool-desc">
+                The stars aligned — your apps didn&apos;t. Get a personalised celestial reading based on your screen time.
+              </p>
+              <span className="stripe-tool-cta">Get Your Horoscope ↗</span>
+            </div>
+          </div>
+        </a>
+
         <div className="stripe stripe-red">
           <div className="stripe-content">
             <a href={`mailto:${homepageData?.contactEmail || "alex.beattie@vuw.ac.nz"}`} className="stripe-link">
