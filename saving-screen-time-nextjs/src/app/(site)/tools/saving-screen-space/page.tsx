@@ -200,7 +200,7 @@ export default function SavingScreenSpacePage() {
                 <div className="step-card reveal">
                   <div className="step-num">01</div>
                   <div className="step-title">Install the Extension</div>
-                  <div className="step-body">Add Screen Space Defacer to your browser in seconds. Works with Chrome, Firefox, and Edge — no account, no sign-up, no nonsense.</div>
+                  <div className="step-body">Add Screen Space Defacer to Chrome in seconds. No account, no sign-up, no nonsense.</div>
                 </div>
                 <div className="step-card reveal">
                   <div className="step-num">02</div>
