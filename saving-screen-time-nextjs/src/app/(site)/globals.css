@@ -354,6 +354,11 @@ body {
 .stripe-tool:hover { opacity: 0.92; }
 .stripe-tool--defacer   { background-color: var(--black); color: var(--red); }
 .stripe-tool--horoscope { background-color: var(--black); color: var(--yellow); border-top: 2px solid currentColor; }
+.stripe-tool--charger   { background-color: var(--black); color: var(--blue);   border-top: 2px solid currentColor; }
+
+/* coming-soon state — no link, so drop the affordances .stripe-tool gives live stripes */
+.stripe-tool--soon { cursor: default; }
+.stripe-tool--soon:hover { opacity: 1; }
 
 .stripe-tool-inner {
   position: relative; z-index: 3;
@@ -367,6 +372,8 @@ body {
 .stripe-tool-cta { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em; border: 2px solid currentColor; padding: 0.6rem 1.1rem; transition: background-color 0.18s, color 0.18s; }
 .stripe-tool--defacer:hover   .stripe-tool-cta { background-color: var(--red);    color: var(--black); }
 .stripe-tool--horoscope:hover .stripe-tool-cta { background-color: var(--yellow); color: var(--black); }
+/* must follow .stripe-tool-cta — its `border` shorthand would otherwise reset border-style */
+.stripe-tool-cta--soon { opacity: 0.75; border-style: dashed; }
 
 /* giant ghosted word behind */
 .stripe-tool-ghost { position: absolute; left: -1vw; top: 50%; transform: translateY(-50%); font-size: clamp(6rem, 24vw, 22rem); font-weight: 900; letter-spacing: -0.04em; line-height: 0.7; opacity: 0.08; white-space: nowrap; pointer-events: none; z-index: 1; }
@@ -382,8 +389,55 @@ body {
 .stripe-tool-glyphs span:nth-child(4n+1) { animation-delay: 0.6s; }
 @keyframes glyph-twinkle { 0%,100% { opacity: 0.18; transform: translateY(0) rotate(0deg); } 50% { opacity: 0.6; transform: translateY(-6px) rotate(8deg); } }
 
+/* cosy charger quilt — blue-on-black, driven entirely by currentColor the same way the
+   defacer scribble and horoscope glyphs are. One conic tiled at 2×--quilt puts a single
+   quilt cell in each quadrant, giving a bare checkerboard of patch / ground with no
+   stitching over it. The patch alpha carries the whole motif now that the seams are gone,
+   so it sits higher than it did when the seams were doing most of the definition — but
+   still held down, because the headline is this same blue and blue on black is only
+   2.5:1 to start with. The colour in this stripe comes from the stitch field, not here. */
+.stripe-tool-quilt {
+  position: absolute; inset: 0; pointer-events: none; z-index: 2;
+  --quilt: clamp(48px, 7vw, 96px);
+  --quilt-patch: color-mix(in srgb, currentColor 34%, transparent);
+  background-image:
+    conic-gradient(
+      var(--quilt-patch) 0deg 90deg,
+      transparent        90deg 180deg,
+      var(--quilt-patch) 180deg 270deg,
+      transparent        270deg 360deg);
+  background-size: calc(var(--quilt) * 2) calc(var(--quilt) * 2);
+}
+
+/* cosy charger stitch field — this stripe's animated moment, built on the horoscope's
+   glyph pattern (placed spans + staggered twinkle) rather than the defacer's self-drawing
+   paths, because scattered marks suit a quilt. These are the only yellow and red in an
+   otherwise blue-on-black stripe, so unlike the quilt they do NOT take currentColor. */
+.stripe-tool-stitches { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+.stripe-tool-stitches span {
+  position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700;
+  font-size: clamp(0.9rem, 1.6vw, 1.5rem); line-height: 1;
+  animation: stitch-twinkle 5s ease-in-out infinite;
+}
+.stripe-tool-stitches span:nth-child(odd)  { color: var(--yellow); }
+.stripe-tool-stitches span:nth-child(even) { color: var(--red); }
+.stripe-tool-stitches span:nth-child(3n)   { animation-delay: 1.7s; }
+.stripe-tool-stitches span:nth-child(4n+1) { animation-delay: 3.1s; }
+.stripe-tool-stitches span:nth-child(5n)   { animation-delay: 0.9s; }
+@keyframes stitch-twinkle {
+  0%,100% { opacity: 0.15; transform: scale(0.8) rotate(0deg); }
+  50%     { opacity: 0.9;  transform: scale(1)   rotate(-8deg); }
+}
+
+/* charger type — the headline, ghost word and CTA keep the stripe's blue via currentColor,
+   matching how the siblings work. The tag and description are pulled off it: blue on black
+   is 2.5:1, which the 0.7rem tag and the mono body copy cannot carry. */
+.stripe-tool--charger .stripe-tool-tag,
+.stripe-tool--charger .stripe-tool-desc { color: var(--white); }
+
 @media (prefers-reduced-motion: reduce) {
   .stripe-tool-glyphs span { animation: none; }
+  .stripe-tool-stitches span { animation: none; opacity: 0.6; }
 }
 @media (max-width: 768px) {
   .stripe-tool-inner { flex-direction: column; align-items: flex-start; padding: 3rem 1.5rem; }
