@@ -5,7 +5,8 @@ import { teamMemberType } from '../schemaTypes/teamMember'
 import { studyType } from '../schemaTypes/study'
 import { mediaItemType } from '../schemaTypes/mediaItem'
 import { blogPostType } from '../schemaTypes/blogPost'
+import { talkType } from '../schemaTypes/talk'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [homepageType, publicationType, teamMemberType, studyType, mediaItemType, blogPostType],
+  types: [homepageType, publicationType, teamMemberType, studyType, mediaItemType, blogPostType, talkType],
 }

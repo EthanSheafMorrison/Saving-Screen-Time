@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 
 interface ShareButtonProps {
   title: string;
+  heading?: string;
 }
 
 const IconCopy = () => (
@@ -52,7 +53,7 @@ const platforms = [
   },
 ];
 
-export default function ShareButton({ title }: ShareButtonProps) {
+export default function ShareButton({ title, heading = "Share this post" }: ShareButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -98,11 +99,11 @@ export default function ShareButton({ title }: ShareButtonProps) {
             className="share-modal"
             role="dialog"
             aria-modal="true"
-            aria-label="Share this post"
+            aria-label={heading}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="share-modal-header">
-              <span className="share-modal-title">Share this post</span>
+              <span className="share-modal-title">{heading}</span>
               <button className="share-modal-close" onClick={close} aria-label="Close" autoFocus>
                 ×
               </button>

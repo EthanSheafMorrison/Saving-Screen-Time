@@ -17,14 +17,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
+  const talks: { slug: { current: string }; _updatedAt: string }[] = await client.fetch(
+    `*[_type == "talk" && defined(slug.current)]{ slug, _updatedAt }`
+  );
+
+  const talkEntries: MetadataRoute.Sitemap = talks.map((talk) => ({
+    url: `${siteUrl}/talks/${talk.slug.current}`,
+    lastModified: new Date(talk._updatedAt),
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: siteUrl, priority: 1.0, changeFrequency: "weekly" },
     { url: `${siteUrl}/blog`, priority: 0.8, changeFrequency: "weekly" },
+    { url: `${siteUrl}/talks`, priority: 0.7, changeFrequency: "weekly" },
     { url: `${siteUrl}/publications`, priority: 0.7, changeFrequency: "monthly" },
     { url: `${siteUrl}/team`, priority: 0.6, changeFrequency: "monthly" },
     { url: `${siteUrl}/media`, priority: 0.6, changeFrequency: "monthly" },
     { url: `${siteUrl}/Studies`, priority: 0.6, changeFrequency: "monthly" },
   ];
 
-  return [...staticRoutes, ...blogEntries];
+  return [...staticRoutes, ...blogEntries, ...talkEntries];
 }

@@ -16,11 +16,14 @@ export async function GET(request: Request) {
   const pages = matchPages(term);
 
   const content = await client.fetch(
-    `*[_type in ["blogPost", "publication", "mediaItem"] && (
+    `*[_type in ["blogPost", "publication", "mediaItem", "talk"] && (
       title match $q ||
       author match $q ||
       authors match $q ||
+      speakers match $q ||
       outlet match $q ||
+      event match $q ||
+      location match $q ||
       excerpt match $q ||
       description match $q
     )] | order(_type asc)[0...8] {
@@ -30,9 +33,11 @@ export async function GET(request: Request) {
       slug,
       author,
       authors,
+      speakers,
       year,
       date,
       outlet,
+      event,
       link
     }`,
     { q: `${term}*` }

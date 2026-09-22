@@ -5,14 +5,16 @@ import { useEffect, useRef, useState } from 'react';
 
 interface SearchResult {
   _id: string;
-  _type: 'page' | 'blogPost' | 'publication' | 'mediaItem';
+  _type: 'page' | 'blogPost' | 'publication' | 'mediaItem' | 'talk';
   title: string;
   slug?: { current: string };
   author?: string;
   authors?: string;
+  speakers?: string;
   year?: string;
   date?: string;
   outlet?: string;
+  event?: string;
   link?: string;
   href?: string;
   label?: string;
@@ -23,6 +25,7 @@ const groupLabels: Record<SearchResult['_type'], string> = {
   blogPost: 'Blog posts',
   publication: 'Publications',
   mediaItem: 'Press',
+  talk: 'Talks',
 };
 
 const groupOrder: SearchResult['_type'][] = [
@@ -30,12 +33,16 @@ const groupOrder: SearchResult['_type'][] = [
   'blogPost',
   'publication',
   'mediaItem',
+  'talk',
 ];
 
 function resultHref(r: SearchResult): string | null {
   if (r._type === 'page') return r.href ?? null;
   if (r._type === 'blogPost') {
     return r.slug?.current ? `/blog/${r.slug.current}` : null;
+  }
+  if (r._type === 'talk') {
+    return r.slug?.current ? `/talks/${r.slug.current}` : null;
   }
   return r.link ?? null;
 }
@@ -45,6 +52,7 @@ function resultByline(r: SearchResult): string {
   if (r._type === 'blogPost') return r.author ?? '';
   if (r._type === 'publication') return r.authors ?? '';
   if (r._type === 'mediaItem') return r.outlet ?? '';
+  if (r._type === 'talk') return r.event ?? r.speakers ?? '';
   return '';
 }
 

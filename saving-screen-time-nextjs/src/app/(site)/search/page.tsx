@@ -1,19 +1,22 @@
 import Link from "next/link";
 import { client } from "../../../sanity/lib/client";
 import { matchPages } from "../../../lib/searchPages";
+import { formatTalkDate } from "../../../lib/talks";
 
 export const revalidate = 60;
 
 interface SearchResult {
   _id: string;
-  _type: "page" | "blogPost" | "publication" | "mediaItem";
+  _type: "page" | "blogPost" | "publication" | "mediaItem" | "talk";
   title: string;
   slug?: { current: string };
   authors?: string;
   author?: string;
+  speakers?: string;
   year?: string;
   date?: string;
   outlet?: string;
+  event?: string;
   excerpt?: string;
   description?: string;
   link?: string;
@@ -27,6 +30,7 @@ function groupByType(results: SearchResult[]) {
     blogPost: [],
     publication: [],
     mediaItem: [],
+    talk: [],
   };
   for (const r of results) {
     if (groups[r._type]) groups[r._type].push(r);
@@ -39,12 +43,16 @@ const groupLabels: Record<string, string> = {
   blogPost: "Blog posts",
   publication: "Publications",
   mediaItem: "Press",
+  talk: "Talks",
 };
 
 function resultHref(r: SearchResult): string | null {
   if (r._type === "page") return r.href ?? null;
   if (r._type === "blogPost") {
     return r.slug?.current ? `/blog/${r.slug.current}` : null;
+  }
+  if (r._type === "talk") {
+    return r.slug?.current ? `/talks/${r.slug.current}` : null;
   }
   // publications and media items link out via their external URL
   return r.link ?? null;
@@ -54,6 +62,7 @@ function resultMeta(r: SearchResult): string {
   if (r._type === "blogPost") return r.date ?? "";
   if (r._type === "publication") return r.year ?? "";
   if (r._type === "mediaItem") return r.date ?? "";
+  if (r._type === "talk") return formatTalkDate(r.date);
   return "";
 }
 
@@ -62,6 +71,7 @@ function resultByline(r: SearchResult): string {
   if (r._type === "blogPost") return r.author ?? "";
   if (r._type === "publication") return r.authors ?? "";
   if (r._type === "mediaItem") return r.outlet ?? "";
+  if (r._type === "talk") return r.event ?? r.speakers ?? "";
   return "";
 }
 
@@ -77,11 +87,14 @@ export default async function SearchPage({
   if (term) {
     const pages = matchPages(term, 20) as SearchResult[];
     const content: SearchResult[] = await client.fetch(
-      `*[_type in ["blogPost", "publication", "mediaItem"] && (
+      `*[_type in ["blogPost", "publication", "mediaItem", "talk"] && (
         title match $q ||
         author match $q ||
         authors match $q ||
+        speakers match $q ||
         outlet match $q ||
+        event match $q ||
+        location match $q ||
         excerpt match $q ||
         description match $q
       )] {
@@ -91,9 +104,11 @@ export default async function SearchPage({
         slug,
         author,
         authors,
+        speakers,
         year,
         date,
         outlet,
+        event,
         excerpt,
         description,
         link

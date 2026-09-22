@@ -104,6 +104,24 @@ export const pageCatalog: PageEntry[] = [
     href: "/media",
     keywords: ["press", "media", "news", "coverage", "in the news"],
   },
+  {
+    _id: "page-talks",
+    _type: "page",
+    title: "Talks",
+    label: "Page",
+    href: "/talks",
+    keywords: [
+      "talks",
+      "events",
+      "presentations",
+      "conference",
+      "seminar",
+      "slides",
+      "brochure",
+      "pdf",
+      "download",
+    ],
+  },
 ];
 
 // Case-insensitive match of a term against a page's title, label and keywords.

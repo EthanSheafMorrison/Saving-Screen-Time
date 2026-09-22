@@ -95,6 +95,9 @@ export default function Navbar() {
               <Link href="/media" onClick={closeMenu} role="menuitem">
                 Press
               </Link>
+              <Link href="/talks" onClick={closeMenu} role="menuitem">
+                Talks
+              </Link>
             </div>
           </div>
           <Link href="/blog" onClick={closeMenu}>Blog</Link>
