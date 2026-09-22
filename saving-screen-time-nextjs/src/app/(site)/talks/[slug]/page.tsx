@@ -4,8 +4,10 @@ import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import { client } from "../../../../sanity/lib/client";
 import { formatFileSize, formatTalkDate, isUpcoming } from "../../../../lib/talks";
+import { folds, type Fold } from "../../../../lib/folds";
 import { portableComponents } from "../../components/portableTextComponents";
 import ShareButton from "../../blog/[slug]/ShareButton";
+import FoldGuide from "./FoldGuide";
 
 export const revalidate = 60;
 
@@ -38,6 +40,7 @@ interface Download {
   url?: string;
   filename?: string;
   size?: number;
+  fold?: string;
 }
 
 interface Talk {
@@ -69,7 +72,8 @@ export default async function TalkPage({
         title,
         "url": file.asset->url,
         "filename": file.asset->originalFilename,
-        "size": file.asset->size
+        "size": file.asset->size,
+        fold
       }
     }`,
     { slug }
@@ -80,6 +84,17 @@ export default async function TalkPage({
   }
 
   const downloads = (talk.downloads ?? []).filter((d) => d.url);
+
+  // One folding guide per fold, even if several PDFs share it.
+  const guides: { fold: Fold; titles: string[] }[] = [];
+  for (const d of downloads) {
+    const fold = d.fold ? folds[d.fold] : undefined;
+    if (!fold) continue;
+    const guide = guides.find((g) => g.fold.id === fold.id);
+    if (guide) guide.titles.push(d.title || d.filename);
+    else guides.push({ fold, titles: [d.title || d.filename] });
+  }
+
   const when = [formatTalkDate(talk.date), talk.time].filter(Boolean).join(", ");
 
   return (
@@ -153,6 +168,11 @@ export default async function TalkPage({
                       PDF{d.size ? ` · ${formatFileSize(d.size)}` : ""} <span aria-hidden="true">↓</span>
                     </span>
                   </a>
+                  {d.fold && folds[d.fold] && (
+                    <a href={`#fold-${d.fold}`} className="talk-download-fold">
+                      How to print and fold <span aria-hidden="true">↓</span>
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -171,6 +191,17 @@ export default async function TalkPage({
                 components={portableComponents}
               />
             </div>
+          </div>
+        </section>
+      )}
+
+      {guides.length > 0 && (
+        <section className="blog-post-section">
+          <div className="section-inner">
+            <h2 className="section-title">How to print and fold</h2>
+            {guides.map((g) => (
+              <FoldGuide key={g.fold.id} fold={g.fold} titles={g.titles} />
+            ))}
           </div>
         </section>
       )}

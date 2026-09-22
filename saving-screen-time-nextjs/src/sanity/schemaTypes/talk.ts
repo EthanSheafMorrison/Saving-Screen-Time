@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { foldOptions } from '../../lib/folds'
 
 export const talkType = defineType({
   name: 'talk',
@@ -88,6 +89,13 @@ export const talkType = defineType({
               type: 'file',
               options: { accept: 'application/pdf' },
               validation: (Rule) => Rule.required().assetRequired()
+            }),
+            defineField({
+              name: 'fold',
+              title: 'Folding Instructions (optional)',
+              type: 'string',
+              description: 'If this PDF is a folded brochure, pick its fold to show printing and folding instructions on the talk page',
+              options: { list: foldOptions },
             }),
           ],
           preview: {
