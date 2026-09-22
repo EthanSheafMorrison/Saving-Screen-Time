@@ -1821,12 +1821,40 @@ body.blog-reveal-ready .blog-post-section.is-visible {
 }
 
 /* ── FOLD GUIDES (talk pages) ── */
-.fold-guide { margin-top: 3.5rem; }
-.fold-guide + .fold-guide {
-  margin-top: 5rem;
-  padding-top: 3.5rem;
-  border-top: 2px solid color-mix(in srgb, var(--white) 30%, transparent);
+/* each guide is a <details>, closed until opened */
+.fold-guide { border-top: 2px solid color-mix(in srgb, var(--white) 35%, transparent); }
+.fold-guide:last-of-type { border-bottom: 2px solid color-mix(in srgb, var(--white) 35%, transparent); }
+.fold-summary {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.4rem 1.5rem;
+  padding: 1.75rem 0;
+  cursor: pointer;
+  list-style: none;
 }
+.fold-summary::-webkit-details-marker { display: none; }
+.fold-summary-cue {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  padding: 0.5rem 0.85rem;
+  border: 1.5px solid currentColor;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+.fold-summary-cue::after { content: "Show ▾"; }
+.fold-guide[open] .fold-summary-cue::after { content: "Hide ▴"; }
+.fold-summary:hover .fold-summary-cue,
+.fold-summary:focus-visible .fold-summary-cue {
+  background: var(--yellow);
+  color: var(--blue);
+}
+.fold-details-body { padding-bottom: 3.5rem; }
+.fold-details-body > .fold-guide-heading:first-child { margin-top: 0.5rem; }
 .fold-guide-title {
   margin: 0;
   font-family: 'EB Garamond', Georgia, serif;
@@ -1835,7 +1863,7 @@ body.blog-reveal-ready .blog-post-section.is-visible {
   line-height: 1.1;
 }
 .fold-guide-kind {
-  margin: 0.6rem 0 0;
+  display: block;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 0.8rem;
   letter-spacing: 0.08em;

@@ -1,5 +1,6 @@
 import type { Fold, FoldCrease, FoldPanel } from "../../../../lib/folds";
 import { insideCreases, printSettings } from "../../../../lib/folds";
+import FoldDetails from "./FoldDetails";
 
 // "How to print and fold" guide for a folded brochure: print settings, a flat
 // crease diagram of each face, the fold steps, and the order it opens in.
@@ -64,12 +65,18 @@ export default function FoldGuide({ fold, titles }: { fold: Fold; titles: string
   const panelWidth = (tag: string) => panels.find((p) => p.tag === tag)?.w ?? 1;
 
   return (
-    <article className="fold-guide" id={`fold-${fold.id}`}>
-      <h3 className="fold-guide-title">{titles.join(" and ")}</h3>
-      <p className="fold-guide-kind">
-        {fold.label} · closes to {fold.closed.w} × {fold.closed.h} mm
-      </p>
-
+    <FoldDetails
+      id={`fold-${fold.id}`}
+      summary={
+        <>
+          <h3 className="fold-guide-title">{titles.join(" and ")}</h3>
+          <span className="fold-guide-kind">
+            {fold.label} · closes to {fold.closed.w} × {fold.closed.h} mm
+          </span>
+          <span className="fold-summary-cue" aria-hidden="true" />
+        </>
+      }
+    >
       <h4 className="fold-guide-heading">Print settings</h4>
       <ul className="fold-print">
         {printSettings(fold).map((setting) => (
@@ -130,6 +137,6 @@ export default function FoldGuide({ fold, titles }: { fold: Fold; titles: string
           </li>
         ))}
       </ol>
-    </article>
+    </FoldDetails>
   );
 }
