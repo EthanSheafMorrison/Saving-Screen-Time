@@ -319,7 +319,7 @@ body {
 
 .tone-label {
   margin: 0 0 0.5rem;
-  color: #8a8a8a;
+  color: #d4d2d8;
   font-size: 0.625rem;
   font-weight: 600;
   letter-spacing: 0.2em;

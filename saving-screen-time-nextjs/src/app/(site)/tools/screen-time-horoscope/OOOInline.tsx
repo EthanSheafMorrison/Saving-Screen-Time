@@ -13,6 +13,10 @@ const colors = {
   black: '#050505',
   yellow: '#E7FF00',
   paper: '#f5f5f0',
+  text: '#ffffff',
+  dim: '#d4d2d8',
+  line: '#8c8c8c', // button / input outlines — 6:1 on black
+  rule: '#555555', // divider lines
 };
 
 const fonts = {
@@ -251,7 +255,7 @@ const st: Record<string, React.CSSProperties> = {
 
   header: {
     padding: '18px 24px',
-    borderBottom: `1px solid #1e1e1e`,
+    borderBottom: `1px solid ${colors.rule}`,
     display: 'flex',
     flexDirection: 'column',
     gap: 4,
@@ -293,7 +297,7 @@ const st: Record<string, React.CSSProperties> = {
     fontWeight: 700,
     letterSpacing: '0.12em',
     textTransform: 'uppercase',
-    color: '#cfccd3',
+    color: colors.text,
   },
 
   stepNum: {
@@ -318,7 +322,7 @@ const st: Record<string, React.CSSProperties> = {
     gap: 4,
     padding: '12px 4px',
     background: 'transparent',
-    border: `1px solid #1e1e1e`,
+    border: `1px solid ${colors.line}`,
     borderRadius: 0,
     cursor: 'pointer',
     fontFamily: fonts.mono,
@@ -335,7 +339,7 @@ const st: Record<string, React.CSSProperties> = {
     fontSize: 9,
     fontWeight: 700,
     letterSpacing: '0.08em',
-    color: '#cfccd3',
+    color: colors.text,
     fontFamily: fonts.sans,
     textTransform: 'uppercase',
   },
@@ -353,7 +357,7 @@ const st: Record<string, React.CSSProperties> = {
     gap: 4,
     padding: '16px 8px',
     background: 'transparent',
-    border: `1px solid #1e1e1e`,
+    border: `1px solid ${colors.line}`,
     borderRadius: 0,
     cursor: 'pointer',
     fontFamily: fonts.mono,
@@ -369,7 +373,7 @@ const st: Record<string, React.CSSProperties> = {
 
   stDesc: {
     fontSize: 9,
-    color: '#7a7a7a',
+    color: colors.dim,
     fontFamily: fonts.mono,
     letterSpacing: '0.04em',
     textTransform: 'uppercase',
@@ -400,14 +404,14 @@ const st: Record<string, React.CSSProperties> = {
 
   resetBtn: {
     background: 'transparent',
-    border: `1px solid #2a2a2a`,
+    border: `1px solid ${colors.line}`,
     borderRadius: 0,
     padding: '12px 14px',
     fontSize: 11,
     fontWeight: 700,
     cursor: 'pointer',
     fontFamily: fonts.sans,
-    color: '#7a7a7a',
+    color: colors.dim,
     letterSpacing: '0.06em',
     textTransform: 'uppercase',
   },
@@ -416,7 +420,7 @@ const st: Record<string, React.CSSProperties> = {
     display: 'flex',
     flexDirection: 'column',
     gap: 8,
-    borderTop: `1px solid #1e1e1e`,
+    borderTop: `1px solid ${colors.rule}`,
     paddingTop: 16,
     marginTop: 4,
   },
@@ -425,7 +429,7 @@ const st: Record<string, React.CSSProperties> = {
     fontSize: 8,
     fontWeight: 700,
     letterSpacing: '0.2em',
-    color: '#6e6e6e',
+    color: colors.dim,
     fontFamily: fonts.mono,
     textTransform: 'uppercase',
   },
@@ -442,7 +446,7 @@ const st: Record<string, React.CSSProperties> = {
     background: 'transparent',
     borderWidth: 1,
     borderStyle: 'solid',
-    borderColor: '#1e1e1e',
+    borderColor: colors.line,
     borderRadius: 0,
     cursor: 'pointer',
     fontFamily: fonts.sans,
@@ -450,7 +454,7 @@ const st: Record<string, React.CSSProperties> = {
     fontWeight: 700,
     letterSpacing: '0.08em',
     textTransform: 'uppercase',
-    color: '#cfccd3',
+    color: colors.text,
     transition: 'background 0.12s, border-color 0.12s, color 0.12s',
     whiteSpace: 'nowrap',
   },

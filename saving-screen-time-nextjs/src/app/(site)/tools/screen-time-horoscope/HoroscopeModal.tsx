@@ -25,6 +25,10 @@ const colors = {
   black: '#050505',
   yellow: '#E7FF00',
   white: '#f5f5f0',
+  text: '#ffffff', // reading body — 20:1 on black
+  dim: '#d4d2d8',  // secondary labels / typing — 13:1 on black
+  line: '#8c8c8c', // button / input outlines — 6:1 on black
+  rule: '#555555', // divider lines
 };
 
 const fonts = {
@@ -137,7 +141,7 @@ function BotSprite() {
           })
         )}
       </svg>
-      <div style={{ marginTop: 8, fontSize: 9, fontFamily: fonts.mono, color: BY, letterSpacing: '0.12em', opacity: 0.7 }}>
+      <div style={{ marginTop: 8, fontSize: 9, fontFamily: fonts.mono, color: BY, letterSpacing: '0.12em' }}>
         ● FORTUNE-BOT  v0.1
       </div>
     </div>
@@ -567,7 +571,7 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
                     )}
 
                     {!showWave && phase !== 'revealed' && (
-                      <p style={{ ...st.cardText, color: '#8a8084' }}>
+                      <p style={{ ...st.cardText, color: colors.dim }}>
                         {displayText}
                         {showCursor && <span style={st.cursor}>▊</span>}
                       </p>
@@ -733,7 +737,7 @@ const st: Record<string, React.CSSProperties> = {
     position: 'fixed',
     inset: 0,
     zIndex: 9999,
-    background: 'rgba(5,5,5,0.92)',
+    background: 'rgba(5,5,5,0.97)',
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'center',
@@ -761,7 +765,7 @@ const st: Record<string, React.CSSProperties> = {
     right: 0,
     background: 'transparent',
     border: 'none',
-    color: '#7a7a7a',
+    color: colors.dim,
     fontSize: 18,
     cursor: 'pointer',
     fontFamily: fonts.mono,
@@ -862,7 +866,6 @@ const st: Record<string, React.CSSProperties> = {
     display: 'block',
     fontSize: 10,
     letterSpacing: '0.12em',
-    opacity: 0.7,
   },
 
   ftSpeech: {
@@ -906,7 +909,7 @@ const st: Record<string, React.CSSProperties> = {
     gap: 3,
     padding: '12px 6px',
     background: 'transparent',
-    border: `1px solid #1e1e1e`,
+    border: `1px solid ${colors.line}`,
     borderRadius: 0,
     cursor: 'pointer',
     fontFamily: fonts.mono,
@@ -923,14 +926,14 @@ const st: Record<string, React.CSSProperties> = {
     fontSize: 12,
     fontWeight: 700,
     letterSpacing: '0.08em',
-    color: '#cfccd3',
+    color: colors.text,
     fontFamily: fonts.sans,
     textTransform: 'uppercase',
   },
 
   signDates: {
     fontSize: 10,
-    color: '#7a7a7a',
+    color: colors.dim,
     fontFamily: fonts.mono,
     letterSpacing: '0.02em',
   },
@@ -950,7 +953,7 @@ const st: Record<string, React.CSSProperties> = {
     gap: 4,
     padding: '22px 8px',
     background: 'transparent',
-    border: `1px solid #1e1e1e`,
+    border: `1px solid ${colors.line}`,
     borderRadius: 0,
     cursor: 'pointer',
     fontFamily: fonts.mono,
@@ -966,7 +969,7 @@ const st: Record<string, React.CSSProperties> = {
 
   stDesc: {
     fontSize: 12,
-    color: '#7a7a7a',
+    color: colors.dim,
     fontFamily: fonts.mono,
     letterSpacing: '0.04em',
     textTransform: 'uppercase',
@@ -986,7 +989,7 @@ const st: Record<string, React.CSSProperties> = {
     gap: 12,
     padding: '4px 0 14px',
     background: 'transparent',
-    borderBottom: `1px solid #1e1e1e`,
+    borderBottom: `1px solid ${colors.rule}`,
   },
 
   bannerSymbol: {
@@ -1033,7 +1036,7 @@ const st: Record<string, React.CSSProperties> = {
   thinkTxt: {
     fontSize: 12,
     fontWeight: 700,
-    color: '#7a7a7a',
+    color: colors.dim,
     letterSpacing: '0.04em',
     fontFamily: fonts.sans,
     textTransform: 'uppercase',
@@ -1045,7 +1048,7 @@ const st: Record<string, React.CSSProperties> = {
     lineHeight: 1.7,
     fontFamily: fonts.serif,
     fontStyle: 'italic',
-    color: '#cfccd3',
+    color: colors.text,
     minHeight: '1.7em',
     wordBreak: 'break-word',
   },
@@ -1060,7 +1063,7 @@ const st: Record<string, React.CSSProperties> = {
     marginTop: 14,
     padding: '12px 0',
     background: 'transparent',
-    borderTop: `1px solid #1e1e1e`,
+    borderTop: `1px solid ${colors.rule}`,
     display: 'flex',
     flexDirection: 'column',
     gap: 3,
@@ -1070,7 +1073,7 @@ const st: Record<string, React.CSSProperties> = {
     fontSize: 8,
     fontWeight: 700,
     letterSpacing: '0.2em',
-    color: '#6e6e6e',
+    color: colors.dim,
     fontFamily: fonts.mono,
     textTransform: 'uppercase',
   },
@@ -1087,7 +1090,7 @@ const st: Record<string, React.CSSProperties> = {
     fontSize: 16,
     fontFamily: fonts.serif,
     fontStyle: 'italic',
-    color: '#cbcbcb',
+    color: colors.text,
     lineHeight: 1.5,
   },
 
@@ -1096,7 +1099,7 @@ const st: Record<string, React.CSSProperties> = {
     display: 'flex',
     flexDirection: 'column',
     gap: 4,
-    borderTop: `1px solid #1e1e1e`,
+    borderTop: `1px solid ${colors.rule}`,
     paddingTop: 16,
   },
 
@@ -1104,7 +1107,7 @@ const st: Record<string, React.CSSProperties> = {
     fontSize: 8,
     fontWeight: 700,
     letterSpacing: '0.2em',
-    color: '#6e6e6e',
+    color: colors.dim,
     fontFamily: fonts.mono,
     textTransform: 'uppercase',
   },
@@ -1126,7 +1129,7 @@ const st: Record<string, React.CSSProperties> = {
     flexDirection: 'column',
     gap: 10,
     animation: 'hFadeIn 0.6s ease',
-    borderTop: `1px solid #1e1e1e`,
+    borderTop: `1px solid ${colors.rule}`,
     paddingTop: 16,
     marginTop: 4,
   },
@@ -1140,12 +1143,12 @@ const st: Record<string, React.CSSProperties> = {
     flex: 1,
     padding: '11px 14px',
     background: 'transparent',
-    border: `1px solid #333`,
+    border: `1px solid ${colors.line}`,
     borderRight: 'none',
     borderRadius: 0,
     fontSize: 13,
     fontFamily: fonts.mono,
-    color: '#cfccd3',
+    color: colors.text,
     outline: 'none',
   },
 
@@ -1172,7 +1175,7 @@ const st: Record<string, React.CSSProperties> = {
     fontSize: 14,
     fontFamily: fonts.serif,
     fontStyle: 'italic',
-    border: `1px solid #2a2a2a`,
+    border: `1px solid ${colors.line}`,
     letterSpacing: '0.02em',
     animation: 'hFadeIn 0.4s ease',
   },
@@ -1180,7 +1183,7 @@ const st: Record<string, React.CSSProperties> = {
   subFine: {
     margin: 0,
     fontSize: 9,
-    color: '#5f5f5f',
+    color: colors.dim,
     fontFamily: fonts.mono,
     letterSpacing: '0.08em',
   },
@@ -1188,14 +1191,14 @@ const st: Record<string, React.CSSProperties> = {
   resetBtn: {
     alignSelf: 'flex-start',
     background: 'transparent',
-    border: `1px solid #2a2a2a`,
+    border: `1px solid ${colors.line}`,
     borderRadius: 0,
     padding: '8px 14px',
     fontSize: 11,
     fontWeight: 700,
     cursor: 'pointer',
     fontFamily: fonts.sans,
-    color: '#7a7a7a',
+    color: colors.dim,
     letterSpacing: '0.05em',
     textTransform: 'uppercase',
     transition: 'color 0.12s, border-color 0.12s',
@@ -1206,7 +1209,7 @@ const st: Record<string, React.CSSProperties> = {
     flexDirection: 'column',
     gap: 8,
     animation: 'hFadeIn 0.5s ease',
-    borderTop: `1px solid #1e1e1e`,
+    borderTop: `1px solid ${colors.rule}`,
     paddingTop: 16,
     marginTop: 4,
   },
@@ -1215,7 +1218,7 @@ const st: Record<string, React.CSSProperties> = {
     fontSize: 8,
     fontWeight: 700,
     letterSpacing: '0.2em',
-    color: '#6e6e6e',
+    color: colors.dim,
     fontFamily: fonts.mono,
     textTransform: 'uppercase',
   },
@@ -1232,7 +1235,7 @@ const st: Record<string, React.CSSProperties> = {
     background: 'transparent',
     borderWidth: 1,
     borderStyle: 'solid',
-    borderColor: '#1e1e1e',
+    borderColor: colors.line,
     borderRadius: 0,
     cursor: 'pointer',
     fontFamily: fonts.sans,
@@ -1240,7 +1243,7 @@ const st: Record<string, React.CSSProperties> = {
     fontWeight: 700,
     letterSpacing: '0.08em',
     textTransform: 'uppercase',
-    color: '#cfccd3',
+    color: colors.text,
     transition: 'background 0.12s, border-color 0.12s, color 0.12s',
     whiteSpace: 'nowrap',
   },
@@ -1256,7 +1259,7 @@ const st: Record<string, React.CSSProperties> = {
     flexDirection: 'column',
     gap: 10,
     animation: 'hFadeIn 0.6s ease',
-    borderTop: `1px solid #1e1e1e`,
+    borderTop: `1px solid ${colors.rule}`,
     paddingTop: 16,
     marginTop: 4,
   },
@@ -1301,7 +1304,7 @@ const st: Record<string, React.CSSProperties> = {
     justifyContent: 'space-between',
     padding: '12px 16px',
     background: colors.black,
-    borderBottom: `1px solid #1e1e1e`,
+    borderBottom: `1px solid ${colors.rule}`,
     position: 'sticky',
     top: 0,
     zIndex: 5,
@@ -1313,7 +1316,6 @@ const st: Record<string, React.CSSProperties> = {
     fontSize: 11,
     letterSpacing: '0.14em',
     color: colors.yellow,
-    opacity: 0.85,
   },
 
   mobileHeaderClose: {
@@ -1482,7 +1484,7 @@ const CSS = `
     0%   { opacity:0.3; transform:translateY(4px) scale(0.94); filter:blur(2px); color:#333; }
     40%  { opacity:1;   transform:translateY(-1px) scale(1.02); filter:blur(0); color:${colors.yellow}; }
     70%  { transform:translateY(0) scale(1); color:#aaa; }
-    100% { opacity:1;   transform:translateY(0) scale(1); filter:blur(0); color:#cfccd3; }
+    100% { opacity:1;   transform:translateY(0) scale(1); filter:blur(0); color:${colors.text}; }
   }
 
   @keyframes hFloat {
