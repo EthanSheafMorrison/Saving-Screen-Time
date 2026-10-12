@@ -31,10 +31,13 @@ const colors = {
   rule: '#555555', // divider lines
 };
 
+// The booth page defines width- and metric-matched fallback faces, so text set
+// before the webfonts arrive does not move when they swap in. On the site those
+// families simply do not exist and the stack falls through as before.
 const fonts = {
-  serif: '"EB Garamond", serif',
-  sans: '"DM Sans", sans-serif',
-  mono: '"IBM Plex Mono", monospace',
+  serif: '"EB Garamond", "EB Garamond Fallback", Georgia, serif',
+  sans: '"DM Sans", "DM Sans Fallback", Arial, Helvetica, sans-serif',
+  mono: '"IBM Plex Mono", "Plex Mono Fallback", Menlo, monospace',
 };
 
 const THINKING_LINES = [
@@ -150,7 +153,7 @@ function BotSprite() {
 
 function WaveText({ text, style }: { text: string; style?: React.CSSProperties }) {
   return (
-    <p style={{ ...st.cardText, ...style }}>
+    <p className="hterm-card-text" style={{ ...st.cardText, ...style }}>
       {text.split('').map((ch, i) => (
         <span
           key={i}
@@ -428,18 +431,19 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
     >
       <div style={st.receiptJagTop} aria-hidden />
       <div style={st.receiptInner}>
-        <div style={st.receiptHeader}>
+        <div className="hterm-receipt-head" style={st.receiptHeader}>
           <span>OUT-OF-OFFICE</span>
           <span>★ {selectedSign?.name?.toUpperCase()}</span>
         </div>
-        <pre style={st.receiptText} key={oooText}>{oooText}</pre>
-        <div style={st.receiptAttribution}>
+        <pre className="hterm-receipt-text" style={st.receiptText} key={oooText}>{oooText}</pre>
+        <div className="hterm-receipt-attr" style={st.receiptAttribution}>
           {HOROSCOPE_LINK_LABEL}
           {'\n'}{HOROSCOPE_URL}
         </div>
         <div style={st.receiptFooter}>
           <button
             onClick={handleRegenerate}
+            className="hterm-receipt-regen"
             style={st.receiptRegenBtn}
             disabled={!printed}
             aria-label="Regenerate out-of-office"
@@ -448,6 +452,7 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
           </button>
           <button
             onClick={handleCopy}
+            className="hterm-receipt-copy"
             style={st.receiptCopyBtn}
             disabled={!printed}
             aria-label="Copy out-of-office to clipboard"
@@ -480,7 +485,7 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
       >
 
         <div className="hterm-mobile-header" style={st.mobileHeader}>
-          <span style={st.mobileHeaderLabel}>● FORTUNE-BOT v0.1</span>
+          <span className="hterm-header-label" style={st.mobileHeaderLabel}>● FORTUNE-BOT v0.1</span>
           <button
             onClick={onClose}
             style={st.mobileHeaderClose}
@@ -512,8 +517,8 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
 
           <div style={st.rightPanel} className="void-right" ref={rightPanelRef}>
 
-            <div style={st.ftSpeech}>
-              <span style={st.ftSpeechText}>
+            <div className="hterm-speech-row" style={st.ftSpeech}>
+              <span className="hterm-speech" style={st.ftSpeechText}>
                 {speechText}
                 {!speechDone && <span style={st.cursor}>▊</span>}
               </span>
@@ -559,19 +564,19 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
 
                   <div style={st.signBanner}>
                     <span style={st.bannerSymbol}>{selectedSign.symbol}</span>
-                    <div style={st.bannerName}>{selectedSign.name}</div>
+                    <div className="hterm-banner-name" style={st.bannerName}>{selectedSign.name}</div>
                   </div>
 
                   <div style={st.card}>
                     {isThinking && (
                       <div style={st.thinkRow}>
                         <span style={st.spinner} />
-                        <span style={st.thinkTxt}>The stars are consulting your data</span>
+                        <span className="hterm-think" style={st.thinkTxt}>The stars are consulting your data</span>
                       </div>
                     )}
 
                     {!showWave && phase !== 'revealed' && (
-                      <p style={{ ...st.cardText, color: colors.dim }}>
+                      <p className="hterm-card-text" style={{ ...st.cardText, color: colors.dim }}>
                         {displayText}
                         {showCursor && <span style={st.cursor}>▊</span>}
                       </p>
@@ -583,21 +588,21 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
 
                     {phase === 'revealed' && (
                       <>
-                        <p style={st.cardText}>{SIGN_HOROSCOPES[selectedSign.id]}</p>
+                        <p className="hterm-card-text" style={st.cardText}>{SIGN_HOROSCOPES[selectedSign.id]}</p>
 
                         {screenTime && (
                           <div style={st.screenTimeCtx}>
-                            <span style={st.screenTimeCtxLabel}>YOUR DAILY SCREEN TIME</span>
-                            <span style={st.screenTimeCtxVal}>
+                            <span className="hterm-ctx-label" style={st.screenTimeCtxLabel}>YOUR DAILY SCREEN TIME</span>
+                            <span className="hterm-ctx-val" style={st.screenTimeCtxVal}>
                               {SCREEN_TIME_OPTIONS.find(o => o.value === screenTime)?.label}
                             </span>
-                            <p style={st.screenTimeCtxText}>{SCREEN_TIME_CONTEXT[screenTime]}</p>
+                            <p className="hterm-ctx-text" style={st.screenTimeCtxText}>{SCREEN_TIME_CONTEXT[screenTime]}</p>
                           </div>
                         )}
 
                         <div style={st.verdict}>
-                          <span style={st.verdictLabel}>SCREEN TIME VERDICT</span>
-                          <span style={st.verdictValue}>{VERDICTS[selectedSign.id]}</span>
+                          <span className="hterm-verdict-label" style={st.verdictLabel}>SCREEN TIME VERDICT</span>
+                          <span className="hterm-verdict-value" style={st.verdictValue}>{VERDICTS[selectedSign.id]}</span>
                         </div>
                       </>
                     )}
@@ -605,7 +610,7 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
 
                   {SUBSCRIBE_ENABLED && phase === 'revealed' && (
                     <div style={st.sub}>
-                      <p style={st.subFine}>Weekly horoscopes · No data harvesting · Just vibes</p>
+                      <p className="hterm-fine" style={st.subFine}>Weekly horoscopes · No data harvesting · Just vibes</p>
                       {subscribed ? (
                         <div style={st.subConfirm}>
                           ✦ Your cosmic inbox is ready. Almost.
@@ -628,7 +633,7 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
 
                   {phase === 'revealed' && (printing || printed) && (
                     <div style={st.toneRow}>
-                      <span style={st.toneLabel}>CHANGE THE TONE</span>
+                      <span className="hterm-tone-label" style={st.toneLabel}>CHANGE THE TONE</span>
                       <div style={st.toneBtnGrid} className="hterm-tone-grid">
                         {TONE_OPTIONS.map((opt) => {
                           const active = tone === opt.value;
@@ -650,8 +655,8 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
 
                   {phase === 'revealed' && !printing && !printed && (
                     <div style={st.printRow}>
-                      <p style={st.subFine}>Take your reading with you · Print an out-of-office</p>
-                      <button onClick={handlePrint} style={st.printBtn}>
+                      <p className="hterm-fine" style={st.subFine}>Take your reading with you · Print an out-of-office</p>
+                      <button onClick={handlePrint} className="hterm-print-btn" style={st.printBtn}>
                         Print your out-of-office
                       </button>
                     </div>
@@ -664,7 +669,7 @@ function HoroscopeTerminal({ onClose, closing }: { onClose: () => void; closing:
                   )}
 
                   {phase === 'revealed' && (
-                    <button onClick={reset} style={st.resetBtn}>
+                    <button onClick={reset} className="hterm-reset-btn" style={st.resetBtn}>
                       ← Consult the Oracle again
                     </button>
                   )}
@@ -1670,5 +1675,33 @@ const CSS = `
     .hterm-tone-btn:last-of-type {
       grid-column: 1 / -1 !important;
     }
+
+    /* Larger type for reading at the booth, standing up, outdoors. */
+    .hterm-header-label { font-size: 12px !important; }
+    .hterm-mobile-header button { min-height: 48px !important; min-width: 48px !important; }
+    .hterm-speech { font-size: 24px !important; }
+    /* Room for the longest typed line (3 lines at this size), so the question
+       growing as it types never pushes the choices below it. */
+    .hterm-speech-row { min-height: 146px !important; }
+    .hterm-card-text { font-size: 22px !important; line-height: 1.65 !important; }
+    .hterm-think { font-size: 13px !important; }
+    .hterm-banner-name { font-size: 18px !important; }
+    .hterm-sign-dates { font-size: 12px !important; }
+    .hterm-ctx-label,
+    .hterm-verdict-label,
+    .hterm-tone-label { font-size: 11px !important; }
+    .hterm-ctx-val { font-size: 18px !important; }
+    .hterm-ctx-text { font-size: 18px !important; }
+    .hterm-verdict-value { font-size: 20px !important; }
+    .hterm-fine { font-size: 12px !important; }
+    .hterm-receipt-text { font-size: 14px !important; }
+    .hterm-receipt-head { font-size: 11px !important; }
+    .hterm-receipt-attr { font-size: 11px !important; }
+
+    .hterm-print-btn { font-size: 14px !important; min-height: 48px !important; }
+    .hterm-reset-btn { font-size: 13px !important; min-height: 48px !important; }
+    .hterm-receipt-copy { font-size: 13px !important; min-height: 48px !important; }
+    .hterm-receipt-regen { font-size: 13px !important; min-height: 48px !important; }
+    .hterm-tone-btn { font-size: 12px !important; min-height: 48px !important; }
   }
 `;

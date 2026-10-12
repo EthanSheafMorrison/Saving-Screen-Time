@@ -27,7 +27,7 @@ const FONTS = `
   font-weight: 700;
   font-display: swap;
   src: url("/fonts/eb-garamond-700.woff2") format("woff2");
-  unicode-range: U+0020, U+0027, U+002D, U+0041-005A, U+0061-007A, U+2014;
+  unicode-range: U+0020-007E, U+00A0, U+00B7, U+2013-2014, U+2018-2019, U+201C-201D, U+2026;
 }
 @font-face {
   font-family: "EB Garamond";
@@ -35,7 +35,7 @@ const FONTS = `
   font-weight: 400;
   font-display: swap;
   src: url("/fonts/eb-garamond-italic-400.woff2") format("woff2");
-  unicode-range: U+0020, U+002D, U+0041-005A, U+0061-007A;
+  unicode-range: U+0020-007E, U+00A0, U+00B7, U+2013-2014, U+2018-2019, U+201C-201D, U+2026;
 }
 @font-face {
   font-family: "DM Sans";

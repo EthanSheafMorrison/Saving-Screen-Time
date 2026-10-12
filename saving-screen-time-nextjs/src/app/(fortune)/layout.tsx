@@ -43,8 +43,14 @@ export default function FortuneLayout({
     <html lang="en-GB">
       <head>
         <style dangerouslySetInnerHTML={{ __html: FORTUNE_CSS }} />
-        {/* Copying needs JS, so without it the copy button is hidden and a hint shows instead. */}
-        <noscript dangerouslySetInnerHTML={{ __html: "<style>.copy,.copy-status{display:none}</style>" }} />
+        {/* The oracle and copying both need JS. Without it, the oracle overlay is
+            hidden so the fortune underneath is read directly, and the copy
+            button gives way to a hint. */}
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: "<style>.hterm-overlay{display:none!important}.copy,.copy-status{display:none}</style>",
+          }}
+        />
       </head>
       <body>
         {children}
