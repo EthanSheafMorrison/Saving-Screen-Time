@@ -19,7 +19,8 @@ export interface ToolPageProps {
   featuresTitle: React.ReactNode;
   features: ToolFeature[];
   ctaLabel?: string;
-  theme?: "horoscope" | "fortune" | "defacer";
+  theme?: "horoscope" | "fortune" | "defacer" | "charger";
+  featuresLabel?: string;
   extraSection?: React.ReactNode;
   onLaunch?: () => void;
   hideCta?: boolean;
@@ -43,6 +44,7 @@ export default function ToolPage({
   hideCta,
   hideFeatures,
   heroDecoration,
+  featuresLabel = "Features",
 }: ToolPageProps) {
   useEffect(() => {
     const reveals = document.querySelectorAll(".reveal");
@@ -95,7 +97,7 @@ export default function ToolPage({
           <p className="study-sub">{subtitle}</p>
           <div className="nav-links">
             <a href="#about" onClick={(e) => { e.preventDefault(); scrollTo("about"); }}>About</a>
-            <a href="#features" onClick={(e) => { e.preventDefault(); scrollTo("features"); }}>Features</a>
+            <a href="#features" onClick={(e) => { e.preventDefault(); scrollTo("features"); }}>{featuresLabel}</a>
             <Link href="/tools">All Tools</Link>
           </div>
           <div className="hero-cta">

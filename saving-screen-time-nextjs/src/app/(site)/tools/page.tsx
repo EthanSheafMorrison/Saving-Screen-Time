@@ -38,6 +38,16 @@ const tools = [
     theme: "horoscope",
     Character: HoroscopeCharacter,
   },
+  {
+    num: "04",
+    tag: "Object — DIY",
+    name: ["Cosy", "Charger"],
+    description:
+      "A handmade bed for your phone. Tuck it in, plug it in, and say goodnight — charging becomes a ritual, not a restriction.",
+    href: "/tools/cosy-charger",
+    cta: "Make the Bed →",
+    theme: "charger",
+  },
 ];
 
 export default function ToolsPage() {
@@ -48,7 +58,7 @@ export default function ToolsPage() {
         <h1 className="tools-index-title">Tools</h1>
       </div>
 
-      {tools.map(({ Character, ...tool }) => (
+      {tools.map((tool) => (
         <Link key={tool.num} href={tool.href} className={`tool-band tool-band--${tool.theme}`}>
           <div className="tool-band-num">{tool.num}</div>
           <div className="tool-band-body">

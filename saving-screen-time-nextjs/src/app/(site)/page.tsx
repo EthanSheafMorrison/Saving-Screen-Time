@@ -158,7 +158,7 @@ export default async function Home() {
             <div className="tools-intro-eyebrow">Beyond the study</div>
             <h2 className="tools-intro-title">The Tools</h2>
             <p className="tools-intro-body">
-              Saving Screen Time isn&apos;t only a study. Alongside the research we build small, free tools — playful experiments in screen time, and <span className="text-highlight">additional outputs of the project</span>. Two are live now, with more on the way.
+              Saving Screen Time isn&apos;t only a study. Alongside the research we build small, free tools — playful experiments in screen time, and <span className="text-highlight">additional outputs of the project</span>. Three are out now, with more on the way.
             </p>
           </div>
         </div>
@@ -206,7 +206,7 @@ export default async function Home() {
           </div>
         </a>
 
-        <div className="stripe stripe-tool stripe-tool--charger stripe-tool--soon">
+        <a href="/tools/cosy-charger" className="stripe stripe-tool stripe-tool--charger">
           <span className="stripe-tool-plus stp-tr" aria-hidden="true">+</span>
           <span className="stripe-tool-plus stp-bl" aria-hidden="true">+</span>
           <span className="stripe-tool-ghost" aria-hidden="true">CHARGER</span>
@@ -218,16 +218,16 @@ export default async function Home() {
           </div>
           <div className="stripe-tool-inner">
             <div className="stripe-tool-text">
-              <div className="stripe-tool-tag">Object — In the works</div>
+              <div className="stripe-tool-tag">Object — DIY</div>
               <h2 className="stripe-tool-name">Cosy Charger</h2>
               <p className="stripe-tool-desc">
                 A handmade phone &ldquo;bed&rdquo;. Charging becomes a ritual, not a restriction —
                 disconnection becomes care, not deprivation.
               </p>
-              <span className="stripe-tool-cta stripe-tool-cta--soon">Coming Soon</span>
+              <span className="stripe-tool-cta">Make the Bed ↗</span>
             </div>
           </div>
-        </div>
+        </a>
 
         <div className="stripe stripe-red">
           <div className="stripe-content">
