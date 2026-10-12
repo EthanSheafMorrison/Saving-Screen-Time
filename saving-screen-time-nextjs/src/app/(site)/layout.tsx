@@ -42,8 +42,9 @@ export default function SiteLayout({
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
       </head>
       <body>
+        <a href="#main-content" className="skip-link">Skip to content</a>
         <Navbar />
-        {children}
+        <div id="main-content">{children}</div>
         <footer style={{ backgroundColor: 'var(--blue)', padding: '2rem', textAlign: 'center' }}>
           <p style={{ fontSize: '0.9rem', color: 'var(--white)', margin: '0 0 0.75rem' }}>
             <Link href="/" style={{ color: 'var(--white)', textDecoration: 'underline', fontWeight: 700 }}>

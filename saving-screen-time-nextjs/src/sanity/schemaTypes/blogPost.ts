@@ -48,7 +48,13 @@ export const blogPostType = defineType({
           type: 'image',
           options: { hotspot: true },
           fields: [
-            defineField({ name: 'alt', title: 'Alt text', type: 'string' }),
+            defineField({
+              name: 'alt',
+              title: 'Alt text',
+              type: 'string',
+              description: 'Describe what the image shows for people who cannot see it. Leave blank only if the image is purely decorative.',
+              validation: (Rule) => Rule.warning('Images without alt text are skipped by screen readers.').required(),
+            }),
             defineField({ name: 'caption', title: 'Caption', type: 'string' }),
           ],
         },

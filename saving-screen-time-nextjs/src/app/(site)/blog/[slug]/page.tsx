@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import ScrollProgress from "./ScrollProgress";
 import SectionReveal from "./SectionReveal";
 import ShareButton from "./ShareButton";
+import ReaderModeButton from "./ReaderModeButton";
 import { portableComponents } from "../../components/portableTextComponents";
 
 export const revalidate = 60;
@@ -73,8 +74,8 @@ function slugify(s: string) {
 function groupByHeadings(
   blocks: Block[],
   postTitle?: string
-): { heading: string | null; blocks: Block[] }[] {
-  const groups: { heading: string | null; blocks: Block[] }[] = [];
+): { heading: string | null; level: 2 | 3; blocks: Block[] }[] {
+  const groups: { heading: string | null; level: 2 | 3; blocks: Block[] }[] = [];
   const normalizedTitle = (postTitle ?? "").trim().toLowerCase();
 
   for (const block of blocks) {
@@ -86,10 +87,11 @@ function groupByHeadings(
       if (groups.length === 0 && text.trim().toLowerCase() === normalizedTitle) {
         continue; // skip: duplicate of the hero h1
       }
-      groups.push({ heading: text, blocks: [] });
+      // h1 and h2 both sit under the hero h1, so they render as h2; h3 stays nested
+      groups.push({ heading: text, level: block.style === "h3" ? 3 : 2, blocks: [] });
     } else {
       if (groups.length === 0) {
-        groups.push({ heading: null, blocks: [] });
+        groups.push({ heading: null, level: 2, blocks: [] });
       }
       groups[groups.length - 1].blocks.push(block);
     }
@@ -146,19 +148,23 @@ export default async function BlogPostPage({
           {post.excerpt && (
             <p className="blog-post-excerpt">{post.excerpt}</p>
           )}
-          <ShareButton title={post.title} />
+          <div className="blog-post-actions">
+            <ReaderModeButton />
+            <ShareButton title={post.title} />
+          </div>
         </div>
       </section>
 
       {/* Body sections grouped by headings */}
       {sections.map((section, i) => {
+        const Heading = section.level === 3 ? "h3" : "h2";
         return (
           <section key={i} className="blog-post-section">
             <div className="section-inner">
               {section.heading && (
-                <h2 id={slugify(section.heading)} className="section-title">
+                <Heading id={slugify(section.heading)} className="section-title">
                   {section.heading}
-                </h2>
+                </Heading>
               )}
               {section.blocks.length > 0 && (
                 <div className="blog-post-body">
