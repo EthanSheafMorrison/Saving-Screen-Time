@@ -9,18 +9,32 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
+  const [hovered, setHovered] = useState<"media" | "tools" | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const toolsRef = useRef<HTMLDivElement>(null);
+
+  // A menu shows while the mouse is over it, or once it's been clicked open
+  const mediaShown = dropdownOpen || hovered === "media";
+  const toolsShown = toolsOpen || hovered === "tools";
 
   const closeMenu = () => {
     setIsOpen(false);
     setDropdownOpen(false);
     setToolsOpen(false);
+    setHovered(null);
+  };
+
+  // Mouse only: a tap fires pointerenter just before its click, which would open
+  // the menu and then toggle it straight shut. Hovering one menu closes the other.
+  const hoverMenu = (menu: "media" | "tools") => {
+    setHovered(menu);
+    if (menu === "media") setToolsOpen(false);
+    else setDropdownOpen(false);
   };
 
   // Close dropdowns on outside click (desktop) and on Escape
   useEffect(() => {
-    if (!dropdownOpen && !toolsOpen) return;
+    if (!dropdownOpen && !toolsOpen && !hovered) return;
     const handleClick = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setDropdownOpen(false);
@@ -33,6 +47,7 @@ export default function Navbar() {
       if (e.key === "Escape") {
         setDropdownOpen(false);
         setToolsOpen(false);
+        setHovered(null);
       }
     };
     document.addEventListener("mousedown", handleClick);
@@ -41,7 +56,7 @@ export default function Navbar() {
       document.removeEventListener("mousedown", handleClick);
       document.removeEventListener("keydown", handleKey);
     };
-  }, [dropdownOpen, toolsOpen]);
+  }, [dropdownOpen, toolsOpen, hovered]);
 
   return (
     <nav className="nav-bar">
@@ -75,18 +90,23 @@ export default function Navbar() {
           <span />
         </button>
         <div className={`nav-links ${isOpen ? "open" : ""}`}>
-          <div className="nav-dropdown" ref={dropdownRef}>
+          <div
+            className="nav-dropdown"
+            ref={dropdownRef}
+            onPointerEnter={(e) => { if (e.pointerType === "mouse") hoverMenu("media"); }}
+            onPointerLeave={(e) => { if (e.pointerType === "mouse") setHovered(null); }}
+          >
             <button
               type="button"
               className="nav-dropdown-toggle"
               onClick={() => setDropdownOpen(!dropdownOpen)}
               aria-haspopup="menu"
-              aria-expanded={dropdownOpen}
+              aria-expanded={mediaShown}
             >
               Media <span aria-hidden="true">▾</span>
             </button>
             <div
-              className={`nav-dropdown-panel ${dropdownOpen ? "open" : ""}`}
+              className={`nav-dropdown-panel ${mediaShown ? "open" : ""}`}
               role="menu"
             >
               <Link href="/publications" onClick={closeMenu} role="menuitem">
@@ -102,7 +122,12 @@ export default function Navbar() {
           </div>
           <Link href="/blog" onClick={closeMenu}>Blog</Link>
           <Link href="/team" onClick={closeMenu}>Team</Link>
-          <div className="nav-dropdown" ref={toolsRef}>
+          <div
+            className="nav-dropdown"
+            ref={toolsRef}
+            onPointerEnter={(e) => { if (e.pointerType === "mouse") hoverMenu("tools"); }}
+            onPointerLeave={(e) => { if (e.pointerType === "mouse") setHovered(null); }}
+          >
             <div className="nav-dropdown-split">
               <Link href="/tools" onClick={closeMenu}>Tools</Link>
               <button
@@ -110,14 +135,14 @@ export default function Navbar() {
                 className="nav-dropdown-caret"
                 onClick={() => setToolsOpen(!toolsOpen)}
                 aria-haspopup="menu"
-                aria-expanded={toolsOpen}
+                aria-expanded={toolsShown}
                 aria-label="Toggle tools menu"
               >
                 <span aria-hidden="true">▾</span>
               </button>
             </div>
             <div
-              className={`nav-dropdown-panel ${toolsOpen ? "open" : ""}`}
+              className={`nav-dropdown-panel ${toolsShown ? "open" : ""}`}
               role="menu"
             >
               <Link href="/tools/screen-time-horoscope" onClick={closeMenu} role="menuitem">
@@ -125,6 +150,9 @@ export default function Navbar() {
               </Link>
               <Link href="/tools/saving-screen-space" onClick={closeMenu} role="menuitem">
                 Defacer
+              </Link>
+              <Link href="/tools/cosy-charger" onClick={closeMenu} role="menuitem">
+                Cosy Charger
               </Link>
             </div>
           </div>

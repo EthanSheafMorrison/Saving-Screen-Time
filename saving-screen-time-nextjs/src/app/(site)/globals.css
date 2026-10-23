@@ -19,7 +19,8 @@
     border: none;
     position: absolute;
     width: 100%;
-    color:var(--white);
+    --nav-fg: var(--white); /* set outright on pages where blending falls short — see NAV ON BLUE AND RED */
+    color: var(--nav-fg);
     mix-blend-mode: difference; /* Ensures nav links interact with background colors */
     top: 0;
     z-index: 100;
@@ -27,14 +28,14 @@
 }
 .nav-bar a {
     text-decoration: none;
-    color: var(--white);    
+    color: var(--nav-fg);
     font-family: 'IBM Plex Mono', monospace;
     font-weight: 200;
     border-bottom: 2px solid transparent;
     transition: border-color 0.3s;
 }
 .nav-bar a:hover {
-    border-bottom: 2px solid var(--white);
+    border-bottom: 2px solid var(--nav-fg);
 }
 
 .nav-menu {
@@ -368,7 +369,7 @@ body {
   display: flex; align-items: center; justify-content: space-between; gap: 2rem;
 }
 .stripe-tool-text { max-width: 40ch; }
-.stripe-tool-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.7; margin-bottom: 1rem; }
+.stripe-tool-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; } /* unfaded: red at 70% is 2.9:1 on black */
 .stripe-tool-name { font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 900; line-height: 0.92; margin: 0 0 1rem; }
 .stripe-tool-desc { font-family: 'IBM Plex Mono', monospace; font-size: clamp(1rem, 1.5vw, 1.25rem); line-height: 1.5; margin: 0 0 1.75rem; }
 .stripe-tool-cta { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em; border: 2px solid currentColor; padding: 0.6rem 1.1rem; transition: background-color 0.18s, color 0.18s; }
@@ -1257,7 +1258,7 @@ body {
 .aim { --section-bg: var(--yellow, #ffeb00); --section-fg: var(--blue, #1222e5); }
 .help { --section-bg: var(--white, #ffffff); --section-fg: var(--blue, #1222e5); }
 .topics { --section-bg: var(--black, #000000); --section-fg: var(--white, #ffffff); }
-.rights { --section-bg: var(--red, #ff0000); --section-fg: var(--white, #ffffff); }
+.rights { --section-bg: var(--red, #ff0000); --section-fg: var(--black, #000000); } /* --white on the red is 2.5:1 */
 .keyinfo { --section-bg: var(--yellow, #ffeb00); --section-fg: var(--blue, #1222e5); }
 .data { --section-bg: var(--white, #ffffff); --section-fg: var(--blue, #1222e5); }
 .team { --section-bg: var(--black, #000000); --section-fg: var(--white, #ffffff); }
@@ -1342,7 +1343,7 @@ body {
 }
 .right-num {
   font-size: 0.65rem; font-weight: 800; letter-spacing: 0.2em;
-  text-transform: uppercase; opacity: 0.65; margin-bottom: 8px;
+  text-transform: uppercase; margin-bottom: 8px;
 }
 .right-title { font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; line-height: 1.2; margin-bottom: 10px; }
 .right-body { font-size: 0.85rem; font-weight: 400; line-height: 1.5; opacity: 0.88; }
@@ -2084,7 +2085,9 @@ body.blog-reveal-ready .blog-post-section.is-visible {
 /* ── NAV HIT-TEST FIX ──
    Nav-bar has 48px padding and sits over the page. Without this, the empty
    padding area intercepts clicks on content below (e.g. the Back to Blog
-   button). Only the actual interactive elements should catch pointer events. */
+   button). Only the actual interactive elements should catch pointer events.
+   The dropdown wrappers count: they're only as big as Media / Tools, and without
+   them the slivers around those triggers would drop the hover that opens a menu. */
 .nav-bar {
   pointer-events: none;
 }
@@ -2092,6 +2095,7 @@ body.blog-reveal-ready .blog-post-section.is-visible {
 .nav-bar button,
 .nav-bar input,
 .nav-bar form,
+.nav-bar .nav-dropdown,
 .nav-bar .nav-dropdown-panel {
   pointer-events: auto;
 }
@@ -2117,7 +2121,7 @@ body.blog-reveal-ready .blog-post-section.is-visible {
 .nav-dropdown-toggle {
   background: transparent;
   border: none;
-  color: var(--white);
+  color: var(--nav-fg);
   font-family: 'IBM Plex Mono', monospace;
   font-size: 1rem;
   font-weight: 400;
@@ -2129,7 +2133,7 @@ body.blog-reveal-ready .blog-post-section.is-visible {
 }
 .nav-dropdown-toggle:hover,
 .nav-dropdown-toggle:focus-visible {
-  border-bottom: 2px solid var(--white);
+  border-bottom: 2px solid var(--nav-fg);
   outline: none;
 }
 .nav-dropdown-panel {
@@ -2147,6 +2151,18 @@ body.blog-reveal-ready .blog-post-section.is-visible {
 }
 .nav-dropdown-panel.open {
   display: flex;
+}
+/* Covers the gap and border above the panel, so the hover that opened it isn't lost
+   on the way down from Media or Tools. The mobile panel sits inline, with no gap. */
+@media (min-width: 769px) {
+  .nav-dropdown-panel::before {
+    content: '';
+    position: absolute;
+    left: -2px;
+    right: -2px;
+    bottom: 100%;
+    height: calc(0.5rem + 2px);
+  }
 }
 .nav-dropdown-panel a {
   color: var(--white);
@@ -2172,7 +2188,7 @@ body.blog-reveal-ready .blog-post-section.is-visible {
 .nav-dropdown-caret {
   background: transparent;
   border: none;
-  color: var(--white);
+  color: var(--nav-fg);
   font-family: 'IBM Plex Mono', monospace;
   font-size: 1rem;
   line-height: 1;
@@ -2180,7 +2196,7 @@ body.blog-reveal-ready .blog-post-section.is-visible {
   padding: 0;
 }
 .nav-dropdown-caret:focus-visible {
-  outline: 1px solid var(--white);
+  outline: 1px solid var(--nav-fg);
 }
 
 /* ── NAV SEARCH ── */
@@ -2198,8 +2214,8 @@ body.blog-reveal-ready .blog-post-section.is-visible {
 .nav-search-input {
   background: transparent;
   border: none;
-  border-bottom: 1px solid var(--white);
-  color: var(--white);
+  border-bottom: 1px solid var(--nav-fg);
+  color: var(--nav-fg);
   font-family: 'IBM Plex Mono', monospace;
   font-size: 0.85rem;
   padding: 0.25rem 0.25rem;
@@ -2207,11 +2223,13 @@ body.blog-reveal-ready .blog-post-section.is-visible {
   outline: none;
 }
 .nav-search-input::placeholder {
-  color: var(--white);
-  opacity: 0.6;
+  color: var(--nav-fg);
+  opacity: 0.85; /* 0.6 drops below 4.5:1 on the blue and red pages */
 }
+/* the underline also thickens, so focus still shows where the nav is already yellow */
 .nav-search-input:focus {
   border-bottom-color: var(--yellow, #E7FF00);
+  box-shadow: 0 1px 0 var(--yellow, #E7FF00);
 }
 
 /* ── NAV SEARCH RESULTS DROPDOWN ── */
@@ -2300,6 +2318,26 @@ body.blog-reveal-ready .blog-post-section.is-visible {
 .search-results-all:hover,
 .search-result-item:hover {
   background: rgba(207, 204, 211, 0.12);
+}
+
+/* ── NAV ON BLUE AND RED ──
+   Difference blending turns the nav olive over the brand blue (3.3:1) and teal over
+   the red (2:1), so pages that open on either drop the blend and set the colour
+   outright: neon on blue (7.3:1), black on red (5.1:1). Desktop only, since the mobile
+   bar has its own black ground; reader mode is left to blend, as its page is pale. */
+@media (min-width: 769px) {
+  html:not([data-reader="on"]) body:has(.sec-hero, .blog-post, .study-page:not([data-theme])) .nav-bar {
+    mix-blend-mode: normal;
+    --nav-fg: var(--yellow);
+  }
+  body:has([data-theme="defacer"]) .nav-bar {
+    mix-blend-mode: normal;
+    --nav-fg: var(--black);
+  }
+  /* a blue panel barely separates from the red; black matches the nav text */
+  body:has([data-theme="defacer"]) :is(.nav-dropdown-panel, .search-results-panel) {
+    background: var(--black);
+  }
 }
 
 /* ── MOBILE OVERRIDES for nav dropdown + search ── */
@@ -2682,7 +2720,6 @@ html[data-reader="on"] .blog-post-section + .blog-post-section .section-inner::b
   letter-spacing: 0.22em;
   text-transform: uppercase;
   margin-bottom: 12px;
-  opacity: 0.6;
 }
 
 .tools-index-title {
@@ -2724,12 +2761,13 @@ html[data-reader="on"] .blog-post-section + .blog-post-section .section-inner::b
   color: var(--lilac, #A98BFF);
 }
 
+/* Band type stays at full strength: the red is only 5.1:1 on black to begin with, and
+   the old 50–85% fades took the numbers, tags and copy down to 1.9–3.9:1 */
 .tool-band-num {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.18em;
-  opacity: 0.5;
   align-self: flex-start;
   padding-top: 6px;
 }
@@ -2746,7 +2784,6 @@ html[data-reader="on"] .blog-post-section + .blog-post-section .section-inner::b
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  opacity: 0.6;
   margin-bottom: 10px;
 }
 
@@ -2766,7 +2803,6 @@ html[data-reader="on"] .blog-post-section + .blog-post-section .section-inner::b
   line-height: 1.55;
   font-weight: 400;
   max-width: 52ch;
-  opacity: 0.85;
   margin: 0;
 }
 
@@ -2996,10 +3032,11 @@ html[data-reader="on"] .blog-post-section + .blog-post-section .section-inner::b
   --section-fg: var(--yellow, #E7FF00);
 }
 
-/* Defacer — red hero, black aim with red text */
+/* Defacer — red hero, black aim with red text. Type on the red is black (5.1:1);
+   --white there is only 2.5:1. */
 [data-theme="defacer"] .hero {
   --section-bg: var(--red, #ff0000);
-  --section-fg: var(--white, #CFCCD3);
+  --section-fg: var(--black, #050505);
 }
 [data-theme="defacer"] .aim {
   --section-bg: var(--black, #050505);
@@ -3015,7 +3052,7 @@ html[data-reader="on"] .blog-post-section + .blog-post-section .section-inner::b
 }
 [data-theme="defacer"] .tool-extra {
   --section-bg: var(--red, #ff0000);
-  --section-fg: var(--white, #CFCCD3);
+  --section-fg: var(--black, #050505);
 }
 /* alternate the stacked defacer extra sections so they don't blend together */
 [data-theme="defacer"] .tool-extra.defaced-demo {
@@ -3420,7 +3457,6 @@ html[data-reader="on"] .blog-post-section + .blog-post-section .section-inner::b
 .cap-body {
   font-size: 0.85rem;
   line-height: 1.5;
-  opacity: 0.8;
 }
 
 @media (max-width: 800px) {
