@@ -4,9 +4,9 @@ import {
   HoroscopeCharacter,
 } from "./components/PixelCharacters";
 
+// Listed in display order. The band numbers (01, 02, …) come from this order.
 const tools = [
   {
-    num: "01",
     tag: "Browser Extension",
     name: ["Screen Space", "Defacer"],
     description:
@@ -17,7 +17,6 @@ const tools = [
     Character: DefacerCharacter,
   },
   // {
-  //   num: "02",
   //   tag: "Screen Time Tool",
   //   name: ["Screen Time", "Fortune"],
   //   description:
@@ -28,7 +27,6 @@ const tools = [
   //   Character: FortuneCharacter,
   // },
   {
-    num: "03",
     tag: "Screen Time Tool",
     name: ["Screen Time", "Horoscope"],
     description:
@@ -39,7 +37,6 @@ const tools = [
     Character: HoroscopeCharacter,
   },
   {
-    num: "04",
     tag: "Object — DIY",
     name: ["Cosy", "Charger"],
     description:
@@ -58,9 +55,9 @@ export default function ToolsPage() {
         <h1 className="tools-index-title">Tools</h1>
       </div>
 
-      {tools.map((tool) => (
-        <Link key={tool.num} href={tool.href} className={`tool-band tool-band--${tool.theme}`}>
-          <div className="tool-band-num">{tool.num}</div>
+      {tools.map((tool, index) => (
+        <Link key={tool.href} href={tool.href} className={`tool-band tool-band--${tool.theme}`}>
+          <div className="tool-band-num">{String(index + 1).padStart(2, "0")}</div>
           <div className="tool-band-body">
             <div className="tool-band-tag">{tool.tag}</div>
             <h2 className="tool-band-name">

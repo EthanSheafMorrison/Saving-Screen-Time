@@ -66,14 +66,21 @@ export const cosyChargerType = defineType({
       title: 'DIY Zine Text',
       type: 'text',
       rows: 3,
-      description: 'A short paragraph shown above the zine download button',
+      description: 'A short paragraph shown above the zine flipbook',
+    }),
+    defineField({
+      name: 'zineFlipbookUrl',
+      title: 'DIY Zine Flipbook (Heyzine link)',
+      type: 'url',
+      description: 'The Heyzine link for flipping through the zine on the page, e.g. https://heyzine.com/flip-book/….html. Paste the link, not the embed code. Leave empty to keep the current flipbook.',
+      validation: (rule) => rule.uri({ scheme: ['https'] }),
     }),
     defineField({
       name: 'zine',
       title: 'DIY Zine (PDF)',
       type: 'file',
       options: { accept: 'application/pdf' },
-      description: 'Upload the DIY instructions zine. Until there is a file here the page shows "Zine coming soon". To update it, replace the file and Publish.',
+      description: 'Upload the DIY instructions zine as a PDF. When there is a file here a download button appears under the flipbook. To update it, replace the file and Publish.',
     }),
   ],
   preview: {

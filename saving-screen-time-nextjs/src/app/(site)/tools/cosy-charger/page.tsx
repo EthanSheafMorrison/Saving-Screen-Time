@@ -16,7 +16,8 @@ const fallback = {
     "A handmade bed for your phone. Tuck it in, plug it in, and say goodnight.",
   quote: "Charging becomes a ritual, not a restriction.",
   zineIntro:
-    "A cosy charger is made from whatever you have lying around — old tapes, offcuts, a scrap of knitting. A DIY zine with step-by-step instructions is on its way.",
+    "A cosy charger is made from whatever you have lying around: old tapes, offcuts, a scrap of knitting. Flip through the DIY zine below for step-by-step instructions.",
+  zineFlipbookUrl: "https://heyzine.com/flip-book/85b8b8d8e8.html",
   photos: [
     {
       key: "cassette-bed",
@@ -58,6 +59,7 @@ interface CosyCharger {
   blogSlug?: string;
   gallery?: GalleryImage[];
   zineIntro?: string;
+  zineFlipbookUrl?: string;
   zineUrl?: string;
   zineSize?: number;
 }
@@ -65,7 +67,7 @@ interface CosyCharger {
 export default async function CosyChargerPage() {
   const data: CosyCharger | null = await client.fetch(
     `*[_type == "cosyCharger"][0]{
-      subtitle, quote, body, zineIntro,
+      subtitle, quote, body, zineIntro, zineFlipbookUrl,
       "blogSlug": blogPost->slug.current,
       gallery[]{
         ...,
@@ -80,6 +82,7 @@ export default async function CosyChargerPage() {
   const gallery = (data?.gallery ?? []).filter((img) => img.asset);
   // ?dl= makes Sanity serve the file as a download under its original filename
   const zineHref = data?.zineUrl ? `${data.zineUrl}?dl=` : null;
+  const flipbookUrl = data?.zineFlipbookUrl || fallback.zineFlipbookUrl;
 
   return (
     <ToolPage
@@ -167,15 +170,31 @@ export default async function CosyChargerPage() {
                 <div className="section-label">DIY</div>
                 <div className="section-title">Make Your <em>Own</em></div>
                 <p className="charger-make-body">{data?.zineIntro || fallback.zineIntro}</p>
-                {zineHref ? (
+              </div>
+              <div className="charger-flipbook reveal">
+                <iframe
+                  src={flipbookUrl}
+                  title="Cosy Charger DIY zine flipbook"
+                  allow="autoplay; fullscreen; clipboard-write"
+                  loading="lazy"
+                />
+              </div>
+              <div className="charger-zine-actions">
+                <a
+                  href={flipbookUrl}
+                  className="charger-flipbook-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Open the zine full screen <span aria-hidden="true">↗</span>
+                </a>
+                {zineHref && (
                   <a href={zineHref} className="study-btn charger-zine-btn">
                     Download the DIY Zine
                     <span className="charger-zine-meta">
                       PDF{data?.zineSize ? ` · ${formatFileSize(data.zineSize)}` : ""} <span aria-hidden="true">↓</span>
                     </span>
                   </a>
-                ) : (
-                  <span className="study-btn charger-zine-btn charger-zine-btn--soon">DIY Zine — Coming Soon</span>
                 )}
               </div>
             </div>
