@@ -76,11 +76,11 @@ export const cosyChargerType = defineType({
       validation: (rule) => rule.uri({ scheme: ['https'] }),
     }),
     defineField({
-      name: 'zine',
-      title: 'DIY Zine (PDF)',
-      type: 'file',
-      options: { accept: 'application/pdf' },
-      description: 'Upload the DIY instructions zine as a PDF. When there is a file here a download button appears under the flipbook. To update it, replace the file and Publish.',
+      name: 'downloads',
+      title: 'Downloads',
+      type: 'array',
+      description: 'Upload the printable zine (or other PDFs). Each one becomes a download button under the flipbook. To update one, replace its file and Publish.',
+      of: [{ type: 'download' }],
     }),
   ],
   preview: {

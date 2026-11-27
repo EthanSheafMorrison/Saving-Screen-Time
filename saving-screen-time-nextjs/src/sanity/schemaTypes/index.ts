@@ -7,7 +7,8 @@ import { mediaItemType } from '../schemaTypes/mediaItem'
 import { blogPostType } from '../schemaTypes/blogPost'
 import { talkType } from '../schemaTypes/talk'
 import { cosyChargerType } from '../schemaTypes/cosyCharger'
+import { downloadType } from '../schemaTypes/download'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [homepageType, publicationType, teamMemberType, studyType, mediaItemType, blogPostType, talkType, cosyChargerType],
+  types: [homepageType, publicationType, teamMemberType, studyType, mediaItemType, blogPostType, talkType, cosyChargerType, downloadType],
 }

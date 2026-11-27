@@ -52,6 +52,15 @@ interface GalleryImage {
   height?: number;
 }
 
+// Same shape as a talk's downloads (the shared "download" type in Sanity)
+interface Download {
+  _key: string;
+  title?: string;
+  url?: string;
+  filename?: string;
+  size?: number;
+}
+
 interface CosyCharger {
   subtitle?: string;
   quote?: string;
@@ -60,8 +69,7 @@ interface CosyCharger {
   gallery?: GalleryImage[];
   zineIntro?: string;
   zineFlipbookUrl?: string;
-  zineUrl?: string;
-  zineSize?: number;
+  downloads?: Download[];
 }
 
 export default async function CosyChargerPage() {
@@ -74,14 +82,18 @@ export default async function CosyChargerPage() {
         "width": asset->metadata.dimensions.width,
         "height": asset->metadata.dimensions.height
       },
-      "zineUrl": zine.asset->url,
-      "zineSize": zine.asset->size
+      downloads[]{
+        _key,
+        title,
+        "url": file.asset->url,
+        "filename": file.asset->originalFilename,
+        "size": file.asset->size
+      }
     }`
   );
 
   const gallery = (data?.gallery ?? []).filter((img) => img.asset);
-  // ?dl= makes Sanity serve the file as a download under its original filename
-  const zineHref = data?.zineUrl ? `${data.zineUrl}?dl=` : null;
+  const downloads = (data?.downloads ?? []).filter((d) => d.url);
   const flipbookUrl = data?.zineFlipbookUrl || fallback.zineFlipbookUrl;
 
   return (
@@ -90,8 +102,9 @@ export default async function CosyChargerPage() {
       tag="Object — Cosy Charger"
       title={<>Cosy <em>Charger</em></>}
       subtitle={data?.subtitle || fallback.subtitle}
-      launchUrl={zineHref ?? "#features"}
-      ctaLabel={zineHref ? "Get the DIY Zine ↓" : "Make Your Own ↓"}
+      // Scrolls to the flipbook and download buttons
+      launchUrl="#features"
+      ctaLabel="Make Your Own ↓"
       featuresLabel="Make One"
       hideCta
       hideFeatures
@@ -188,14 +201,15 @@ export default async function CosyChargerPage() {
                 >
                   Open the zine full screen <span aria-hidden="true">↗</span>
                 </a>
-                {zineHref && (
-                  <a href={zineHref} className="study-btn charger-zine-btn">
-                    Download the DIY Zine
+                {/* ?dl= makes Sanity serve the file as a download under its original filename */}
+                {downloads.map((d) => (
+                  <a key={d._key} href={`${d.url}?dl=`} className="study-btn charger-zine-btn">
+                    {d.title || d.filename}
                     <span className="charger-zine-meta">
-                      PDF{data?.zineSize ? ` · ${formatFileSize(data.zineSize)}` : ""} <span aria-hidden="true">↓</span>
+                      PDF{d.size ? ` · ${formatFileSize(d.size)}` : ""} <span aria-hidden="true">↓</span>
                     </span>
                   </a>
-                )}
+                ))}
               </div>
             </div>
           </section>

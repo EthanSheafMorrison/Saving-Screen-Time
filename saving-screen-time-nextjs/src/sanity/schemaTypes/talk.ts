@@ -1,5 +1,4 @@
 import { defineField, defineType } from 'sanity'
-import { foldOptions } from '../../lib/folds'
 
 export const talkType = defineType({
   name: 'talk',
@@ -70,42 +69,7 @@ export const talkType = defineType({
       title: 'Downloads',
       type: 'array',
       description: 'Upload brochures, slides etc. as PDFs. Each one becomes a download button on the talk page. To update one, replace its file and Publish.',
-      of: [
-        {
-          type: 'object',
-          name: 'download',
-          title: 'PDF',
-          fields: [
-            defineField({
-              name: 'title',
-              title: 'Button Label',
-              type: 'string',
-              description: 'e.g. Project Brochure',
-              validation: (Rule) => Rule.required()
-            }),
-            defineField({
-              name: 'file',
-              title: 'PDF File',
-              type: 'file',
-              options: { accept: 'application/pdf' },
-              validation: (Rule) => Rule.required().assetRequired()
-            }),
-            defineField({
-              name: 'fold',
-              title: 'Folding Instructions (optional)',
-              type: 'string',
-              description: 'If this PDF is a folded brochure, pick its fold to show printing and folding instructions on the talk page',
-              options: { list: foldOptions },
-            }),
-          ],
-          preview: {
-            select: {
-              title: 'title',
-              subtitle: 'file.asset.originalFilename',
-            },
-          },
-        },
-      ],
+      of: [{ type: 'download' }],
     }),
     defineField({
       name: 'body',
